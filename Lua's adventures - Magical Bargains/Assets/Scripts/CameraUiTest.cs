@@ -27,6 +27,7 @@ public class CameraUiTest : MonoBehaviour
     {
         if (activated)
         {
+            highlight.GetComponent<SpriteRenderer>().enabled = true;
 
             if (!viewingPhoto)
             {
@@ -41,6 +42,7 @@ public class CameraUiTest : MonoBehaviour
         if (activated == true)
         {
             activated = false;
+            highlight.GetComponent<SpriteRenderer>().enabled = false;
             removePhoto();
         }
         else
