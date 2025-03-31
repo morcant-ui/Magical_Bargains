@@ -7,6 +7,7 @@ public class LoupeUiTest : MonoBehaviour
 
     public GameObject highlight;
     public GameObject magnifier;
+    public GameObject lens;
 
     private bool activated = false;
 
@@ -17,6 +18,7 @@ public class LoupeUiTest : MonoBehaviour
     {
         highlight.GetComponent<SpriteRenderer>().enabled = false;
         magnifier.GetComponent<SpriteRenderer>().enabled = false;
+        lens.GetComponent<Renderer>().enabled = false;
     }
 
     // Update is called once per frame
@@ -26,11 +28,13 @@ public class LoupeUiTest : MonoBehaviour
         {
             highlight.GetComponent<SpriteRenderer>().enabled = true;
             magnifier.GetComponent<SpriteRenderer>().enabled = true;
+            lens.GetComponent<Renderer>().enabled = true;
 
         }
         else {
             highlight.GetComponent<SpriteRenderer>().enabled = false;
             magnifier.GetComponent<SpriteRenderer>().enabled = false;
+            lens.GetComponent<Renderer>().enabled = false;
         }
     }
 
