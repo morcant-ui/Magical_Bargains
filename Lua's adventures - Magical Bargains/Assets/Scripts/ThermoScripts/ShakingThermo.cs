@@ -1,16 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ShakingThermo : MonoBehaviour
 {
     private float holdTime = 0f;
     private bool isMouseOver = false;
     private bool isShaking = false;
+    private bool triedShaking = false;
     private Vector3 originalPos;
 
     public float shakeDuration = 0.5f;
     public float shakeMagnitude = 0.1f;
+
+    //flashbang data
+    public FlashBangThermo flashbang;
+    public Color flashColor;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,11 +29,19 @@ public class ShakingThermo : MonoBehaviour
         if (isMouseOver && Input.GetMouseButton(0)) // Left click
         {
             holdTime += Time.deltaTime;
-
+            // if you forgot to reset
+            if (holdTime < 5f && !isShaking)
+            {
+                triedShaking = true;
+            }
+            // if you hold mouse down for holdTime it will shake == reset
             if (holdTime >= 5f && !isShaking)
             {
                 StartCoroutine(Shake());
+                triedShaking = false;
             }
+
+            Debug.Log(triedShaking);
         }
         else
         {
@@ -47,6 +61,18 @@ public class ShakingThermo : MonoBehaviour
         isMouseOver = true;
     }
 
+    void OnMouseUp()
+    {
+        if (!triedShaking){
+            flashbang.TriggerFlash(flashColor);
+        }
+        if (triedShaking){
+            Color newFlashColor = Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f);
+            flashbang.TriggerFlash(newFlashColor);
+            triedShaking = false;
+        }
+    }
+
     void OnMouseExit()
     {
         isMouseOver = false;
@@ -54,6 +80,7 @@ public class ShakingThermo : MonoBehaviour
         StopAllCoroutines();
         transform.localPosition = originalPos;
         isShaking = false;
+        
     }
 
     System.Collections.IEnumerator Shake()
