@@ -12,6 +12,7 @@ public class OutlineBehavior : MonoBehaviour
 
     void Start()
     {
+        //TODO : ADD A BOOL IN INVESTIGATION MODE ON OR NOT TO MAKE OUTLINE DISAPPEAR AFTER
         outline.SetActive(false);
         spriteRenderer = outline.GetComponent<SpriteRenderer>();
         spriteRenderer.color = originalColor;
