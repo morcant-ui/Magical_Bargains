@@ -14,6 +14,9 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private GameObject dialoguePanel;
     [SerializeField] private TextMeshProUGUI dialogueText;
 
+    [Header("Examination Button")]
+    [SerializeField] private GameObject examinationButton;
+
 
 
     private Story currentStory;
@@ -37,6 +40,9 @@ public class DialogueManager : MonoBehaviour
     private void Start() {
         dialogueIsPlaying = false;
         dialoguePanel.SetActive(false);
+        if (GameStateManager.GetInstance().GetState() != "examination") {
+            examinationButton.GetComponent<SpriteRenderer>().enabled = false;
+        }
     }
 
     private void Update() {
@@ -77,6 +83,16 @@ public class DialogueManager : MonoBehaviour
         dialoguePanel.SetActive(false);
         dialogueText.text = "";
 
+        string currentState = GameStateManager.GetInstance().GetState() ;
+
+        if (currentState == "dialogue1") {
+
+            examinationButton.GetComponent<SpriteRenderer>().enabled = true;
+
+        } else {
+            Debug.Log("don't know what to do now");
+            Debug.Log(currentState);
+        }
     }
 
 }
