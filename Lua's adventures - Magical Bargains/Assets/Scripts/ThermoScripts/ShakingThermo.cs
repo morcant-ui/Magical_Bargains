@@ -41,7 +41,7 @@ public class ShakingThermo : MonoBehaviour
                 triedShaking = false;
             }
 
-            Debug.Log(triedShaking);
+            //Debug.Log(triedShaking);
         }
         else
         {

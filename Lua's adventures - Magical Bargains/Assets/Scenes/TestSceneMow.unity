@@ -326,8 +326,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -319.7384, y: -171.11589}
-  m_SizeDelta: {x: 32.0054, y: 19.752}
+  m_AnchoredPosition: {x: -14.3361, y: -10.2568}
+  m_SizeDelta: {x: 739.9757, y: 464.7507}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &958992729
 MonoBehaviour:
@@ -696,7 +696,7 @@ MonoBehaviour:
   shakeDuration: 0.5
   shakeMagnitude: 0.1
   flashbang: {fileID: 1660514703}
-  intensity: 0.8
+  flashColor: {r: 1, g: 0.79247266, b: 0.044025064, a: 0.67058825}
 --- !u!114 &1660514703
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -710,7 +710,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   screenOverlay: {fileID: 958992729}
-  flashColor: {r: 0.9528302, g: 0.09588221, b: 0.13019647, a: 1}
   fadeDuration: 1.5
 --- !u!1 &2124763934
 GameObject:
