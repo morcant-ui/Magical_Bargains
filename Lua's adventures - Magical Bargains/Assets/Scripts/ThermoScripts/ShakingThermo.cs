@@ -67,7 +67,7 @@ public class ShakingThermo : MonoBehaviour
             flashbang.TriggerFlash(flashColor);
         }
         if (triedShaking){
-            Color newFlashColor = Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f);
+            Color newFlashColor = Random.ColorHSV(0f, 1f, 0f, 0.9f, 0.5f, 1f);
             flashbang.TriggerFlash(newFlashColor);
             triedShaking = false;
         }
