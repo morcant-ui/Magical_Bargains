@@ -11,8 +11,8 @@ public class LoupeTest : MonoBehaviour
     private Vector3 offset;
 
     // arbitrary constraints for our x axis
-    public float leftBoundX = (float) -3.05f;
-    public float rightBoundX = (float) 3.5f;
+    public float leftBoundX = (float) -5.5f;
+    public float rightBoundX = (float) 5.5f;
 
     void Update()
     {
