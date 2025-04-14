@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
+using TMPro;
 
 public class DialogueSceneButtonManager : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class DialogueSceneButtonManager : MonoBehaviour
     [Header("Buttons")]
     [SerializeField] private Button dialogueButton;
     [SerializeField] private Button inspectButton;
+    [SerializeField] private GameObject inspectButtonText;
 
     [Header("Scenes")]
     [SerializeField] private string inspectScene = "TestInspectScene";
@@ -25,9 +27,7 @@ public class DialogueSceneButtonManager : MonoBehaviour
     {
         string currentState = GameStateManager.GetInstance().GetState();
 
-        if (currentState == "dialogue2") {
-            inspectButton.interactable = false;
-        }
+  
 
         // Attach a listener to the button
         dialogueButton.onClick.AddListener(OnDialogueButtonClick);
@@ -102,6 +102,10 @@ public class DialogueSceneButtonManager : MonoBehaviour
             {
                 Debug.Log("We should currently be in the following state: " + currentState);
                 Debug.Log("At this point the client should leave");
+
+                // for now i just reset and go back to menu
+                GameStateManager.GetInstance().SetState("dialogue1");
+                SceneManager.LoadScene("SimpleMenu");
             }
         }
 

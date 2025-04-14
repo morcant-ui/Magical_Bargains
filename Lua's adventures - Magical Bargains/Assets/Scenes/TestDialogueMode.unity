@@ -248,6 +248,7 @@ MonoBehaviour:
   dialogue2: {fileID: 4900000, guid: 54875af4bd146de4d816f3cc56d1e6bf, type: 3}
   dialogueButton: {fileID: 1327271305}
   inspectButton: {fileID: 1758524287}
+  inspectButtonText: {fileID: 216603554}
   inspectScene: TestInspectMode
 --- !u!1 &216603554
 GameObject:
@@ -259,6 +260,7 @@ GameObject:
   m_Component:
   - component: {fileID: 216603555}
   - component: {fileID: 216603557}
+  - component: {fileID: 216603558}
   - component: {fileID: 216603556}
   m_Layer: 5
   m_Name: Text (TMP)
@@ -386,6 +388,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 216603554}
   m_CullTransparentMesh: 1
+--- !u!114 &216603558
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 216603554}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd905ccf3c9ae5b46ba8aa4261d653e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputField: {fileID: 216603556}
+  text1: Inspect mode
+  text2: Leave
 --- !u!1 &423992235
 GameObject:
   m_ObjectHideFlags: 0
