@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LoupeTest : MonoBehaviour
+public class LoupeMouvementPourSprite : MonoBehaviour
 {
     // Magnifier: we can only drag along the x axis, and constrained by arbitrary bounds (so that we can't go beyond our desk)
 

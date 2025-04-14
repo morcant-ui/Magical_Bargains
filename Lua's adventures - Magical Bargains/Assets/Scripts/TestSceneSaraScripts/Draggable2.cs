@@ -12,6 +12,13 @@ public class Draggable2 : MonoBehaviour
     private bool held = false;
     private Vector3 offset;
 
+    [Header("Bounds")]
+    [SerializeField] private bool activateBounds = true;
+    [SerializeField] private float leftBoundX = (float)-3.5f;
+    [SerializeField] private float rightBoundX = (float)3.5f;
+    [SerializeField] private float downBoundY = (float)-3.5f;
+    [SerializeField] private float upperBoundY = (float)2.5f;
+
 
     // Start is called before the first frame update
     void Start()
@@ -23,7 +30,21 @@ public class Draggable2 : MonoBehaviour
     void Update()
     {
         if (held) {
-            transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition) + offset;
+
+            if (activateBounds)
+            {
+                Vector3 currentPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition) + offset;
+
+                float constrainedX = Mathf.Clamp(currentPosition.x, leftBoundX, rightBoundX);
+
+                float constrainedY = Mathf.Clamp(currentPosition.y, downBoundY, upperBoundY);
+
+
+                transform.position = new Vector3(constrainedX, constrainedY, currentPosition.z);
+            }
+            else {
+                transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition) + offset;
+            }
         }
     }
 

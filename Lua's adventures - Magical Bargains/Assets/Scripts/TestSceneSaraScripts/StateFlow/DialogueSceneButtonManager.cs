@@ -5,23 +5,29 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
 
-public class ButtonManager : MonoBehaviour
+public class DialogueSceneButtonManager : MonoBehaviour
 {
     [Header("Ink JSON")]
-    [SerializeField] private TextAsset inkJSON;
+    [SerializeField] private TextAsset dialogue1;
+    [SerializeField] private TextAsset dialogue2;
 
     [Header("Buttons")]
     [SerializeField] private Button dialogueButton;
     [SerializeField] private Button inspectButton;
 
     [Header("Scenes")]
-    [SerializeField] private string inspectScene = "TestSceneSara";
+    [SerializeField] private string inspectScene = "TestInspectScene";
 
     private bool dialogueButtonActivated = false;
     private bool inspectButtonActivated = false;
 
     private void Start()
     {
+        string currentState = GameStateManager.GetInstance().GetState();
+
+        if (currentState == "dialogue2") {
+            inspectButton.interactable = false;
+        }
 
         // Attach a listener to the button
         dialogueButton.onClick.AddListener(OnDialogueButtonClick);
@@ -48,14 +54,37 @@ public class ButtonManager : MonoBehaviour
 
     private void Update() {
 
-        // if player presses button, trigger dialogue managment
-        if (dialogueButtonActivated && !DialogueManager.GetInstance().dialogueIsPlaying && !DialogueManager.GetInstance().dialogueIsFinished)
+        if (dialogueButtonActivated)
         {
-            DialogueManager.GetInstance().EnterDialogueMode(inkJSON);
-            dialogueButtonActivated = false;
-            EventSystem.current.SetSelectedGameObject(null);
+            // distinction between scenes:
+            string currentState = GameStateManager.GetInstance().GetState();
 
+            if (currentState == "dialogue1")
+            {
+
+                // if player presses button, trigger dialogue managment
+                if (!DialogueManager.GetInstance().dialogueIsPlaying && !DialogueManager.GetInstance().dialogueIsFinished)
+                {
+                    DialogueManager.GetInstance().EnterDialogueMode(dialogue1);
+                    dialogueButtonActivated = false;
+                    EventSystem.current.SetSelectedGameObject(null);
+
+                }
+
+            }
+            else if (currentState == "dialogue2")
+            {
+                if (!DialogueManager.GetInstance().dialogueIsPlaying && !DialogueManager.GetInstance().dialogueIsFinished)
+                {
+                    DialogueManager.GetInstance().EnterDialogueMode(dialogue2);
+                    dialogueButtonActivated = false;
+                    EventSystem.current.SetSelectedGameObject(null);
+
+                }
+            }
         }
+
+
 
         if (inspectButtonActivated && DialogueManager.GetInstance().dialogueIsFinished) {
 
@@ -71,8 +100,8 @@ public class ButtonManager : MonoBehaviour
             }
             else
             {
-                Debug.Log("don't know what to do now");
-                Debug.Log(currentState);
+                Debug.Log("We should currently be in the following state: " + currentState);
+                Debug.Log("At this point the client should leave");
             }
         }
 
