@@ -31,10 +31,28 @@ public class CameraUiTest : MonoBehaviour
 
             if (!viewingPhoto)
             {
-                StartCoroutine(CapturePhoto());
+                StartCoroutine(HandleFishingSequence());
+                //StartCoroutine(CapturePhoto());
             }
 
         }
+    }
+
+    private IEnumerator HandleFishingSequence()
+    {
+        viewingPhoto = true; // Prevent retriggering
+
+        FishingGame minigame = GameObject.Find("FishingGame").GetComponent<FishingGame>();
+        //minigame.gameObject.SetActive(true);
+
+        // Wait for the minigame to finish
+        yield return StartCoroutine(minigame.PlayFishingGame());
+
+        //minigame.gameObject.SetActive(false);
+
+        // Now take the photo
+        yield return StartCoroutine(CapturePhoto());
+
     }
 
     void OnMouseUp()
