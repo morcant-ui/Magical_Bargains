@@ -1,0 +1,39 @@
+{
+    "clients": [
+        {
+            "clientID": "client_01",
+            "clientColor": "#deeb34",
+            "objectID": "item_01",
+            "objectColor": "#deeb34",
+            "hasDefects": true
+        },
+        {
+            "clientID": "client_02",
+            "clientColor": "#86eb34",
+            "objectID": "item_02",
+            "objectColor": "#86eb34",
+            "hasDefects": false
+        },
+        {
+            "clientID": "client_03",
+            "clientColor": "#34ebe5",
+            "objectID": "item_03",
+            "objectColor": "#34ebe5",
+            "hasDefects": false
+        },
+        {
+            "clientID": "client_04",
+            "clientColor": "#343deb",
+            "objectID": "item_04",
+            "objectColor": "#343deb",
+            "hasDefects": true
+        },
+        {
+            "clientID": "client_05",
+            "clientColor": "#9834eb",
+            "objectID": "item_05",
+            "objectColor": "#9834eb",
+            "hasDefects": false
+        }
+    ]
+}

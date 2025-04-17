@@ -86,4 +86,9 @@ public class DialogueManager : MonoBehaviour
 
     }
 
+    public void Reset() {
+        dialogueIsPlaying = false;
+        dialogueIsFinished = false;
+    }
+
 }
