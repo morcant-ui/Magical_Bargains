@@ -1,21 +1,32 @@
+using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
-    public TextAsset levelDataJSON;
+    [Header("Game Data")]
+    [SerializeField] private TextAsset levelDataJSON;
 
-    public ClientSpawner clientSpawner;
-    public ArtifactSpawner artifactSpawner;
+    [Header("Assets Spawners")]
+    [SerializeField] private ClientSpawner clientSpawner;
+    [SerializeField] private ArtifactSpawner artifactSpawner;
 
-    public GameObject blackScreen;
+    [Header("Button Manager")]
+    [SerializeField] private TESTButtonManager buttonManager;
 
-    public TESTButtonManager buttonManager;
-    private bool processingClients = true; 
+    [Header("black screen UI")]
+    [SerializeField] private GameObject blackScreen;
 
-    private Queue<ClientData> clientQueue;
-    private ClientData currentClient;
+
+
+    private Queue<ClientData> clientQueue; // this queue will let us iterate thru game data
+    private ClientData currentClient; // index to keep track of current client/artifact
+
+    private string spritePathName = "Sprites";
+    private string dialoguePathName = "Dialogues";
+
+    private bool processingClients = true;
 
 
     void Start()
@@ -25,8 +36,10 @@ public class LevelManager : MonoBehaviour
         LoadNextClient();
     }
 
-    void Update() {
-        if (!processingClients) {
+    void Update()
+    {
+        if (!processingClients)
+        {
             blackScreen.SetActive(true);
         }
     }
@@ -40,10 +53,11 @@ public class LevelManager : MonoBehaviour
     public void LoadNextClient()
     {
 
-        if (currentClient != null) {
-            
+        if (currentClient != null)
+        {
+
             StartCoroutine(DestroyAfterDelay(0.5f));
-            
+
         }
 
         if (clientQueue.Count == 0)
@@ -57,17 +71,18 @@ public class LevelManager : MonoBehaviour
 
         string clientSpriteName = currentClient.clientSprite;
         string dialogueNameA = currentClient.dialogueA;
+
         Color objectColor = ParseColor(currentClient.objectColor);
-        
+
 
         ///// WARNING: THIS CURRENTLY ONLY WORKS BC OLD OBJ ARE DESTROYED BEFORE THE CALL
         ///// TO SPAWNERS: ideally we should wrap all those instructions inside another coroutine
         ///// and write "yield return StartCoroutine(DestroyAfterDelay(0.5f));
         /// (i think... not sure)
-        clientSpawner.SpawnClient(clientSpriteName);
+        clientSpawner.SpawnClient(Path.Combine(spritePathName, clientSpriteName));
         artifactSpawner.SpawnObject(objectColor, currentClient.hasDefects);
 
-        var dialogueA = Resources.Load<TextAsset>(dialogueNameA);
+        var dialogueA = Resources.Load<TextAsset>(Path.Combine(dialoguePathName, dialogueNameA));
         buttonManager.LoadDialogue(dialogueA);
     }
 
@@ -81,8 +96,8 @@ public class LevelManager : MonoBehaviour
     IEnumerator DestroyAfterDelay(float delay)
     {
         blackScreen.SetActive(true);
-        
-        
+
+
 
         GameObject[] oldObjects = GameObject.FindGameObjectsWithTag("currentClient");
 

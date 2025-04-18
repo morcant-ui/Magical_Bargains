@@ -180,6 +180,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f5c5c7b13049ac47ba19b32b060eebd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  activateBounds: 1
+  leftBoundX: -3
+  rightBoundX: 3
+  downBoundY: -1.8
+  upperBoundY: 1.8
 --- !u!212 &88700711
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -370,6 +375,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f5c5c7b13049ac47ba19b32b060eebd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  activateBounds: 0
+  leftBoundX: -3.5
+  rightBoundX: 3.5
+  downBoundY: -3.5
+  upperBoundY: 2.5
 --- !u!212 &117844831
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2618,6 +2628,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f5c5c7b13049ac47ba19b32b060eebd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  activateBounds: 0
+  leftBoundX: -3.5
+  rightBoundX: 3.5
+  downBoundY: -3.5
+  upperBoundY: 2.5
 --- !u!212 &1744643250
 SpriteRenderer:
   m_ObjectHideFlags: 0

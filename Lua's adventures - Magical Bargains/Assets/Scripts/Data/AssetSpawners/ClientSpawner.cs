@@ -19,11 +19,10 @@ public class ClientSpawner : MonoBehaviour
         clientPrefab.SetActive(false);
     }
 
-    public GameObject SpawnClient(string clientSpriteName)
+    public GameObject SpawnClient(string clientSpritePath)
     {
         Vector3 position = new Vector3(spawnPointX, spawnPointY, 0);
-        Debug.Log("CLIENT SPRITE: " + clientSpriteName);
-        Sprite sprite = Resources.Load<Sprite>(clientSpriteName);
+        Sprite sprite = Resources.Load<Sprite>(clientSpritePath);
 
         var obj = Instantiate(clientPrefab, position, Quaternion.identity);
         obj.GetComponent<SpriteRenderer>().sprite = sprite;
