@@ -39,7 +39,6 @@ public class LevelManager : MonoBehaviour
     {
 
         if (currentClient != null) {
-            Debug.Log("Helloo");
             
             StartCoroutine(DestroyAfterDelay(0.5f));
             
@@ -54,7 +53,8 @@ public class LevelManager : MonoBehaviour
 
         currentClient = clientQueue.Dequeue();
 
-        Color clientColor = ParseColor(currentClient.clientColor);
+        string clientSpriteName = currentClient.clientSprite;
+        string dialogueNameA = currentClient.dialogueA;
         Color objectColor = ParseColor(currentClient.objectColor);
         
 
@@ -62,10 +62,10 @@ public class LevelManager : MonoBehaviour
         ///// TO SPAWNERS: ideally we should wrap all those instructions inside another coroutine
         ///// and write "yield return StartCoroutine(DestroyAfterDelay(0.5f));
         /// (i think... not sure)
-        clientSpawner.SpawnClient(clientColor);
+        clientSpawner.SpawnClient(clientSpriteName);
         artifactSpawner.SpawnObject(objectColor, currentClient.hasDefects);
 
-        
+        // var dialogue = Resources.Load<TextAsset>(dialogueNameA);
     }
 
     Color ParseColor(string hex)

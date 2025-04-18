@@ -19,11 +19,14 @@ public class ClientSpawner : MonoBehaviour
         clientPrefab.SetActive(false);
     }
 
-    public GameObject SpawnClient(Color clientColor)
+    public GameObject SpawnClient(string clientSpriteName)
     {
         Vector3 position = new Vector3(spawnPointX, spawnPointY, 0);
+        Debug.Log("CLIENT SPRITE: " + clientSpriteName);
+        Sprite sprite = Resources.Load<Sprite>(clientSpriteName);
+
         var obj = Instantiate(clientPrefab, position, Quaternion.identity);
-        obj.GetComponent<SpriteRenderer>().color = clientColor;
+        obj.GetComponent<SpriteRenderer>().sprite = sprite;
         obj.tag = "currentClient";
         obj.transform.SetParent(spawnContainer.transform);
 

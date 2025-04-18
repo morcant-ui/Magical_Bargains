@@ -692,7 +692,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93074c733441e1442a4b1bcb3e7eb343, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelDataJSON: {fileID: 4900000, guid: fbcffa37bc5a06849ba9b1fad824f911, type: 3}
+  levelDataJSON: {fileID: 4900000, guid: b0cb1760c1d6c6f4aa495fe4948efa17, type: 3}
   clientSpawner: {fileID: 590828403}
   artifactSpawner: {fileID: 279820208}
   blackScreen: {fileID: 1979985655}
@@ -1830,9 +1830,25 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 987569494087899134, guid: b1d4092935a617140b107e2f838f24df, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 987569494087899134, guid: b1d4092935a617140b107e2f838f24df, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 987569494087899134, guid: b1d4092935a617140b107e2f838f24df, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 987569494087899135, guid: b1d4092935a617140b107e2f838f24df, type: 3}
       propertyPath: m_RootOrder
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 987569494087899135, guid: b1d4092935a617140b107e2f838f24df, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 987569494087899135, guid: b1d4092935a617140b107e2f838f24df, type: 3}
       propertyPath: m_LocalPosition.x

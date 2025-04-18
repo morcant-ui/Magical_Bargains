@@ -6,9 +6,10 @@ using UnityEngine;
 public class ClientData
 {
     public string clientID;
-    public string clientColor; // store as hex, convert to Color
+    public string clientSprite;
+    public string dialogueA;
     public string objectID;
-    public string objectColor;
+    public string objectColor; // store as hex, convert to Color
     public bool hasDefects;
 }
 

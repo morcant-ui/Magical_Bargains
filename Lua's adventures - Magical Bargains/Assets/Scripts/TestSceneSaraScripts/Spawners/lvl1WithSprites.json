@@ -1,0 +1,36 @@
+{
+    "clients": [
+        {
+            "clientID": "client_01",
+            "clientSprite": "client1",
+            "dialogueA":"dia1a",
+            "objectID": "item_01",
+            "objectColor": "#deeb34",
+            "hasDefects": true
+        },
+        {
+            "clientID": "client_02",
+            "clientSprite": "client2",
+            "dialogueA":"dia2a",
+            "objectID": "item_02",
+            "objectColor": "#86eb34",
+            "hasDefects": true
+        },
+        {
+            "clientID": "client_03",
+            "clientSprite": "client3",
+            "dialogueA":"dia3a",
+            "objectID": "item_03",
+            "objectColor": "#34ebe5",
+            "hasDefects": false
+        },
+        {
+            "clientID": "client_04",
+            "clientSprite": "client4",
+            "dialogueA":"dia4a",
+            "objectID": "item_04",
+            "objectColor": "#343deb",
+            "hasDefects": true
+        }
+    ]
+}
