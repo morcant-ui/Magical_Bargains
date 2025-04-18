@@ -7,21 +7,28 @@ using UnityEngine.SceneManagement;
 public class MenuButtonManager : MonoBehaviour
 {
     [Header("Buttons")]
-    [SerializeField] private Button startButton;
+    [SerializeField] private Button dialogueSceneButton;
+    [SerializeField] private Button tentativeSceneButton;
 
     [Header("Scenes")]
-    [SerializeField] private string firstScene = "TestDialogueMode";
+    [SerializeField] private string dialogueScene = "TestDialogueMode";
+    [SerializeField] private string tentativeScene = "tentative";
 
 
 
     private void Start() {
 
-        startButton.onClick.AddListener(OnStartButtonClick);
+        dialogueSceneButton.onClick.AddListener(OnDialogueSceneButtonClick);
+        tentativeSceneButton.onClick.AddListener(OnTentativeSceneButtonClick);
     }
 
 
-    public void OnStartButtonClick() {
+    public void OnDialogueSceneButtonClick() {
 
-        SceneManager.LoadScene(firstScene);
+        SceneManager.LoadScene(dialogueScene);
+    }
+
+    public void OnTentativeSceneButtonClick() {
+        SceneManager.LoadScene(tentativeScene);
     }
 }

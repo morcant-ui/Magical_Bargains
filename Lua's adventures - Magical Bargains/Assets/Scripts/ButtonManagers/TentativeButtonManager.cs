@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
 using TMPro;
 
-public class TESTButtonManager : MonoBehaviour
+public class TentativeButtonManager : MonoBehaviour
 {
 
     private TextAsset dialogueIntro;

@@ -2,6 +2,7 @@ using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
@@ -13,7 +14,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private ArtifactSpawner artifactSpawner;
 
     [Header("Button Manager")]
-    [SerializeField] private TESTButtonManager buttonManager;
+    [SerializeField] private TentativeButtonManager buttonManager;
 
     [Header("black screen UI")]
     [SerializeField] private GameObject blackScreen;
@@ -41,6 +42,7 @@ public class LevelManager : MonoBehaviour
         if (!processingClients)
         {
             blackScreen.SetActive(true);
+            StartCoroutine(GoBackToMenuAfterDelay(0.5f));
         }
     }
 
@@ -113,6 +115,14 @@ public class LevelManager : MonoBehaviour
         {
             blackScreen.SetActive(false);
         }
+    }
+
+    IEnumerator GoBackToMenuAfterDelay(float delay)
+    {
+        
+        yield return new WaitForSeconds(delay);
+
+        SceneManager.LoadScene("SimpleMenu");
     }
 }
 
