@@ -10,7 +10,9 @@ public class LevelManager : MonoBehaviour
     public ArtifactSpawner artifactSpawner;
 
     public GameObject blackScreen;
-    private bool finished;
+
+    public TESTButtonManager buttonManager;
+    private bool processingClients = true; 
 
     private Queue<ClientData> clientQueue;
     private ClientData currentClient;
@@ -24,7 +26,7 @@ public class LevelManager : MonoBehaviour
     }
 
     void Update() {
-        if (finished) {
+        if (!processingClients) {
             blackScreen.SetActive(true);
         }
     }
@@ -47,7 +49,7 @@ public class LevelManager : MonoBehaviour
         if (clientQueue.Count == 0)
         {
             Debug.Log("All clients processed.");
-            finished = true;
+            processingClients = false;
             return;
         }
 
@@ -65,7 +67,8 @@ public class LevelManager : MonoBehaviour
         clientSpawner.SpawnClient(clientSpriteName);
         artifactSpawner.SpawnObject(objectColor, currentClient.hasDefects);
 
-        // var dialogue = Resources.Load<TextAsset>(dialogueNameA);
+        var dialogueA = Resources.Load<TextAsset>(dialogueNameA);
+        buttonManager.LoadDialogue(dialogueA);
     }
 
     Color ParseColor(string hex)
@@ -89,8 +92,12 @@ public class LevelManager : MonoBehaviour
         }
         yield return new WaitForSeconds(delay);
 
-        
-        blackScreen.SetActive(false);
+
+        // ugly repeating of code but whatever: its to prevent blackscreen to oscillate
+        if (clientQueue.Count != 0 || processingClients)
+        {
+            blackScreen.SetActive(false);
+        }
     }
 }
 

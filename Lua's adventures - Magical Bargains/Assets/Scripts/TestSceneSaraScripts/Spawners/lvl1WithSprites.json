@@ -31,6 +31,14 @@
             "objectID": "item_04",
             "objectColor": "#343deb",
             "hasDefects": true
+        },
+        {
+            "clientID": "client_05",
+            "clientSprite": "client5",
+            "dialogueA":"dia5a",
+            "objectID": "item_05",
+            "objectColor": "#9834eb",
+            "hasDefects": true
         }
     ]
 }

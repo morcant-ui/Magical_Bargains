@@ -245,8 +245,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31f29bd5d7dde5f44b7ba59e94e896d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogueIntro: {fileID: 4900000, guid: a0700c661cd2b4f4bb2cb8cb77ed85ca, type: 3}
-  dialogueOutro: {fileID: 4900000, guid: 54875af4bd146de4d816f3cc56d1e6bf, type: 3}
   startButton: {fileID: 1327271305}
   nextButton: {fileID: 1758524287}
   levelManager: {fileID: 830348782}
@@ -260,7 +258,6 @@ GameObject:
   m_Component:
   - component: {fileID: 216603555}
   - component: {fileID: 216603557}
-  - component: {fileID: 216603558}
   - component: {fileID: 216603556}
   m_Layer: 5
   m_Name: Text (TMP)
@@ -386,21 +383,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 216603554}
   m_CullTransparentMesh: 1
---- !u!114 &216603558
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 216603554}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd905ccf3c9ae5b46ba8aa4261d653e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  inputField: {fileID: 216603556}
-  text1: Inspect mode
-  text2: Leave
 --- !u!1 &279820206
 GameObject:
   m_ObjectHideFlags: 0
@@ -696,6 +678,7 @@ MonoBehaviour:
   clientSpawner: {fileID: 590828403}
   artifactSpawner: {fileID: 279820208}
   blackScreen: {fileID: 1979985655}
+  buttonManager: {fileID: 200059855}
 --- !u!1 &904900071
 GameObject:
   m_ObjectHideFlags: 0
@@ -1852,7 +1835,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 987569494087899135, guid: b1d4092935a617140b107e2f838f24df, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -6
+      value: -5.5
       objectReference: {fileID: 0}
     - target: {fileID: 987569494087899135, guid: b1d4092935a617140b107e2f838f24df, type: 3}
       propertyPath: m_LocalPosition.y

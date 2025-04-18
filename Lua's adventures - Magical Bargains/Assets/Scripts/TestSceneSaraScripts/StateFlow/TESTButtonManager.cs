@@ -9,8 +9,8 @@ using TMPro;
 public class TESTButtonManager : MonoBehaviour
 {
 
-    [SerializeField] private TextAsset dialogueIntro;
-    [SerializeField] private TextAsset dialogueOutro;
+    private TextAsset dialogueIntro;
+    private TextAsset dialogueOutro;
 
     [Header("Buttons")]
     [SerializeField] private Button startButton;
@@ -35,6 +35,12 @@ public class TESTButtonManager : MonoBehaviour
         nextButton.onClick.AddListener(OnNextButtonClick);
     }
 
+    public void LoadDialogue(TextAsset dialogueA) {
+
+        dialogueIntro = dialogueA;
+        startButton.interactable = true;
+        
+    }
 
     public void OnStartButtonClick()
     {
@@ -101,7 +107,12 @@ public class TESTButtonManager : MonoBehaviour
 
         if (!DialogueManager.GetInstance().dialogueIsFinished)
         {
-            startButton.interactable = true;
+            if (dialogueIntro != null) {
+                startButton.interactable = true;
+            } else {
+                startButton.interactable = false;
+            }
+            
             nextButton.interactable = false;
         }
         else
