@@ -19,7 +19,7 @@ public class ArtifactSpawner : MonoBehaviour
         objectPrefab.SetActive(false);
     }
 
-    public GameObject SpawnObject(string artifactSpritePath, bool hasDefects) {
+    public GameObject SpawnObject(string artifactSpritePath) {
 
         Vector3 position = new Vector3(spawnPointX, spawnPointY, 0);
         Sprite sprite = Resources.Load<Sprite>(artifactSpritePath);
@@ -37,11 +37,6 @@ public class ArtifactSpawner : MonoBehaviour
         obj.transform.SetParent(spawnContainer.transform);
 
         obj.SetActive(true);
-
-        if (hasDefects) {
-            // maybe add a defect overlay or blinking animation
-            Debug.Log("Defective item spawned.");
-        }
 
         return obj;
     }

@@ -11,7 +11,7 @@ public class ClientData
     public string dialogueB;
     public string artifactID;
     public string artifactSprite; // store as hex, convert to Color
-    public bool hasDefects;
+    public bool isMagnifierDefective;
 }
 
 [System.Serializable]

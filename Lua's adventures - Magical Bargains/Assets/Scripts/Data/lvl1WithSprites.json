@@ -7,7 +7,8 @@
             "dialogueB":"dia1b",
             "artifactID": "item_01",
             "artifactSprite": "artifact1",
-            "hasDefects": true
+            "isMagnifierDefective": true,
+            "magnifierSprite":"item_01_defective"
         },
         {
             "clientID": "client_02",
@@ -15,8 +16,7 @@
             "dialogueA":"dia2a",
             "dialogueB":"dia2b",
             "artifactID": "item_02",
-            "artifactSprite": "artifact2",
-            "hasDefects": true
+            "artifactSprite": "artifact2"
         },
         {
             "clientID": "client_03",
@@ -24,8 +24,7 @@
             "dialogueA":"dia3a",
             "dialogueB":"dia3b",
             "artifactID": "item_03",
-            "artifactSprite": "artifact3",
-            "hasDefects": false
+            "artifactSprite": "artifact3"
         },
         {
             "clientID": "client_04",
@@ -33,8 +32,7 @@
             "dialogueA":"dia4a",
             "dialogueB":"dia4b",
             "artifactID": "item_04",
-            "artifactSprite": "artifact1",
-            "hasDefects": true
+            "artifactSprite": "artifact1"
         },
         {
             "clientID": "client_05",
@@ -42,8 +40,7 @@
             "dialogueA":"dia5a",
             "dialogueB":"dia5b",
             "artifactID": "item_05",
-            "artifactSprite": "artifact3",
-            "hasDefects": true
+            "artifactSprite": "artifact3"
         }
     ]
 }
