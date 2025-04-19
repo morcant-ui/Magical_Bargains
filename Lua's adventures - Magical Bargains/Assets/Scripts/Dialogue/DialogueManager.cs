@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using Ink.Runtime;
+using UnityEngine.UI;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class DialogueManager : MonoBehaviour
 
     [SerializeField] private GameObject dialoguePanel;
     [SerializeField] private TextMeshProUGUI dialogueText;
+
 
 
     private Story currentStory;
@@ -27,22 +29,29 @@ public class DialogueManager : MonoBehaviour
     private static DialogueManager instance;
 
     private void Awake() {
-        if (instance != null) {
-            Debug.LogWarning("Found more than one Dialogue Manager !");
+        if (instance != null && instance != this)
+        {
+            Debug.Log("what's up with this ?");
+            Destroy(this.gameObject); // kill extra copies
+
         }
-        instance = this;
+        else
+        {
+
+            instance = this;
+            DontDestroyOnLoad(this.gameObject); // keep across scenes
+        }
+
+
+        dialogueIsPlaying = false;
+        dialogueIsFinished = false;
+        dialoguePanel.SetActive(false);
     }
 
     public static DialogueManager GetInstance() {
         return instance;
     }
 
-    private void Start() {
-        dialogueIsPlaying = false;
-        dialogueIsFinished = false;
-
-        dialoguePanel.SetActive(false);
-    }
 
     private void Update() {
         if (!dialogueIsPlaying) {
