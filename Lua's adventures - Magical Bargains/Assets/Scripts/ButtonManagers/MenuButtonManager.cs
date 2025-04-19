@@ -9,10 +9,12 @@ public class MenuButtonManager : MonoBehaviour
     [Header("Buttons")]
     [SerializeField] private Button dialogueSceneButton;
     [SerializeField] private Button tentativeSceneButton;
+    [SerializeField] private Button properSceneButton;
 
     [Header("Scenes")]
     [SerializeField] private string dialogueScene = "TestDialogueMode";
     [SerializeField] private string tentativeScene = "tentative";
+    [SerializeField] private string properScene = "ProperScene";
 
 
 
@@ -20,6 +22,7 @@ public class MenuButtonManager : MonoBehaviour
 
         dialogueSceneButton.onClick.AddListener(OnDialogueSceneButtonClick);
         tentativeSceneButton.onClick.AddListener(OnTentativeSceneButtonClick);
+        properSceneButton.onClick.AddListener(OnProperSceneButtonClick);
     }
 
 
@@ -30,5 +33,10 @@ public class MenuButtonManager : MonoBehaviour
 
     public void OnTentativeSceneButtonClick() {
         SceneManager.LoadScene(tentativeScene);
+    }
+
+    public void OnProperSceneButtonClick()
+    {
+        SceneManager.LoadScene(properScene);
     }
 }

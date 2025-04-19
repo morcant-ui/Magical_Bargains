@@ -52,7 +52,7 @@ public class TentativeButtonManager : MonoBehaviour
 
     public void OnNextButtonClick()
     {
-        if (!nextButtonActivated && DialogueManager.GetInstance().dialogueIsFinished)
+        if (!nextButtonActivated && CopieDialogueManager.GetInstance().dialogueIsFinished)
         {
             nextButtonActivated = true;
         }
@@ -68,9 +68,9 @@ public class TentativeButtonManager : MonoBehaviour
 
 
             // if player presses button, trigger dialogue managment
-            if (!DialogueManager.GetInstance().dialogueIsPlaying && !DialogueManager.GetInstance().dialogueIsFinished)
+            if (!CopieDialogueManager.GetInstance().dialogueIsPlaying && !CopieDialogueManager.GetInstance().dialogueIsFinished)
             {
-                DialogueManager.GetInstance().EnterDialogueMode(dialogueIntro);
+                CopieDialogueManager.GetInstance().EnterDialogueMode(dialogueIntro);
                 startButtonActivated = false;
                 EventSystem.current.SetSelectedGameObject(null);
 
@@ -81,7 +81,7 @@ public class TentativeButtonManager : MonoBehaviour
 
 
 
-        if (nextButtonActivated && DialogueManager.GetInstance().dialogueIsFinished)
+        if (nextButtonActivated && CopieDialogueManager.GetInstance().dialogueIsFinished)
         {
 
 
@@ -91,7 +91,7 @@ public class TentativeButtonManager : MonoBehaviour
             levelManager.LoadNextClient();
             EventSystem.current.SetSelectedGameObject(null);
 
-            DialogueManager.GetInstance().Reset();
+            CopieDialogueManager.GetInstance().Reset();
 
 
             // should be receiving event info from level manager for when the queue is empty ?
@@ -105,7 +105,7 @@ public class TentativeButtonManager : MonoBehaviour
 
         }
 
-        if (!DialogueManager.GetInstance().dialogueIsFinished)
+        if (!CopieDialogueManager.GetInstance().dialogueIsFinished)
         {
             if (dialogueIntro != null) {
                 startButton.interactable = true;

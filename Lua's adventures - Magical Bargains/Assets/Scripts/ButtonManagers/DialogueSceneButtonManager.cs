@@ -45,7 +45,7 @@ public class DialogueSceneButtonManager : MonoBehaviour
 
     public void OnInspectButtonClick()
     {
-        if (!inspectButtonActivated && DialogueManager.GetInstance().dialogueIsFinished)
+        if (!inspectButtonActivated && Copie2DialogueManager.GetInstance().dialogueIsFinished)
         {
             inspectButtonActivated = true;
         }
@@ -63,9 +63,9 @@ public class DialogueSceneButtonManager : MonoBehaviour
             {
 
                 // if player presses button, trigger dialogue managment
-                if (!DialogueManager.GetInstance().dialogueIsPlaying && !DialogueManager.GetInstance().dialogueIsFinished)
+                if (!Copie2DialogueManager.GetInstance().dialogueIsPlaying && !Copie2DialogueManager.GetInstance().dialogueIsFinished)
                 {
-                    DialogueManager.GetInstance().EnterDialogueMode(dialogue1);
+                    Copie2DialogueManager.GetInstance().EnterDialogueMode(dialogue1);
                     dialogueButtonActivated = false;
                     EventSystem.current.SetSelectedGameObject(null);
 
@@ -74,9 +74,9 @@ public class DialogueSceneButtonManager : MonoBehaviour
             }
             else if (currentState == "dialogue2")
             {
-                if (!DialogueManager.GetInstance().dialogueIsPlaying && !DialogueManager.GetInstance().dialogueIsFinished)
+                if (!Copie2DialogueManager.GetInstance().dialogueIsPlaying && !Copie2DialogueManager.GetInstance().dialogueIsFinished)
                 {
-                    DialogueManager.GetInstance().EnterDialogueMode(dialogue2);
+                    Copie2DialogueManager.GetInstance().EnterDialogueMode(dialogue2);
                     dialogueButtonActivated = false;
                     EventSystem.current.SetSelectedGameObject(null);
 
@@ -86,7 +86,7 @@ public class DialogueSceneButtonManager : MonoBehaviour
 
 
 
-        if (inspectButtonActivated && DialogueManager.GetInstance().dialogueIsFinished) {
+        if (inspectButtonActivated && Copie2DialogueManager.GetInstance().dialogueIsFinished) {
 
             string currentState = GameStateManager.GetInstance().GetState();
 
@@ -109,7 +109,7 @@ public class DialogueSceneButtonManager : MonoBehaviour
             }
         }
 
-        if (!DialogueManager.GetInstance().dialogueIsFinished)
+        if (!Copie2DialogueManager.GetInstance().dialogueIsFinished)
         {
             dialogueButton.interactable = true;
             inspectButton.interactable = false;

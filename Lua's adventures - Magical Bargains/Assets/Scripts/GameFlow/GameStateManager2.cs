@@ -25,7 +25,6 @@ public class GameStateManager2 : MonoBehaviour
         {
 
             instance = this;
-            DontDestroyOnLoad(this.gameObject); // keep across scenes
         }
 
         

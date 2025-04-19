@@ -5,7 +5,7 @@ using TMPro;
 using Ink.Runtime;
 using UnityEngine.UI;
 
-public class DialogueManager : MonoBehaviour
+public class CopieDialogueManager : MonoBehaviour
 {
 
     // "manage and display the dialogue that's written to the UI"
@@ -26,7 +26,7 @@ public class DialogueManager : MonoBehaviour
     
 
 
-    private static DialogueManager instance;
+    private static CopieDialogueManager instance;
 
     private void Awake() {
         if (instance != null && instance != this)
@@ -47,7 +47,7 @@ public class DialogueManager : MonoBehaviour
         dialoguePanel.SetActive(false);
     }
 
-    public static DialogueManager GetInstance() {
+    public static CopieDialogueManager GetInstance() {
         return instance;
     }
 
