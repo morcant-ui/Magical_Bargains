@@ -107,6 +107,15 @@ public class LevelManager : MonoBehaviour
         {
             Destroy(obj);
         }
+
+        GameObject[] oldObjects2 = GameObject.FindGameObjectsWithTag("currentArtifact");
+
+        foreach (GameObject obj in oldObjects2)
+        {
+            Destroy(obj);
+        }
+
+
         yield return new WaitForSeconds(delay);
 
 
