@@ -8,8 +8,9 @@ public class ClientData
     public string clientID;
     public string clientSprite;
     public string dialogueA;
-    public string objectID;
-    public string objectColor; // store as hex, convert to Color
+    public string dialogueB;
+    public string artifactID;
+    public string artifactSprite; // store as hex, convert to Color
     public bool hasDefects;
 }
 

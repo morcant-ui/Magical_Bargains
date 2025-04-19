@@ -4,40 +4,45 @@
             "clientID": "client_01",
             "clientSprite": "client1",
             "dialogueA":"dia1a",
-            "objectID": "item_01",
-            "objectColor": "#deeb34",
+            "dialogueB":"dia1b",
+            "artifactID": "item_01",
+            "artifactSprite": "artifact1",
             "hasDefects": true
         },
         {
             "clientID": "client_02",
             "clientSprite": "client2",
             "dialogueA":"dia2a",
-            "objectID": "item_02",
-            "objectColor": "#86eb34",
+            "dialogueB":"dia2b",
+            "artifactID": "item_02",
+            "artifactSprite": "artifact2",
             "hasDefects": true
         },
         {
             "clientID": "client_03",
             "clientSprite": "client3",
             "dialogueA":"dia3a",
-            "objectID": "item_03",
-            "objectColor": "#34ebe5",
+            "dialogueB":"dia3b",
+            "artifactID": "item_03",
+            "artifactSprite": "artifact3",
             "hasDefects": false
         },
         {
             "clientID": "client_04",
             "clientSprite": "client4",
             "dialogueA":"dia4a",
-            "objectID": "item_04",
-            "objectColor": "#343deb",
+            "dialogueB":"dia4b",
+            "artifactID": "item_04",
+            "artifactSprite": "artifact1",
             "hasDefects": true
         },
         {
             "clientID": "client_05",
             "clientSprite": "client5",
             "dialogueA":"dia5a",
-            "objectID": "item_05",
-            "objectColor": "#9834eb",
+            "dialogueB":"dia5b",
+            "artifactID": "item_05",
+            "artifactSprite": "artifact3",
             "hasDefects": true
         }
     ]

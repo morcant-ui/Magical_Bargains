@@ -15,8 +15,9 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI dialogueText;
 
 
-
     private Story currentStory;
+
+    private string inputKey = "space";
 
     public bool dialogueIsPlaying { get; private set; }
     public bool dialogueIsFinished { get; private set; }
@@ -48,7 +49,7 @@ public class DialogueManager : MonoBehaviour
             return;
         }
 
-        if (dialogueIsPlaying && Input.GetKeyDown("space")) {
+        if (dialogueIsPlaying && Input.GetKeyDown(inputKey)) {
             ContinueStory();
         }
     }

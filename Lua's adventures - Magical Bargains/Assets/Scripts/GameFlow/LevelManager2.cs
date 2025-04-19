@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class LevelManager : MonoBehaviour
+public class LevelManager2 : MonoBehaviour
 {
     [Header("Game Data")]
     [SerializeField] private TextAsset levelDataJSON;
@@ -12,9 +12,6 @@ public class LevelManager : MonoBehaviour
     [Header("Assets Spawners")]
     [SerializeField] private ClientSpawner clientSpawner;
     [SerializeField] private ArtifactSpawner artifactSpawner;
-
-    [Header("Button Manager")]
-    [SerializeField] private TentativeButtonManager buttonManager;
 
     [Header("black screen UI")]
     [SerializeField] private GameObject blackScreen;
@@ -24,8 +21,17 @@ public class LevelManager : MonoBehaviour
     private Queue<ClientData> clientQueue; // this queue will let us iterate thru game data
     private ClientData currentClient; // index to keep track of current client/artifact
 
+    private TextAsset dialogueA;
+    private TextAsset dialogueB;
+
+    private string artifactSpriteName;
+    private bool hadDefects;
+
     private string spritePathName = "Sprites";
-    private string dialoguePathName = "Dialogues/dialogueA";
+    private string dialogueAPathName = "Dialogues/dialogueA";
+    private string dialogueBPathName = "Dialogues/dialogueB";
+
+    private string menuScene = "SimpleMenu";
 
     private bool processingClients = true;
 
@@ -35,6 +41,7 @@ public class LevelManager : MonoBehaviour
         blackScreen.SetActive(false);
         LoadLevelData();
         LoadNextClient();
+        //GameStateManager.GetInstance().LoadIntroState();
     }
 
     void Update()
@@ -55,13 +62,13 @@ public class LevelManager : MonoBehaviour
     public void LoadNextClient()
     {
 
+        // after every processed client we destroy them and reset dialogueManager
         if (currentClient != null)
         {
-
             StartCoroutine(DestroyAfterDelay(0.5f));
-
         }
 
+        // we now check the queue (not dependent on coroutine above): if empty we'll put up a black screen
         if (clientQueue.Count == 0)
         {
             Debug.Log("All clients processed.");
@@ -69,60 +76,110 @@ public class LevelManager : MonoBehaviour
             return;
         }
 
+        // if not done: pop the queue
         currentClient = clientQueue.Dequeue();
 
+        // retreive necessary information from game data
         string clientSpriteName = currentClient.clientSprite;
         string dialogueNameA = currentClient.dialogueA;
 
-        string artifactSpriteName = currentClient.artifactSprite;
 
 
+        
+
+        
+
+
+
+        //Color objectColor = ParseColor(currentClient.objectColor);
+
+        // now we call the client and artifact spawner feeding them necessary information
         ///// WARNING: THIS CURRENTLY ONLY WORKS BC OLD OBJ ARE DESTROYED BEFORE THE CALL
         ///// TO SPAWNERS: ideally we should wrap all those instructions inside another coroutine
         ///// and write "yield return StartCoroutine(DestroyAfterDelay(0.5f));
         /// (i think... not sure)
+
         clientSpawner.SpawnClient(Path.Combine(spritePathName, clientSpriteName));
-        artifactSpawner.SpawnObject(Path.Combine(spritePathName, artifactSpriteName), currentClient.hasDefects);
+        
 
-        var dialogueA = Resources.Load<TextAsset>(Path.Combine(dialoguePathName, dialogueNameA));
-        buttonManager.LoadDialogue(dialogueA);
+        // retrieve the dialogue from Resources
+        dialogueA = Resources.Load<TextAsset>(Path.Combine(dialogueAPathName, dialogueNameA));
+
+        // now we have a new client on our hand, we should load the new Dialogue
+        DialogueManager.GetInstance().EnterDialogueMode(dialogueA); // dia not playing and dia not finished
     }
 
-    Color ParseColor(string hex)
+    public void CreateArtifact() {
+
+        string artifactSpriteName = currentClient.artifactSprite;
+        bool hasDefects = currentClient.hasDefects;
+
+        artifactSpawner.SpawnObject(Path.Combine(spritePathName, artifactSpriteName), hasDefects);
+    }
+
+    public void PrepareBargainState()
     {
-        ColorUtility.TryParseHtmlString(hex, out var color);
-        return color;
+        // Destroy Artifact
+        GameObject[] oldObjects = GameObject.FindGameObjectsWithTag("currentArtifact");
+
+        foreach (GameObject obj in oldObjects)
+        {
+            Destroy(obj);
+        }
+
+
+        // Load Dialogue B
+        string dialogueNameB = currentClient.dialogueB;
+        TextAsset dialogueB = Resources.Load<TextAsset>(Path.Combine(dialogueBPathName, dialogueNameB));
+
+        DialogueManager.GetInstance().EnterDialogueMode(dialogueB);
     }
 
-
+    // destroy a client and artifact
     IEnumerator DestroyAfterDelay(float delay)
     {
+
         blackScreen.SetActive(true);
 
-
-
+        // to destroy them i use the "delete all object with tag" strategy
         GameObject[] oldObjects = GameObject.FindGameObjectsWithTag("currentClient");
 
         foreach (GameObject obj in oldObjects)
         {
             Destroy(obj);
         }
+
+        // wait for a few seconds: could use this time for animation maybe instead of blackscreen
         yield return new WaitForSeconds(delay);
 
 
-        // ugly repeating of code but whatever: its to prevent blackscreen to oscillate
+        // ugly repeating of code but whatever: its to prevent blackscreen to oscillate at the very end
         if (clientQueue.Count != 0 || processingClients)
         {
             blackScreen.SetActive(false);
         }
     }
 
+    // once client queue is done: blackscreen for a few seconds then go back to menu
     IEnumerator GoBackToMenuAfterDelay(float delay)
     {
         
         yield return new WaitForSeconds(delay);
 
-        SceneManager.LoadScene("SimpleMenu");
+        SceneManager.LoadScene(menuScene);
+    }
+
+
+
+
+
+
+
+    // helper function to get color from game data
+    Color ParseColor(string hex)
+    {
+        ColorUtility.TryParseHtmlString(hex, out var color);
+        return color;
     }
 }
 

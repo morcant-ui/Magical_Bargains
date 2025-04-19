@@ -14,17 +14,26 @@ public class ArtifactSpawner : MonoBehaviour
     [SerializeField] private GameObject spawnContainer;
 
 
+
     private void Awake() {
         objectPrefab.SetActive(false);
     }
 
-    public GameObject SpawnObject(Color objectColor, bool hasDefects) {
+    public GameObject SpawnObject(string artifactSpritePath, bool hasDefects) {
 
         Vector3 position = new Vector3(spawnPointX, spawnPointY, 0);
+        Sprite sprite = Resources.Load<Sprite>(artifactSpritePath);
+
         var obj = Instantiate(objectPrefab, position, Quaternion.identity);
         var sr = obj.GetComponent<SpriteRenderer>();
-        sr.color = objectColor;
-        obj.tag = "currentClient";
+        sr.sprite = sprite;
+
+        // adapt bounding box
+        Vector2 S = sr.sprite.bounds.size;
+        obj.GetComponent<BoxCollider2D>().size = S;
+        //obj.GetComponent<BoxCollider2D>().offset = new Vector2((S.x / 2), 0);
+
+        obj.tag = "currentArtifact";
         obj.transform.SetParent(spawnContainer.transform);
 
         obj.SetActive(true);
