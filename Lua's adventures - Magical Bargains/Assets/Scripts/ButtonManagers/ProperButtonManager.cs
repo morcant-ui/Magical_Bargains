@@ -7,10 +7,17 @@ using UnityEngine.EventSystems;
 public class ProperButtonManager : MonoBehaviour
 {
 
-    [Header("Buttons")]
+    [Header("State Buttons")]
     [SerializeField] private Button inspectButton;
     [SerializeField] private Button bargainButton;
     [SerializeField] private Button introButton;
+
+    [Header("Tools Buttons")]
+    [SerializeField] private Button magnifierButton;
+    [SerializeField] private GameObject magnifier;
+
+    private bool magnifierButtonActivated = false;
+
 
 
 
@@ -29,6 +36,9 @@ public class ProperButtonManager : MonoBehaviour
         inspectButton.onClick.AddListener(OnInspectButtonClick);
         bargainButton.onClick.AddListener(OnBargainButtonClick);
         introButton.onClick.AddListener(OnIntroButtonClick);
+
+        magnifierButton.onClick.AddListener(OnMagnifierButtonClick);
+        magnifier.SetActive(false);
 
     }
 
@@ -56,6 +66,24 @@ public class ProperButtonManager : MonoBehaviour
         }
     }
 
+
+    public void OnMagnifierButtonClick()
+    {
+        if (magnifierButtonActivated)
+        {
+
+            magnifier.SetActive(false);
+            magnifierButtonActivated = false;
+        }
+        else
+        {
+
+            magnifier.SetActive(true);
+            magnifierButtonActivated = true;
+        }
+        EventSystem.current.SetSelectedGameObject(null);
+    }
+
     void Update() {
 
         string currentState = GameStateManager2.GetInstance().GetState();
@@ -63,6 +91,8 @@ public class ProperButtonManager : MonoBehaviour
         bool isInspectActive = false;
         bool isBargainActive = false;
         bool isIntroActive = false;
+
+        bool isToolsActive = false;
 
         // if state is intro and dialogue is finished -> show inspect button
         if (currentState == "intro" && DialogueManager.GetInstance().dialogueIsFinished)
@@ -74,6 +104,7 @@ public class ProperButtonManager : MonoBehaviour
         if (currentState == "inspect") 
         {
             isBargainActive = true;
+            isToolsActive = true;
         }
 
         if (currentState == "bargain" && DialogueManager.GetInstance().dialogueIsFinished)
@@ -89,6 +120,9 @@ public class ProperButtonManager : MonoBehaviour
 
         introButton.gameObject.SetActive(isIntroActive);
         introButton.interactable = isIntroActive;
+
+        magnifierButton.gameObject.SetActive(isToolsActive);
+        magnifierButton.interactable = isToolsActive;
 
     }
 }
