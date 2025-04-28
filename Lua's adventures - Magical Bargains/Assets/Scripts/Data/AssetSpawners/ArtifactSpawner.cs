@@ -15,7 +15,8 @@ public class ArtifactSpawner : MonoBehaviour
     [SerializeField] private GameObject spawnContainer;
 
     private string spritePathName = "Sprites";
-    private int hiddenLayer = 3;
+    private int magnifierLayer = 6;
+    private int cameraLayer = 7;
 
 
 
@@ -23,7 +24,7 @@ public class ArtifactSpawner : MonoBehaviour
         objectPrefab.SetActive(false);
     }
 
-    public GameObject SpawnObject(string artifactSpriteName, string magnifierSpriteName) {
+    public GameObject SpawnObject(string artifactSpriteName, string magnifierSpriteName, string cameraSpriteName) {
 
         Vector3 position = new Vector3(spawnPointX, spawnPointY, 0);
         Sprite sprite = Resources.Load<Sprite>(Path.Combine(spritePathName, artifactSpriteName));
@@ -43,28 +44,39 @@ public class ArtifactSpawner : MonoBehaviour
         obj.SetActive(true);
 
 
-        if (!string.IsNullOrWhiteSpace(magnifierSpriteName))
-        {
+        bool hasMagnifierSprite = !string.IsNullOrWhiteSpace(magnifierSpriteName);
+        bool hasCameraSprite = !string.IsNullOrWhiteSpace(cameraSpriteName);
 
-            Debug.Log("Artifact spawner: hidden sprite detected");
-            Sprite hiddenSprite = Resources.Load<Sprite>(Path.Combine(spritePathName, magnifierSpriteName));
+        Sprite hiddenSprite;
+        int layer;
 
-            var hiddenObj = Instantiate(objectPrefab, position, Quaternion.identity);
+        if (hasMagnifierSprite) {
+            Debug.Log("Artifact spawner: hidden sprite detected for magnifier");
+            hiddenSprite = Resources.Load<Sprite>(Path.Combine(spritePathName, magnifierSpriteName));
+            layer = magnifierLayer;
+        } else if (hasCameraSprite) {
+            Debug.Log("Artifact spawner: hidden sprite detected for camera");
+            hiddenSprite = Resources.Load<Sprite>(Path.Combine(spritePathName, cameraSpriteName));
+            layer = cameraLayer;
+        } else {
+            Debug.Log("Artifact spawner: no hidden sprite detected");
+            return obj;
+        }
+      
 
-            hiddenObj.GetComponent<SpriteRenderer>().sprite = hiddenSprite;
+
+        var hiddenObj = Instantiate(objectPrefab, position, Quaternion.identity);
+
+        hiddenObj.GetComponent<SpriteRenderer>().sprite = hiddenSprite;
 
             
-            hiddenObj.tag = "currentArtifact";
-            hiddenObj.transform.SetParent(obj.transform);
+        hiddenObj.tag = "currentArtifact";
+        hiddenObj.transform.SetParent(obj.transform);
 
-            hiddenObj.layer = hiddenLayer;
-            hiddenObj.GetComponent<SpriteRenderer>().sortingOrder = sr.sortingOrder + 1;
+        hiddenObj.layer = layer;
+        hiddenObj.GetComponent<SpriteRenderer>().sortingOrder = sr.sortingOrder + 1;
 
-            hiddenObj.SetActive(true);
-        }
-        else {
-            Debug.Log("Artifact spawner: no hidden sprite detected");
-        }
+        hiddenObj.SetActive(true);
 
         return obj;
     }

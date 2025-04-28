@@ -60,6 +60,11 @@ public class ProperButtonManager : MonoBehaviour
         // load bargain state
         GameStateManager2.GetInstance().LoadBargainState();
         EventSystem.current.SetSelectedGameObject(null);
+
+        magnifier.gameObject.SetActive(false);
+        cameraScript.Abort();
+        cameraButtonActivated = false;
+        magnifierButtonActivated = false;
     }
 
     public void OnIntroButtonClick() {
@@ -68,6 +73,11 @@ public class ProperButtonManager : MonoBehaviour
             // load intro state
             GameStateManager2.GetInstance().LoadIntroState();
             EventSystem.current.SetSelectedGameObject(null);
+
+            magnifier.gameObject.SetActive(false);
+            cameraScript.Abort();
+            cameraButtonActivated = false;
+            magnifierButtonActivated = false;
         }
     }
 
@@ -93,7 +103,7 @@ public class ProperButtonManager : MonoBehaviour
         if (cameraButtonActivated)
         {
             cameraButtonActivated = false;
-            cameraScript.RemovePhoto();
+            cameraScript.Abort();
         }
         else
         {
@@ -128,6 +138,8 @@ public class ProperButtonManager : MonoBehaviour
         if (currentState == "bargain" && DialogueManager.GetInstance().dialogueIsFinished)
         {
             isIntroActive = true;
+            
+
         }
 
         inspectButton.gameObject.SetActive(isInspectActive);
@@ -140,9 +152,21 @@ public class ProperButtonManager : MonoBehaviour
         introButton.interactable = isIntroActive;
 
         magnifierButton.gameObject.SetActive(isToolsActive);
-        magnifierButton.interactable = isToolsActive;
+        magnifierButton.interactable = !cameraButtonActivated;
 
         cameraButton.gameObject.SetActive(isToolsActive);
-        cameraButton.interactable = isToolsActive;
+        cameraButton.interactable = !magnifierButtonActivated;
+
+        if (!magnifierButtonActivated)
+        {
+            magnifier.gameObject.SetActive(false);
+           
+        } else if (!cameraButtonActivated) {
+
+            cameraScript.Abort();
+
+        }
+        
+        
     }
 }

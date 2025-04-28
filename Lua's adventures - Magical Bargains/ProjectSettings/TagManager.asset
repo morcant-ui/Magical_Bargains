@@ -10,11 +10,11 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Hidden Sprites
+  - 
   - Water
   - UI
-  - 
-  - 
+  - MagnifierLayer
+  - CameraLayer
   - 
   - 
   - 

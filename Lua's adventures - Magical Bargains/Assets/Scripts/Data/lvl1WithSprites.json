@@ -16,7 +16,8 @@
             "dialogueA":"dia2a",
             "dialogueB":"dia2b",
             "artifactID": "item_02",
-            "artifactSprite": "artifact2"
+            "artifactSprite": "artifact2",
+            "cameraSprite":"hidden-artifact2"
         },
         {
             "clientID": "client_03",

@@ -15,6 +15,10 @@ public class CameraScript : MonoBehaviour
     [SerializeField] private GameObject cameraFlash;
     [SerializeField] private float flashTime;
 
+    [Header("Photo Camera Setup")]
+    [SerializeField] private Camera photoCamera;
+    [SerializeField] private RenderTexture photoRenderTexture;
+
     private void Start()
     {
         screenCapture = new Texture2D(Screen.width, Screen.height, TextureFormat.RGB24, false);
@@ -57,12 +61,18 @@ public class CameraScript : MonoBehaviour
 
         yield return new WaitForEndOfFrame();
 
-        Rect regionToRead = new Rect(0, 0, Screen.width, Screen.height);
+        photoCamera.Render();
 
-        screenCapture.ReadPixels(regionToRead, 0, 0, false);
+        RenderTexture currentRT = RenderTexture.active;
+        RenderTexture.active = photoRenderTexture;
+
+        screenCapture.ReadPixels(new Rect(0, 0, photoRenderTexture.width, photoRenderTexture.height), 0, 0);
         screenCapture.Apply();
 
+        RenderTexture.active = currentRT;
+
         ShowPhoto();
+        yield return null;
     }
 
     void ShowPhoto()
@@ -97,10 +107,11 @@ public class CameraScript : MonoBehaviour
         cameraFlash.GetComponent<Image>().color = new Color(1f, 1f, 1f, 1f);
     }
 
-    public void RemovePhoto()
+    public void Abort()
     {
         viewingPhoto = false;
         photoFrame.SetActive(false);
+        // Destroy minigame...
 
         // cameraUI true
     }

@@ -12,6 +12,7 @@ public class ClientData
     public string artifactID;
     public string artifactSprite; // store as hex, convert to Color
     public string magnifierSprite;
+    public string cameraSprite;
 }
 
 [System.Serializable]
