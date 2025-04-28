@@ -8,7 +8,7 @@
             "artifactID": "item_01",
             "artifactSprite": "artifact1",
             "isMagnifierDefective": true,
-            "magnifierSprite":"item_01_defective"
+            "magnifierSprite":"hidden-artifact1"
         },
         {
             "clientID": "client_02",

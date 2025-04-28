@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
 
 public class ArtifactSpawner : MonoBehaviour
 {
@@ -13,16 +14,19 @@ public class ArtifactSpawner : MonoBehaviour
 
     [SerializeField] private GameObject spawnContainer;
 
+    private string spritePathName = "Sprites";
+    private int hiddenLayer = 3;
+
 
 
     private void Awake() {
         objectPrefab.SetActive(false);
     }
 
-    public GameObject SpawnObject(string artifactSpritePath) {
+    public GameObject SpawnObject(string artifactSpriteName, string magnifierSpriteName) {
 
         Vector3 position = new Vector3(spawnPointX, spawnPointY, 0);
-        Sprite sprite = Resources.Load<Sprite>(artifactSpritePath);
+        Sprite sprite = Resources.Load<Sprite>(Path.Combine(spritePathName, artifactSpriteName));
 
         var obj = Instantiate(objectPrefab, position, Quaternion.identity);
         var sr = obj.GetComponent<SpriteRenderer>();
@@ -37,6 +41,30 @@ public class ArtifactSpawner : MonoBehaviour
         obj.transform.SetParent(spawnContainer.transform);
 
         obj.SetActive(true);
+
+
+        if (!string.IsNullOrWhiteSpace(magnifierSpriteName))
+        {
+
+            Debug.Log("hidden sprite detected");
+            Sprite hiddenSprite = Resources.Load<Sprite>(Path.Combine(spritePathName, magnifierSpriteName));
+
+            var hiddenObj = Instantiate(objectPrefab, position, Quaternion.identity);
+
+            hiddenObj.GetComponent<SpriteRenderer>().sprite = hiddenSprite;
+
+            
+            hiddenObj.tag = "currentArtifact";
+            hiddenObj.transform.SetParent(spawnContainer.transform);
+
+            hiddenObj.layer = hiddenLayer;
+            hiddenObj.GetComponent<SpriteRenderer>().sortingOrder = sr.sortingOrder + 1;
+
+            hiddenObj.SetActive(true);
+        }
+        else {
+            Debug.Log("no hidden sprite");
+        }
 
         return obj;
     }

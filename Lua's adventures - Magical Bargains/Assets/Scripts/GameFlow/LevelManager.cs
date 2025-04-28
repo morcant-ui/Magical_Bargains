@@ -82,7 +82,7 @@ public class LevelManager : MonoBehaviour
         ///// and write "yield return StartCoroutine(DestroyAfterDelay(0.5f));
         /// (i think... not sure)
         clientSpawner.SpawnClient(Path.Combine(spritePathName, clientSpriteName));
-        artifactSpawner.SpawnObject(Path.Combine(spritePathName, artifactSpriteName));
+        artifactSpawner.SpawnObject(Path.Combine(spritePathName, artifactSpriteName), "");
 
         var dialogueA = Resources.Load<TextAsset>(Path.Combine(dialoguePathName, dialogueNameA));
         buttonManager.LoadDialogue(dialogueA);
