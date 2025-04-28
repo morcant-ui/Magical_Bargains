@@ -116,8 +116,6 @@ public class LevelManager2 : MonoBehaviour
         //bool isThermostatDefective = currentClient.isThermostatDefective;
         //bool isCameraDefective = currentClient.isCameraDefective;
 
-        Debug.Log("TEST: " + string.IsNullOrWhiteSpace(magnifierSpriteName));
-
         artifactSpawner.SpawnObject(artifactSpriteName, magnifierSpriteName);
     }
 

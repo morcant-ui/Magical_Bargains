@@ -46,7 +46,7 @@ public class ArtifactSpawner : MonoBehaviour
         if (!string.IsNullOrWhiteSpace(magnifierSpriteName))
         {
 
-            Debug.Log("hidden sprite detected");
+            Debug.Log("Artifact spawner: hidden sprite detected");
             Sprite hiddenSprite = Resources.Load<Sprite>(Path.Combine(spritePathName, magnifierSpriteName));
 
             var hiddenObj = Instantiate(objectPrefab, position, Quaternion.identity);
@@ -55,7 +55,7 @@ public class ArtifactSpawner : MonoBehaviour
 
             
             hiddenObj.tag = "currentArtifact";
-            hiddenObj.transform.SetParent(spawnContainer.transform);
+            hiddenObj.transform.SetParent(obj.transform);
 
             hiddenObj.layer = hiddenLayer;
             hiddenObj.GetComponent<SpriteRenderer>().sortingOrder = sr.sortingOrder + 1;
@@ -63,7 +63,7 @@ public class ArtifactSpawner : MonoBehaviour
             hiddenObj.SetActive(true);
         }
         else {
-            Debug.Log("no hidden sprite");
+            Debug.Log("Artifact spawner: no hidden sprite detected");
         }
 
         return obj;
