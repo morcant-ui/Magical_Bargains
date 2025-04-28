@@ -14,9 +14,13 @@ public class ProperButtonManager : MonoBehaviour
 
     [Header("Tools Buttons")]
     [SerializeField] private Button magnifierButton;
+    [SerializeField] private Button cameraButton;
+
     [SerializeField] private GameObject magnifier;
+    [SerializeField] private CameraScript cameraScript;
 
     private bool magnifierButtonActivated = false;
+    private bool cameraButtonActivated = false;
 
 
 
@@ -39,6 +43,7 @@ public class ProperButtonManager : MonoBehaviour
 
         magnifierButton.onClick.AddListener(OnMagnifierButtonClick);
         magnifier.SetActive(false);
+        cameraButton.onClick.AddListener(OnCameraButtonClick);
 
     }
 
@@ -84,6 +89,19 @@ public class ProperButtonManager : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(null);
     }
 
+    public void OnCameraButtonClick() {
+        if (cameraButtonActivated)
+        {
+            cameraButtonActivated = false;
+            cameraScript.RemovePhoto();
+        }
+        else
+        {
+            cameraButtonActivated = true;
+            cameraScript.StartProcess();
+        }
+    }
+
     void Update() {
 
         string currentState = GameStateManager2.GetInstance().GetState();
@@ -124,5 +142,7 @@ public class ProperButtonManager : MonoBehaviour
         magnifierButton.gameObject.SetActive(isToolsActive);
         magnifierButton.interactable = isToolsActive;
 
+        cameraButton.gameObject.SetActive(isToolsActive);
+        cameraButton.interactable = isToolsActive;
     }
 }
