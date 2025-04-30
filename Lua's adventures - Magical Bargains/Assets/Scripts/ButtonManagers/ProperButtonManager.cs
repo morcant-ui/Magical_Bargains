@@ -15,12 +15,15 @@ public class ProperButtonManager : MonoBehaviour
     [Header("Tools Buttons")]
     [SerializeField] private Button magnifierButton;
     [SerializeField] private Button cameraButton;
+    [SerializeField] private Button thermometerButton;
 
     [SerializeField] private GameObject magnifier;
     [SerializeField] private CameraScript cameraScript;
+    [SerializeField] private GameObject thermometer;
 
     private bool magnifierButtonActivated = false;
     private bool cameraButtonActivated = false;
+    private bool thermometerButtonActivated = false;
 
 
 
@@ -44,6 +47,8 @@ public class ProperButtonManager : MonoBehaviour
         magnifierButton.onClick.AddListener(OnMagnifierButtonClick);
         magnifier.SetActive(false);
         cameraButton.onClick.AddListener(OnCameraButtonClick);
+        thermometer.SetActive(false);
+        thermometerButton.onClick.AddListener(OnThermometerButtonClick);
 
     }
 
@@ -65,6 +70,8 @@ public class ProperButtonManager : MonoBehaviour
         cameraScript.Abort();
         cameraButtonActivated = false;
         magnifierButtonActivated = false;
+        thermometer.gameObject.SetActive(false);
+        thermometerButtonActivated = false;
     }
 
     public void OnIntroButtonClick() {
@@ -78,6 +85,8 @@ public class ProperButtonManager : MonoBehaviour
             cameraScript.Abort();
             cameraButtonActivated = false;
             magnifierButtonActivated = false;
+            thermometer.gameObject.SetActive(false);
+            thermometerButtonActivated = false;
         }
     }
 
@@ -110,6 +119,23 @@ public class ProperButtonManager : MonoBehaviour
             cameraButtonActivated = true;
             cameraScript.StartProcess();
         }
+    }
+
+    public void OnThermometerButtonClick()
+    {
+        if (thermometerButtonActivated)
+        {
+
+            thermometer.SetActive(false);
+            thermometerButtonActivated = false;
+        }
+        else
+        {
+
+            thermometer.SetActive(true);
+            thermometerButtonActivated = true;
+        }
+        EventSystem.current.SetSelectedGameObject(null);
     }
 
     void Update() {
@@ -157,6 +183,9 @@ public class ProperButtonManager : MonoBehaviour
         cameraButton.gameObject.SetActive(isToolsActive);
         cameraButton.interactable = !magnifierButtonActivated;
 
+        thermometerButton.gameObject.SetActive(isToolsActive);
+        thermometerButton.interactable= !thermometerButtonActivated;
+
         if (!magnifierButtonActivated)
         {
             magnifier.gameObject.SetActive(false);
@@ -165,6 +194,9 @@ public class ProperButtonManager : MonoBehaviour
 
             cameraScript.Abort();
 
+        } else if (!thermometerButtonActivated)
+        {
+            thermometer.gameObject.SetActive(false);
         }
         
         
