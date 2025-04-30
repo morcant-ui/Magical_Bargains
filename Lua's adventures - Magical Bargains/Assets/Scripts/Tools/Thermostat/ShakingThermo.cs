@@ -15,8 +15,11 @@ public class ShakingThermo : MonoBehaviour
     public float shakeMagnitude = 0.1f;
 
     //flashbang data
-    public FlashBangThermo flashbang;
     public Color flashColor;
+
+    public Image screenOverlay;
+
+    public float fadeDuration = 1.5f;
     // Start is called before the first frame update
     void Start()
     {
@@ -64,11 +67,11 @@ public class ShakingThermo : MonoBehaviour
     void OnMouseUp()
     {
         if (!triedShaking){
-            flashbang.TriggerFlash(flashColor);
+           TriggerFlash(flashColor);
         }
         if (triedShaking){
             Color newFlashColor = Random.ColorHSV(0f, 1f, 0f, 0.9f, 0.5f, 1f);
-            flashbang.TriggerFlash(newFlashColor);
+            TriggerFlash(newFlashColor);
             triedShaking = false;
         }
     }
@@ -93,5 +96,39 @@ public class ShakingThermo : MonoBehaviour
             transform.localPosition = new Vector3(randomPoint.x, randomPoint.y, originalPos.z);
             yield return null;
         }
+    }
+
+    public void TriggerFlash(Color flashColor)
+    {
+        StartCoroutine(FlashEffect(flashColor));
+    }
+
+    private IEnumerator FlashEffect(Color flashColor)
+    {
+        // Fade in
+        float t = 0;
+        float fadeInDuration = 0.3f;
+        while (t < fadeInDuration)
+        {
+            screenOverlay.color = Color.Lerp(Color.clear, flashColor, t / fadeInDuration);
+            t += Time.deltaTime;
+            yield return null;
+        }
+
+        screenOverlay.color = flashColor;
+
+        // Wait a bit
+        yield return new WaitForSeconds(0.5f);
+
+        // Fade out
+        t = 0;
+        while (t < fadeDuration)
+        {
+            screenOverlay.color = Color.Lerp(flashColor, Color.clear, t / fadeDuration);
+            t += Time.deltaTime;
+            yield return null;
+        }
+
+        screenOverlay.color = Color.clear;
     }
 }

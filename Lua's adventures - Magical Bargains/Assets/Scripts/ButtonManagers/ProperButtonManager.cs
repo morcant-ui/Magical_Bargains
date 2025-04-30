@@ -47,8 +47,8 @@ public class ProperButtonManager : MonoBehaviour
         magnifierButton.onClick.AddListener(OnMagnifierButtonClick);
         magnifier.SetActive(false);
         cameraButton.onClick.AddListener(OnCameraButtonClick);
-        thermometer.SetActive(false);
         thermometerButton.onClick.AddListener(OnThermometerButtonClick);
+        thermometer.SetActive(false);
 
     }
 
