@@ -11,19 +11,20 @@ public class ShakingThermo : MonoBehaviour
     private bool triedShaking = false;
     private Vector3 originalPos;
 
+    private Color flashColor;
+
     public float shakeDuration = 0.5f;
     public float shakeMagnitude = 0.1f;
-
-    //flashbang data
-    public Color flashColor;
 
     public Image screenOverlay;
 
     public float fadeDuration = 1.5f;
-    // Start is called before the first frame update
-    void Start()
+    
+    public void StartProcess()
     {
         originalPos = transform.localPosition;
+        screenOverlay.color = Color.clear;
+        
     }
 
     // Update is called once per frame
@@ -67,6 +68,13 @@ public class ShakingThermo : MonoBehaviour
     void OnMouseUp()
     {
         if (!triedShaking){
+            // get color and intensity
+            ArtifactColor colorComponent = GameObject.FindWithTag("currentArtifact").GetComponent<ArtifactColor>();
+            if (colorComponent != null)
+            {
+                flashColor = colorComponent.artifactColor * colorComponent.intensity;
+            }
+            //Debug.Log(flashColor);
            TriggerFlash(flashColor);
         }
         if (triedShaking){
@@ -100,6 +108,7 @@ public class ShakingThermo : MonoBehaviour
 
     public void TriggerFlash(Color flashColor)
     {
+        Debug.Log(flashColor);
         StartCoroutine(FlashEffect(flashColor));
     }
 
@@ -110,6 +119,7 @@ public class ShakingThermo : MonoBehaviour
         float fadeInDuration = 0.3f;
         while (t < fadeInDuration)
         {
+            //Debug.Log(flashColor);
             screenOverlay.color = Color.Lerp(Color.clear, flashColor, t / fadeInDuration);
             t += Time.deltaTime;
             yield return null;
@@ -128,7 +138,7 @@ public class ShakingThermo : MonoBehaviour
             t += Time.deltaTime;
             yield return null;
         }
-
+        
         screenOverlay.color = Color.clear;
     }
 }

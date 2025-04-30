@@ -20,6 +20,7 @@ public class ProperButtonManager : MonoBehaviour
     [SerializeField] private GameObject magnifier;
     [SerializeField] private CameraScript cameraScript;
     [SerializeField] private GameObject thermometer;
+    [SerializeField] private ShakingThermo thermometerScript;
 
     private bool magnifierButtonActivated = false;
     private bool cameraButtonActivated = false;
@@ -128,11 +129,13 @@ public class ProperButtonManager : MonoBehaviour
 
             thermometer.SetActive(false);
             thermometerButtonActivated = false;
+            thermometerScript.StartProcess();
         }
         else
         {
 
             thermometer.SetActive(true);
+
             thermometerButtonActivated = true;
         }
         EventSystem.current.SetSelectedGameObject(null);
@@ -179,12 +182,15 @@ public class ProperButtonManager : MonoBehaviour
 
         magnifierButton.gameObject.SetActive(isToolsActive);
         magnifierButton.interactable = !cameraButtonActivated;
+        magnifierButton.interactable = !thermometerButtonActivated;
 
         cameraButton.gameObject.SetActive(isToolsActive);
         cameraButton.interactable = !magnifierButtonActivated;
+        cameraButton.interactable = !thermometerButtonActivated;
 
         thermometerButton.gameObject.SetActive(isToolsActive);
-        thermometerButton.interactable= !thermometerButtonActivated;
+        thermometerButton.interactable = !magnifierButtonActivated;
+        thermometerButton.interactable = !cameraButtonActivated;
 
         if (!magnifierButtonActivated)
         {

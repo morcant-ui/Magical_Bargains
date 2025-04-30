@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 
+
 public class ArtifactSpawner : MonoBehaviour
 {
     [Header("Prefab")]
@@ -17,8 +18,14 @@ public class ArtifactSpawner : MonoBehaviour
     private string spritePathName = "Sprites";
     private int magnifierLayer = 6;
     private int cameraLayer = 7;
-
-
+  
+    private static readonly Dictionary<string, (Color color, float intensity)> artifactColorMap = new()
+    {
+        {"artifact1", (Color.red,1f)},
+        {"artifact2", (Color.green,0.5f)},
+        {"artifact3", (Color.white,0f)},
+        {"artifact4", (Color.yellow,1f)},
+    };
 
     private void Awake() {
         objectPrefab.SetActive(false);
@@ -37,6 +44,16 @@ public class ArtifactSpawner : MonoBehaviour
         Vector2 S = sr.sprite.bounds.size;
         obj.GetComponent<BoxCollider2D>().size = S;
         //obj.GetComponent<BoxCollider2D>().offset = new Vector2((S.x / 2), 0);
+
+        // adapt color and intensity for thermo
+        Color artifactColor = artifactColorMap.TryGetValue(artifactSpriteName, out var colorInfo)
+            ? colorInfo.color*colorInfo.intensity
+            : Color.black; //if not found
+
+        // add ArtifactColor Component
+        ArtifactColor colorComponent = obj.AddComponent<ArtifactColor>();
+        colorComponent.artifactColor = artifactColor;
+        colorComponent.intensity = colorInfo.intensity;
 
         obj.tag = "currentArtifact";
         obj.transform.SetParent(spawnContainer.transform);
