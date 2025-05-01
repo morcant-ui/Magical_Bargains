@@ -12,15 +12,18 @@ public class ProperButtonManager : MonoBehaviour
     [SerializeField] private Button bargainButton;
     [SerializeField] private Button introButton;
 
+    [Header("Bargain Buttons")]
+    [SerializeField] private Button acceptButton;
+    [SerializeField] private Button addButton;
+    [SerializeField] private Button minusButton;
+
+    [SerializeField] private OfferDialogsManager offerDialogsManager;
+
     [Header("Tools Buttons")]
     [SerializeField] private Button magnifierButton;
     [SerializeField] private Button cameraButton;
     [SerializeField] private Button thermometerButton;
 
-    [Header("Bargain Buttons")]
-    [SerializeField] private Button acceptButton;
-    [SerializeField] private Button addButton;
-    [SerializeField] private Button minusButton;
 
     [SerializeField] private GameObject magnifier;
     [SerializeField] private CameraScript cameraScript;
@@ -66,8 +69,8 @@ public class ProperButtonManager : MonoBehaviour
         thermometer.SetActive(false);
 
         acceptButton.onClick.AddListener(OnAcceptOfferButtonClick);
-        addButton.onClick.AddListener(OnBargainButtonClick);
-        minusButton.onClick.AddListener(OnBargainButtonClick);
+        addButton.onClick.AddListener(OnAddOfferButtonClick);
+        minusButton.onClick.AddListener(OnReduceOfferButtonClick);
 
     }
 
@@ -84,6 +87,8 @@ public class ProperButtonManager : MonoBehaviour
         // load bargain state
         GameStateManager2.GetInstance().LoadBargainState();
         EventSystem.current.SetSelectedGameObject(null);
+        
+        offerDialogsManager.StartBargain();
 
         magnifier.gameObject.SetActive(false);
         cameraScript.Abort();
@@ -91,12 +96,34 @@ public class ProperButtonManager : MonoBehaviour
         magnifierButtonActivated = false;
         thermometer.gameObject.SetActive(false);
         thermometerButtonActivated = false;
-        
     }
 
+    public void OnAddOfferButtonClick(){
+        offerDialogsManager.ChangeOffer(10);
+
+        magnifier.gameObject.SetActive(false);
+        cameraScript.Abort();
+        cameraButtonActivated = false;
+        magnifierButtonActivated = false;
+        thermometer.gameObject.SetActive(false);
+        thermometerButtonActivated = false;
+    }
+
+    public void OnReduceOfferButtonClick(){
+        offerDialogsManager.ChangeOffer(-10);
+
+        magnifier.gameObject.SetActive(false);
+        cameraScript.Abort();
+        cameraButtonActivated = false;
+        magnifierButtonActivated = false;
+        thermometer.gameObject.SetActive(false);
+        thermometerButtonActivated = false;
+    }
     public void OnAcceptOfferButtonClick(){
         
         offerAccepted = true;
+
+        offerDialogsManager.AcceptOffer();
 
         GameStateManager2.GetInstance().LoadBargainDoneState();
         

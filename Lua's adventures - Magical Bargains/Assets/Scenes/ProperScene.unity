@@ -541,6 +541,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3371433159339292358, guid: 8b585118c571dee4193eec2a4a0d09f4, type: 3}
   m_PrefabInstance: {fileID: 726355515}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &105721550
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 105721551}
+  m_Layer: 0
+  m_Name: OfferDialogsManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &105721551
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 105721550}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1959401830}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &128429738
 GameObject:
   m_ObjectHideFlags: 0
@@ -796,6 +827,9 @@ MonoBehaviour:
   magnifierButton: {fileID: 604584610}
   cameraButton: {fileID: 269983468}
   thermometerButton: {fileID: 1389080578}
+  acceptButton: {fileID: 1730271250}
+  addButton: {fileID: 1384789604}
+  minusButton: {fileID: 715777382}
   magnifier: {fileID: 2122805173}
   cameraScript: {fileID: 13461029}
   thermometer: {fileID: 148415657}
@@ -3926,10 +3960,10 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_NormalColor: {r: 0.9352782, g: 0.5740477, b: 0.9433962, a: 1}
+    m_HighlightedColor: {r: 0.9056604, g: 0.12388753, b: 0.8719355, a: 1}
+    m_PressedColor: {r: 0.5754717, g: 0.11672304, b: 0.38367286, a: 1}
+    m_SelectedColor: {r: 0.9433962, g: 0.56514776, b: 0.90241015, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -4295,6 +4329,7 @@ Transform:
   m_Children:
   - {fileID: 547474430}
   - {fileID: 176006324}
+  - {fileID: 105721551}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
