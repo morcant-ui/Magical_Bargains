@@ -5,36 +5,39 @@
             "clientSprite": "client1",
             "dialogueA":"dia1a",
             "dialogueB":"dia1b",
+            "dialogueC":"dia1c",
             "artifactID": "item_01",
             "artifactSprite": "artifact1",
             "isMagnifierDefective": true,
             "magnifierSprite":"hidden-artifact1",
             "thermoColor": "#FF0000",
             "artifactOffer": "200",
-            "minOfferAccepter": "70"
+            "minOfferAccepted": "180"
         },
         {
             "clientID": "client_02",
             "clientSprite": "client2",
             "dialogueA":"dia2a",
             "dialogueB":"dia2b",
+            "dialogueC":"dia2c",
             "artifactID": "item_02",
             "artifactSprite": "artifact2",
             "cameraSprite":"hidden-artifact2",
             "thermoColor": "#0000FF",
             "artifactOffer": "100",
-            "minOfferAccepter": "80"
+            "minOfferAccepted": "90"
         },
         {
             "clientID": "client_03",
             "clientSprite": "client3",
             "dialogueA":"dia3a",
             "dialogueB":"dia3b",
+            "dialogueC":"dia3c",
             "artifactID": "item_03",
             "artifactSprite": "artifact3",
             "thermoColor": "#FFFFFF",
             "artifactOffer": "50",
-            "minOfferAccepter": "20"
+            "minOfferAccepted": "10"
         
         },
         {
@@ -42,22 +45,24 @@
             "clientSprite": "client4",
             "dialogueA":"dia4a",
             "dialogueB":"dia4b",
+            "dialogueC":"dia4c",
             "artifactID": "item_04",
             "artifactSprite": "artifact1",
             "thermoColor":"#FFFF00",
             "artifactOffer": "250",
-            "minOfferAccepter": "200"
+            "minOfferAccepted": "250"
         },
         {
             "clientID": "client_05",
             "clientSprite": "client5",
             "dialogueA":"dia5a",
             "dialogueB":"dia5b",
+            "dialogueC":"dia5c",
             "artifactID": "item_05",
             "artifactSprite": "artifact3",
             "thermoColor":"#FFFF00",
-            "artifactOffer": "80",
-            "minOfferAccepter": "10"
+            "artifactOffer": "20",
+            "minOfferAccepted": "10"
         }
     ]
 }

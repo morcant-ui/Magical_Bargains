@@ -16,6 +16,9 @@ public class LevelManager2 : MonoBehaviour
     [Header("black screen UI")]
     [SerializeField] private GameObject blackScreen;
 
+    [Header("Offers")]
+    [SerializeField] private OfferManager offerManager;
+
 
 
     private Queue<ClientData> clientQueue; // this queue will let us iterate thru game data
@@ -30,13 +33,11 @@ public class LevelManager2 : MonoBehaviour
     private string spritePathName = "Sprites";
     private string dialogueAPathName = "Dialogues/dialogueA";
     private string dialogueBPathName = "Dialogues/dialogueB";
+    private string dialogueCPathName = "Dialogues/dialogueC";
 
     private string menuScene = "SimpleMenu";
 
     private bool processingClients = true;
-
-    private  string currentOffer;
-    private string minOfferAccepted;
 
     void Start()
     {
@@ -133,23 +134,33 @@ public class LevelManager2 : MonoBehaviour
         {
             Destroy(obj);
         }
-            currentOffer = currentClient.artifactOffer;
-            minOfferAccepted = currentClient.minOfferAccepted;
-            Debug.Log("current offer is" + currentOffer);
-        
+            string currentOffer = currentClient.artifactOffer;
+            offerManager.StartBargain(currentOffer);
     }
-
-    // Getter to get the values currentOffer and minOfferAccepted
-    public string CurrentOffer => currentOffer;
-    public string MinOfferAccepted => minOfferAccepted;
 
     public void FinishBargainState()
     {   
-        // Load Dialogue B
-        string dialogueNameB = currentClient.dialogueB;
-        TextAsset dialogueB = Resources.Load<TextAsset>(Path.Combine(dialogueBPathName, dialogueNameB));
+        int finalOffer = offerManager.FinalOffer;
+        int minOfferAccepted = int.Parse(currentClient.minOfferAccepted);
 
-        DialogueManager.GetInstance().EnterDialogueMode(dialogueB);
+        if (finalOffer >= minOfferAccepted)
+        {
+            // Load Dialogue B
+            string dialogueNameB = currentClient.dialogueB;
+            TextAsset dialogueB = Resources.Load<TextAsset>(Path.Combine(dialogueBPathName, dialogueNameB));
+
+            DialogueManager.GetInstance().EnterDialogueMode(dialogueB);
+        }
+        else
+        {
+            Debug.Log("HUM OFFER IS NOT ACCEPTED");
+            // Load Dialogue C
+            string dialogueNameC = currentClient.dialogueC;
+            TextAsset dialogueC = Resources.Load<TextAsset>(Path.Combine(dialogueCPathName, dialogueNameC));
+
+            DialogueManager.GetInstance().EnterDialogueMode(dialogueC);
+        }
+
     }
 
     // destroy a client and artifact

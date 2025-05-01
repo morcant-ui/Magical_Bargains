@@ -9,7 +9,6 @@ public class OfferManager : MonoBehaviour
     [Header("Dialogue UI")]
     [SerializeField] private GameObject offerPanel;
     [SerializeField] private TextMeshProUGUI offerText;
-    [SerializeField] private LevelManager2 levelManager;
 
 
     private int originalOffer;
@@ -17,10 +16,10 @@ public class OfferManager : MonoBehaviour
 
     private bool isBargainOn = false;
     // Start is called before the first frame update
-    public void StartBargain()
+    public void StartBargain(string currentOffer)
     {
         isBargainOn = true;
-        originalOffer = int.Parse(levelManager.CurrentOffer);
+        originalOffer = int.Parse(currentOffer);
         yourOffer = originalOffer;
         UpdateOfferDisplay();   
     }
@@ -41,11 +40,13 @@ public class OfferManager : MonoBehaviour
     public void AcceptOffer()
     {
         isBargainOn = false;
-        Debug.Log("offerAccepted");
     }
 
     void UpdateOfferDisplay()
     {
         offerText.text = "The client offer is " + originalOffer.ToString() + " coins! \n Your offer is now " + yourOffer.ToString() + " coins :)";
     }
+
+    //Getter to get final Offer
+    public int FinalOffer => yourOffer;
 }

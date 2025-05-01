@@ -1,0 +1,1 @@
+﻿Deal is cancelled.

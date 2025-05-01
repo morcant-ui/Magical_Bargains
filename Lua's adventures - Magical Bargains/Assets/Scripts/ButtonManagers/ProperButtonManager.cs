@@ -87,8 +87,6 @@ public class ProperButtonManager : MonoBehaviour
         // load bargain state
         GameStateManager2.GetInstance().LoadBargainState();
         EventSystem.current.SetSelectedGameObject(null);
-        
-        offerManager.StartBargain();
 
         magnifier.gameObject.SetActive(false);
         cameraScript.Abort();

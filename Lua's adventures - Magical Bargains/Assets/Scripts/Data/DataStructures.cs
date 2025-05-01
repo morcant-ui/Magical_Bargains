@@ -9,6 +9,7 @@ public class ClientData
     public string clientSprite;
     public string dialogueA;
     public string dialogueB;
+    public string dialogueC;
     public string artifactID;
     public string artifactSprite; // store as hex, convert to Color
     public string magnifierSprite;
