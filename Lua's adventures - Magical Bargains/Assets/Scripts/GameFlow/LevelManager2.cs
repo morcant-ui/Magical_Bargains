@@ -114,11 +114,12 @@ public class LevelManager2 : MonoBehaviour
         string artifactSpriteName = currentClient.artifactSprite;
         string magnifierSpriteName = currentClient.magnifierSprite;
         string cameraSpriteName = currentClient.cameraSprite;
+        string thermoColor = currentClient.thermoColor;
         
         //bool isThermostatDefective = currentClient.isThermostatDefective;
         //bool isCameraDefective = currentClient.isCameraDefective;
 
-        artifactSpawner.SpawnObject(artifactSpriteName, magnifierSpriteName, cameraSpriteName);
+        artifactSpawner.SpawnObject(artifactSpriteName, magnifierSpriteName, cameraSpriteName, thermoColor);
     }
 
     public void PrepareBargainState()

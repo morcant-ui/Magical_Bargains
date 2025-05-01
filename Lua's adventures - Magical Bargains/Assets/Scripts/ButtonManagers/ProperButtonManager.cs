@@ -129,14 +129,13 @@ public class ProperButtonManager : MonoBehaviour
 
             thermometer.SetActive(false);
             thermometerButtonActivated = false;
-            thermometerScript.StartProcess();
         }
         else
         {
 
             thermometer.SetActive(true);
-
             thermometerButtonActivated = true;
+            thermometerScript.StartProcess();
         }
         EventSystem.current.SetSelectedGameObject(null);
     }
@@ -195,16 +194,14 @@ public class ProperButtonManager : MonoBehaviour
         if (!magnifierButtonActivated)
         {
             magnifier.gameObject.SetActive(false);
-           
-        } else if (!cameraButtonActivated) {
-
+        }
+        if (!cameraButtonActivated) 
+        {
             cameraScript.Abort();
-
-        } else if (!thermometerButtonActivated)
+        }
+        if (!thermometerButtonActivated)
         {
             thermometer.gameObject.SetActive(false);
         }
-        
-        
     }
 }

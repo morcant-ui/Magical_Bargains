@@ -13,6 +13,8 @@ public class ClientData
     public string artifactSprite; // store as hex, convert to Color
     public string magnifierSprite;
     public string cameraSprite;
+    public string thermoColor;
+    public string thermoIntensity;
 }
 
 [System.Serializable]

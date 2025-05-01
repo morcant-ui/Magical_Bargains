@@ -493,6 +493,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 3371433159339292354, guid: 8b585118c571dee4193eec2a4a0d09f4, type: 3}
   m_PrefabInstance: {fileID: 726355515}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &148415658 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3371433159339292357, guid: 8b585118c571dee4193eec2a4a0d09f4, type: 3}
+  m_PrefabInstance: {fileID: 726355515}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 148415657}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93f58ce84fb009a4ebdbe3aa4765ceed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &169555600
 GameObject:
   m_ObjectHideFlags: 0
@@ -651,6 +662,7 @@ MonoBehaviour:
   magnifier: {fileID: 2122805173}
   cameraScript: {fileID: 13461029}
   thermometer: {fileID: 148415657}
+  thermometerScript: {fileID: 148415658}
 --- !u!1 &180541990
 GameObject:
   m_ObjectHideFlags: 0
@@ -3177,14 +3189,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1631164565}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 541.6639, y: 278.7432, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 73.885254, y: -10.999817, z: 3.3806407}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 70091401}
-  m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_Father: {fileID: 1674110304}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1674110303
 GameObject:
@@ -3216,6 +3228,7 @@ Transform:
   m_Children:
   - {fileID: 13461028}
   - {fileID: 467840424}
+  - {fileID: 1631164566}
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

@@ -12,6 +12,8 @@ public class ShakingThermo : MonoBehaviour
     private Vector3 originalPos;
 
     private Color flashColor;
+    private Coroutine flashCoroutine;
+    private Coroutine shakeCoroutine;
 
     public float shakeDuration = 0.5f;
     public float shakeMagnitude = 0.1f;
@@ -41,11 +43,12 @@ public class ShakingThermo : MonoBehaviour
             // if you hold mouse down for holdTime it will shake == reset
             if (holdTime >= 5f && !isShaking)
             {
-                StartCoroutine(Shake());
+                //StartCoroutine(Shake());
+                shakeCoroutine = StartCoroutine(Shake());
                 triedShaking = false;
             }
 
-            //Debug.Log(triedShaking);
+           
         }
         else
         {
@@ -69,12 +72,13 @@ public class ShakingThermo : MonoBehaviour
     {
         if (!triedShaking){
             // get color and intensity
-            ArtifactColor colorComponent = GameObject.FindWithTag("currentArtifact").GetComponent<ArtifactColor>();
+            ThermoColor colorComponent = GameObject.FindWithTag("currentArtifact").GetComponent<ThermoColor>();
             if (colorComponent != null)
             {
-                flashColor = colorComponent.artifactColor * colorComponent.intensity;
+                flashColor = colorComponent.thermoColor;
             }
-            //Debug.Log(flashColor);
+            
+            
            TriggerFlash(flashColor);
         }
         if (triedShaking){
@@ -88,9 +92,16 @@ public class ShakingThermo : MonoBehaviour
     {
         isMouseOver = false;
         holdTime = 0f;
-        StopAllCoroutines();
-        transform.localPosition = originalPos;
-        isShaking = false;
+
+        if (shakeCoroutine != null)
+        {
+            StopCoroutine(shakeCoroutine);
+            transform.localPosition = originalPos;
+            shakeCoroutine = null;
+            isShaking = false;
+        }
+        
+        
         
     }
 
@@ -104,28 +115,43 @@ public class ShakingThermo : MonoBehaviour
             transform.localPosition = new Vector3(randomPoint.x, randomPoint.y, originalPos.z);
             yield return null;
         }
+
+        
     }
 
     public void TriggerFlash(Color flashColor)
     {
-        Debug.Log(flashColor);
-        StartCoroutine(FlashEffect(flashColor));
+        if (shakeCoroutine != null)
+        {
+            StopCoroutine(shakeCoroutine);
+            transform.localPosition = originalPos;
+            shakeCoroutine = null;
+            isShaking = false;
+        }
+
+        if (flashCoroutine != null)
+        {
+            StopCoroutine(flashCoroutine);
+        }
+
+        flashCoroutine = StartCoroutine(FlashEffect(flashColor));
     }
 
     private IEnumerator FlashEffect(Color flashColor)
     {
+        
         // Fade in
         float t = 0;
         float fadeInDuration = 0.3f;
         while (t < fadeInDuration)
         {
-            //Debug.Log(flashColor);
+           
             screenOverlay.color = Color.Lerp(Color.clear, flashColor, t / fadeInDuration);
             t += Time.deltaTime;
             yield return null;
         }
-
         screenOverlay.color = flashColor;
+        
 
         // Wait a bit
         yield return new WaitForSeconds(0.5f);

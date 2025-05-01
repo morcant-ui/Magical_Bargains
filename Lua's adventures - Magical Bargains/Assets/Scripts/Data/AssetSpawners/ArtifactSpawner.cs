@@ -18,20 +18,12 @@ public class ArtifactSpawner : MonoBehaviour
     private string spritePathName = "Sprites";
     private int magnifierLayer = 6;
     private int cameraLayer = 7;
-  
-    private static readonly Dictionary<string, (Color color, float intensity)> artifactColorMap = new()
-    {
-        {"artifact1", (Color.red,1f)},
-        {"artifact2", (Color.green,0.5f)},
-        {"artifact3", (Color.white,0f)},
-        {"artifact4", (Color.yellow,1f)},
-    };
 
     private void Awake() {
         objectPrefab.SetActive(false);
     }
 
-    public GameObject SpawnObject(string artifactSpriteName, string magnifierSpriteName, string cameraSpriteName) {
+    public GameObject SpawnObject(string artifactSpriteName, string magnifierSpriteName, string cameraSpriteName, string thermoColor) {
 
         Vector3 position = new Vector3(spawnPointX, spawnPointY, 0);
         Sprite sprite = Resources.Load<Sprite>(Path.Combine(spritePathName, artifactSpriteName));
@@ -46,20 +38,19 @@ public class ArtifactSpawner : MonoBehaviour
         //obj.GetComponent<BoxCollider2D>().offset = new Vector2((S.x / 2), 0);
 
         // adapt color and intensity for thermo
-        Color artifactColor = artifactColorMap.TryGetValue(artifactSpriteName, out var colorInfo)
-            ? colorInfo.color*colorInfo.intensity
+        Color thermometerColor = ColorUtility.TryParseHtmlString(thermoColor, out var colorInfo)
+            ? colorInfo //colorInfo * intensity -> if I want to add intensity, something like this
             : Color.black; //if not found
-
+            
         // add ArtifactColor Component
-        ArtifactColor colorComponent = obj.AddComponent<ArtifactColor>();
-        colorComponent.artifactColor = artifactColor;
-        colorComponent.intensity = colorInfo.intensity;
+        ThermoColor colorComponent = obj.AddComponent<ThermoColor>();
+        colorComponent.thermoColor = thermometerColor;
+        //colorComponent.intensity = intensity
 
         obj.tag = "currentArtifact";
         obj.transform.SetParent(spawnContainer.transform);
 
         obj.SetActive(true);
-
 
         bool hasMagnifierSprite = !string.IsNullOrWhiteSpace(magnifierSpriteName);
         bool hasCameraSprite = !string.IsNullOrWhiteSpace(cameraSpriteName);
@@ -80,8 +71,6 @@ public class ArtifactSpawner : MonoBehaviour
             return obj;
         }
       
-
-
         var hiddenObj = Instantiate(objectPrefab, position, Quaternion.identity);
 
         hiddenObj.GetComponent<SpriteRenderer>().sprite = hiddenSprite;
