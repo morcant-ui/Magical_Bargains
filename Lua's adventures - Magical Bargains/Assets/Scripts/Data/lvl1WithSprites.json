@@ -9,7 +9,8 @@
             "artifactSprite": "artifact1",
             "isMagnifierDefective": true,
             "magnifierSprite":"hidden-artifact1",
-            "thermoColor": "#FF0000"
+            "thermoColor": "#FF0000",
+            "artifactOffer": "100"
         },
         {
             "clientID": "client_02",
@@ -19,7 +20,8 @@
             "artifactID": "item_02",
             "artifactSprite": "artifact2",
             "cameraSprite":"hidden-artifact2",
-            "thermoColor": "#0000FF"
+            "thermoColor": "#0000FF",
+            "artifactOffer": "100"
         },
         {
             "clientID": "client_03",
@@ -28,7 +30,8 @@
             "dialogueB":"dia3b",
             "artifactID": "item_03",
             "artifactSprite": "artifact3",
-            "thermoColor": "#FFFFFF"
+            "thermoColor": "#FFFFFF",
+            "artifactOffer": "100"
         
         },
         {
@@ -38,7 +41,8 @@
             "dialogueB":"dia4b",
             "artifactID": "item_04",
             "artifactSprite": "artifact1",
-            "thermoColor":"#FFFF00"
+            "thermoColor":"#FFFF00",
+            "artifactOffer": "100"
         },
         {
             "clientID": "client_05",
@@ -47,7 +51,8 @@
             "dialogueB":"dia5b",
             "artifactID": "item_05",
             "artifactSprite": "artifact3",
-            "thermoColor":"#FFFF00"
+            "thermoColor":"#FFFF00",
+            "artifactOffer": "100"
         }
     ]
 }

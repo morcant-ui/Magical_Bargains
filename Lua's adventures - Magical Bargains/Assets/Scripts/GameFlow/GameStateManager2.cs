@@ -61,9 +61,15 @@ public class GameStateManager2 : MonoBehaviour
     {
         state = "bargain";
         // move Desk and stuff for layout change
-        //hide tools
+        //hide tools + show bargaining buttons
         DialogueManager.GetInstance().Reset();
         levelManager.PrepareBargainState();
 
+    }
+
+    public void LoadBargainDoneState()
+    {
+        state = "bargainDone";
+        levelManager.FinishBargainState();
     }
 }

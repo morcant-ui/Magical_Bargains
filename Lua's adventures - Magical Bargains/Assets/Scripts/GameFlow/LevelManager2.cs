@@ -132,7 +132,13 @@ public class LevelManager2 : MonoBehaviour
             Destroy(obj);
         }
 
+            Debug.Log("i wait for end of bargain now");
+        
+    }
 
+    public void FinishBargainState()
+    {
+        Debug.Log("I am done with bargain yayy");    
         // Load Dialogue B
         string dialogueNameB = currentClient.dialogueB;
         TextAsset dialogueB = Resources.Load<TextAsset>(Path.Combine(dialogueBPathName, dialogueNameB));

@@ -17,6 +17,11 @@ public class ProperButtonManager : MonoBehaviour
     [SerializeField] private Button cameraButton;
     [SerializeField] private Button thermometerButton;
 
+    [Header("Bargain Buttons")]
+    [SerializeField] private Button acceptButton;
+    [SerializeField] private Button addButton;
+    [SerializeField] private Button minusButton;
+
     [SerializeField] private GameObject magnifier;
     [SerializeField] private CameraScript cameraScript;
     [SerializeField] private GameObject thermometer;
@@ -25,6 +30,8 @@ public class ProperButtonManager : MonoBehaviour
     private bool magnifierButtonActivated = false;
     private bool cameraButtonActivated = false;
     private bool thermometerButtonActivated = false;
+
+    private bool offerAccepted = false;
 
 
 
@@ -41,6 +48,13 @@ public class ProperButtonManager : MonoBehaviour
         introButton.gameObject.SetActive(false);
         introButton.interactable = false;
 
+        acceptButton.gameObject.SetActive(false);
+        acceptButton.interactable = false;
+        addButton.gameObject.SetActive(false);
+        addButton.interactable = false;
+        minusButton.gameObject.SetActive(false);
+        minusButton.interactable = false;
+
         inspectButton.onClick.AddListener(OnInspectButtonClick);
         bargainButton.onClick.AddListener(OnBargainButtonClick);
         introButton.onClick.AddListener(OnIntroButtonClick);
@@ -50,6 +64,10 @@ public class ProperButtonManager : MonoBehaviour
         cameraButton.onClick.AddListener(OnCameraButtonClick);
         thermometerButton.onClick.AddListener(OnThermometerButtonClick);
         thermometer.SetActive(false);
+
+        acceptButton.onClick.AddListener(OnAcceptOfferButtonClick);
+        addButton.onClick.AddListener(OnBargainButtonClick);
+        minusButton.onClick.AddListener(OnBargainButtonClick);
 
     }
 
@@ -66,6 +84,22 @@ public class ProperButtonManager : MonoBehaviour
         // load bargain state
         GameStateManager2.GetInstance().LoadBargainState();
         EventSystem.current.SetSelectedGameObject(null);
+
+        magnifier.gameObject.SetActive(false);
+        cameraScript.Abort();
+        cameraButtonActivated = false;
+        magnifierButtonActivated = false;
+        thermometer.gameObject.SetActive(false);
+        thermometerButtonActivated = false;
+        
+    }
+
+    public void OnAcceptOfferButtonClick(){
+        
+        offerAccepted = true;
+
+        GameStateManager2.GetInstance().LoadBargainDoneState();
+        
 
         magnifier.gameObject.SetActive(false);
         cameraScript.Abort();
@@ -150,6 +184,8 @@ public class ProperButtonManager : MonoBehaviour
 
         bool isToolsActive = false;
 
+        bool bargainInProgress = false;
+
         // if state is intro and dialogue is finished -> show inspect button
         if (currentState == "intro" && DialogueManager.GetInstance().dialogueIsFinished)
         {
@@ -163,8 +199,15 @@ public class ProperButtonManager : MonoBehaviour
             isToolsActive = true;
         }
 
-        if (currentState == "bargain" && DialogueManager.GetInstance().dialogueIsFinished)
+        if (currentState == "bargain" && !offerAccepted){
+           
+            bargainInProgress = true;
+        }
+
+        if (currentState == "bargainDone" && DialogueManager.GetInstance().dialogueIsFinished)
         {
+            offerAccepted = false;
+            bargainInProgress = false;
             isIntroActive = true;
             
 
@@ -178,6 +221,14 @@ public class ProperButtonManager : MonoBehaviour
 
         introButton.gameObject.SetActive(isIntroActive);
         introButton.interactable = isIntroActive;
+
+        acceptButton.gameObject.SetActive(bargainInProgress);
+        addButton.gameObject.SetActive(bargainInProgress);
+        minusButton.gameObject.SetActive(bargainInProgress);
+        acceptButton.interactable = bargainInProgress;
+        addButton.interactable = bargainInProgress;
+        minusButton.interactable = bargainInProgress;
+         
 
         magnifierButton.gameObject.SetActive(isToolsActive);
         magnifierButton.interactable = !cameraButtonActivated;

@@ -15,6 +15,7 @@ public class ClientData
     public string cameraSprite;
     public string thermoColor;
     public string thermoIntensity;
+    public string artifactOffer;
 }
 
 [System.Serializable]
