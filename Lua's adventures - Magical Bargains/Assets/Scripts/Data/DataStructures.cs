@@ -16,6 +16,7 @@ public class ClientData
     public string thermoColor;
     public string thermoIntensity;
     public string artifactOffer;
+    public string minOfferAccepted;
 }
 
 [System.Serializable]

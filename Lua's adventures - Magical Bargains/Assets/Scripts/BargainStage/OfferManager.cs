@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class OfferDialogsManager : MonoBehaviour
+public class OfferManager : MonoBehaviour
 {
 
     [Header("Dialogue UI")]
     [SerializeField] private GameObject offerPanel;
     [SerializeField] private TextMeshProUGUI offerText;
+    [SerializeField] private LevelManager2 levelManager;
 
 
     private int originalOffer;
@@ -19,7 +20,7 @@ public class OfferDialogsManager : MonoBehaviour
     public void StartBargain()
     {
         isBargainOn = true;
-        originalOffer = 100;
+        originalOffer = int.Parse(levelManager.CurrentOffer);
         yourOffer = originalOffer;
         UpdateOfferDisplay();   
     }

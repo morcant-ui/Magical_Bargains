@@ -10,7 +10,8 @@
             "isMagnifierDefective": true,
             "magnifierSprite":"hidden-artifact1",
             "thermoColor": "#FF0000",
-            "artifactOffer": "100"
+            "artifactOffer": "200",
+            "minOfferAccepter": "70"
         },
         {
             "clientID": "client_02",
@@ -21,7 +22,8 @@
             "artifactSprite": "artifact2",
             "cameraSprite":"hidden-artifact2",
             "thermoColor": "#0000FF",
-            "artifactOffer": "100"
+            "artifactOffer": "100",
+            "minOfferAccepter": "80"
         },
         {
             "clientID": "client_03",
@@ -31,7 +33,8 @@
             "artifactID": "item_03",
             "artifactSprite": "artifact3",
             "thermoColor": "#FFFFFF",
-            "artifactOffer": "100"
+            "artifactOffer": "50",
+            "minOfferAccepter": "20"
         
         },
         {
@@ -42,7 +45,8 @@
             "artifactID": "item_04",
             "artifactSprite": "artifact1",
             "thermoColor":"#FFFF00",
-            "artifactOffer": "100"
+            "artifactOffer": "250",
+            "minOfferAccepter": "200"
         },
         {
             "clientID": "client_05",
@@ -52,7 +56,8 @@
             "artifactID": "item_05",
             "artifactSprite": "artifact3",
             "thermoColor":"#FFFF00",
-            "artifactOffer": "100"
+            "artifactOffer": "80",
+            "minOfferAccepter": "10"
         }
     ]
 }

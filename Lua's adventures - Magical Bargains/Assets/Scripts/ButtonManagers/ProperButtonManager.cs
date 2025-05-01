@@ -17,7 +17,7 @@ public class ProperButtonManager : MonoBehaviour
     [SerializeField] private Button addButton;
     [SerializeField] private Button minusButton;
 
-    [SerializeField] private OfferDialogsManager offerDialogsManager;
+    [SerializeField] private OfferManager offerManager;
 
     [Header("Tools Buttons")]
     [SerializeField] private Button magnifierButton;
@@ -88,7 +88,7 @@ public class ProperButtonManager : MonoBehaviour
         GameStateManager2.GetInstance().LoadBargainState();
         EventSystem.current.SetSelectedGameObject(null);
         
-        offerDialogsManager.StartBargain();
+        offerManager.StartBargain();
 
         magnifier.gameObject.SetActive(false);
         cameraScript.Abort();
@@ -99,7 +99,7 @@ public class ProperButtonManager : MonoBehaviour
     }
 
     public void OnAddOfferButtonClick(){
-        offerDialogsManager.ChangeOffer(10);
+        offerManager.ChangeOffer(10);
 
         magnifier.gameObject.SetActive(false);
         cameraScript.Abort();
@@ -110,7 +110,7 @@ public class ProperButtonManager : MonoBehaviour
     }
 
     public void OnReduceOfferButtonClick(){
-        offerDialogsManager.ChangeOffer(-10);
+        offerManager.ChangeOffer(-10);
 
         magnifier.gameObject.SetActive(false);
         cameraScript.Abort();
@@ -123,7 +123,7 @@ public class ProperButtonManager : MonoBehaviour
         
         offerAccepted = true;
 
-        offerDialogsManager.AcceptOffer();
+        offerManager.AcceptOffer();
 
         GameStateManager2.GetInstance().LoadBargainDoneState();
         
