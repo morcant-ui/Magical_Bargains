@@ -10,7 +10,6 @@ public class OfferManager : MonoBehaviour
     [SerializeField] private GameObject offerPanel;
     [SerializeField] private TextMeshProUGUI offerText;
 
-
     private int originalOffer;
     private int yourOffer;
 
@@ -18,6 +17,7 @@ public class OfferManager : MonoBehaviour
     // Start is called before the first frame update
     public void StartBargain(string currentOffer)
     {
+
         isBargainOn = true;
         originalOffer = int.Parse(currentOffer);
         yourOffer = originalOffer;

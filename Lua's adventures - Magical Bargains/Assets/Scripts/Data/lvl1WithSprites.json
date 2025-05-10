@@ -48,6 +48,7 @@
             "dialogueC":"dia4c",
             "artifactID": "item_04",
             "artifactSprite": "artifact1",
+            "magnifierSprite":"hidden-artifact4",
             "thermoColor":"#FFFF00",
             "artifactOffer": "250",
             "minOfferAccepted": "250"

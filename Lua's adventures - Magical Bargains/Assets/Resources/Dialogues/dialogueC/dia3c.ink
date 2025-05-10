@@ -1,1 +1,1 @@
-﻿Deal is cancelled.
+Deal is cancelled.

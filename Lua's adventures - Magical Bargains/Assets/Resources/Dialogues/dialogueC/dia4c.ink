@@ -1,1 +1,1 @@
-﻿If you do not have enough money to run your shop just say so, don't make me lose time!
+If you do not have enough money to run your shop just say so, don't make me lose time!

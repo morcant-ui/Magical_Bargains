@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
+
 
 public class LevelManager2 : MonoBehaviour
 {
@@ -19,7 +21,11 @@ public class LevelManager2 : MonoBehaviour
     [Header("Offers")]
     [SerializeField] private OfferManager offerManager;
 
+    [Header("Savings Indication")]
+    [SerializeField] private GameObject savingsImage;
+    [SerializeField] private TextMeshProUGUI savingsText;
 
+    private double savings;
 
     private Queue<ClientData> clientQueue; // this queue will let us iterate thru game data
     private ClientData currentClient; // index to keep track of current client/artifact
@@ -134,8 +140,16 @@ public class LevelManager2 : MonoBehaviour
         {
             Destroy(obj);
         }
-            string currentOffer = currentClient.artifactOffer;
-            offerManager.StartBargain(currentOffer);
+
+
+        savings = GameStateManager2.GetInstance().CheckMoney();
+        savingsText.text = "$" + savings.ToString("00.00");
+
+        savingsImage.SetActive(true);
+
+        string currentOffer = currentClient.artifactOffer;
+        Debug.Log(currentOffer);
+        offerManager.StartBargain(currentOffer);
     }
 
     public void FinishBargainState()
@@ -143,13 +157,28 @@ public class LevelManager2 : MonoBehaviour
         int finalOffer = offerManager.FinalOffer;
         int minOfferAccepted = int.Parse(currentClient.minOfferAccepted);
 
-        if (finalOffer >= minOfferAccepted)
+        if (finalOffer >= minOfferAccepted && savings >= finalOffer)
         {
+            Debug.Log("offer went through !");
+
+            savings = GameStateManager2.GetInstance().RetrieveMoney(finalOffer);
+            savingsText.text = "$" + savings.ToString("00.00");
+
             // Load Dialogue B
             string dialogueNameB = currentClient.dialogueB;
             TextAsset dialogueB = Resources.Load<TextAsset>(Path.Combine(dialogueBPathName, dialogueNameB));
 
             DialogueManager.GetInstance().EnterDialogueMode(dialogueB);
+
+        } else if (finalOffer >= minOfferAccepted && savings < finalOffer) {
+            Debug.Log("You are trying to retrieve " + finalOffer + " gold, but you only have " + savings + " in grandpa's bank account !");
+
+            savings = GameStateManager2.GetInstance().RetrieveMoney(finalOffer);
+            savingsText.text = "$" + savings.ToString("00.00");
+
+            TextAsset NotEnoughMoneyDialogue = Resources.Load<TextAsset>(Path.Combine("Dialogues", "NotEnoughMoney"));
+
+            DialogueManager.GetInstance().EnterDialogueMode(NotEnoughMoneyDialogue);
         }
         else
         {

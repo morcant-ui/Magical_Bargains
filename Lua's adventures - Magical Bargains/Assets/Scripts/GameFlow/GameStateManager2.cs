@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 public class GameStateManager2 : MonoBehaviour
 {
 
+    private static double savings = 60.0;
+
     private string state;
 
     private static GameStateManager2 instance;
@@ -71,5 +73,24 @@ public class GameStateManager2 : MonoBehaviour
     {
         state = "bargainDone";
         levelManager.FinishBargainState();
+    }
+
+
+    public double RetrieveMoney(double amount) {
+        if (savings >= amount)
+        {
+
+            savings -= amount;
+            return savings;
+
+        }
+        else {
+            return savings;
+        }
+
+    }
+
+    public double CheckMoney() {
+        return savings;
     }
 }
