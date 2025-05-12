@@ -256,16 +256,13 @@ public class ButtonManager : MonoBehaviour
          
 
         magnifierButton.gameObject.SetActive(isToolsActive);
-        magnifierButton.interactable = !cameraButtonActivated;
-        magnifierButton.interactable = !thermometerButtonActivated;
+        magnifierButton.interactable = !(cameraButtonActivated || thermometerButtonActivated);
 
         cameraButton.gameObject.SetActive(isToolsActive);
-        cameraButton.interactable = !magnifierButtonActivated;
-        cameraButton.interactable = !thermometerButtonActivated;
+        cameraButton.interactable = !(magnifierButtonActivated || thermometerButtonActivated);
 
         thermometerButton.gameObject.SetActive(isToolsActive);
-        thermometerButton.interactable = !magnifierButtonActivated;
-        thermometerButton.interactable = !cameraButtonActivated;
+        thermometerButton.interactable = !(magnifierButtonActivated || cameraButtonActivated);
 
         if (!magnifierButtonActivated)
         {
