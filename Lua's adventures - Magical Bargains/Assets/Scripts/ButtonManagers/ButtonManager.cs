@@ -150,7 +150,7 @@ public class ButtonManager : MonoBehaviour
         if (DialogueManager.GetInstance().dialogueIsFinished) 
         {
             // load intro state
-            GameStateManager.GetInstance().LoadIntroState();
+            GameStateManager.GetInstance().LoadClientIntro();
             EventSystem.current.SetSelectedGameObject(null);
 
             magnifier.gameObject.SetActive(false);

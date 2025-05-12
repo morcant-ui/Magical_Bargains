@@ -12,6 +12,8 @@ public class GameStateManager : MonoBehaviour
 
     private static GameStateManager instance;
 
+    private bool playIntroCutscene = true;
+
     private static double savings = 80.0;
 
     private string state;
@@ -56,9 +58,16 @@ public class GameStateManager : MonoBehaviour
     public void LoadGameIntro() {
         state = "game intro";
 
-        gameIntro.ShowIntroCutscene();
-
         levelManager.LoadGameData();
+
+        if (playIntroCutscene)
+        {
+            gameIntro.ShowIntroCutscene();
+        } else {
+            LoadLevelIntro();
+        }
+
+        
     }
 
     public void LoadLevelIntro() {
@@ -71,8 +80,10 @@ public class GameStateManager : MonoBehaviour
 
     public void LoadClientIntro() {
         state = "client intro";
-        Debug.Log("------we arrived here !!");
         grandpa.SetActive(false);
+
+        DialogueManager.GetInstance().Reset();
+        levelManager.LoadNextClient();
     }
 
     public void LoadIntroState() 

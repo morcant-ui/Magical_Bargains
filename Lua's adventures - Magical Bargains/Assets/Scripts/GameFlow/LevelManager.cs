@@ -55,6 +55,7 @@ public class LevelManager : MonoBehaviour
     private string menuScene = "SimpleMenu";
 
     private bool processingClients = true;
+    private bool processingLevels = true;
 
     void Start()
     {
@@ -66,20 +67,14 @@ public class LevelManager : MonoBehaviour
 
     void Update()
     {
-        if (!processingClients)
-        {
-            blackScreen.SetActive(true);
-            StartCoroutine(GoBackToMenuAfterDelay(0.5f));
-        }
+
     }
 
     // THIS NEEDS TO RUN ONCE AT THE BEGINNING OF THE GAME
     public void LoadGameData()
     {
         ListLevels listLevels = JsonUtility.FromJson<ListLevels>(gameDataJSON.text);
-        Debug.Log(listLevels.levelData);
         levelQueue = new Queue<LevelData>(listLevels.levelData);
-        Debug.Log(levelQueue.Count);
         
     }
 
@@ -90,8 +85,10 @@ public class LevelManager : MonoBehaviour
         // if level queue is empty then the game is finished
         if (levelQueue.Count == 0) {
             // GAME IS DONE
-            
-        }
+            Debug.Log("--------Game is done !!");
+            GoBackToMenuWithoutDelay();
+            return;
+        } 
 
         // else: we dequeue and retrieve the JSON file for the list of clients of this level
         currentLevel = levelQueue.Dequeue();
@@ -103,8 +100,9 @@ public class LevelManager : MonoBehaviour
         ListClients listClients = JsonUtility.FromJson<ListClients>(clientDataJSON.text);
         clientQueue = new Queue<ClientData>(listClients.clients);
 
-        // the level starts with this next function:
-        // Note: if we want the grandpa to show up before each level, run another function before this one
+        processingClients = true;
+
+        // make grandpa talk before opening the shop
         string grandpaDialogueName = currentLevel.grandpaIntroDialogue;
         TextAsset grandpaIntroDialogue = Resources.Load<TextAsset>(Path.Combine(grandpaDialoguesPathName, grandpaDialogueName));
 
@@ -115,7 +113,8 @@ public class LevelManager : MonoBehaviour
     // THIS NEEDS TO RUN ONCE FOR EACH CLIENT FOR EACH LEVEL 
     public void LoadNextClient()
     {
-
+        DialogueManager.GetInstance().Reset();
+        bool bo = DialogueManager.GetInstance().dialogueIsFinished;
         // after every processed client we destroy them and reset dialogueManager
         if (currentClient != null)
         {
@@ -127,6 +126,11 @@ public class LevelManager : MonoBehaviour
         {
             Debug.Log("All clients processed.");
             processingClients = false;
+
+            currentClient = null;
+            currentLevel = null;
+
+            StartCoroutine(NextLevelAfterDelay(0.5f));
             return;
             // reset current level current client and the client queue
         }
@@ -258,7 +262,10 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    // once client queue is done: blackscreen for a few seconds then go back to menu
+    //// once LEVEL queue is done: blackscreen for a few seconds then go back to menu
+    private void GoBackToMenuWithoutDelay() {
+        SceneManager.LoadScene(menuScene);
+    }
     IEnumerator GoBackToMenuAfterDelay(float delay)
     {
         
@@ -268,8 +275,19 @@ public class LevelManager : MonoBehaviour
     }
 
 
+    // once client queue is done: blackscreen for a few seconds then go back to menu
+    IEnumerator NextLevelAfterDelay(float delay)
+    {
+        blackScreen.SetActive(true);
 
+        yield return new WaitForSeconds(delay);
 
+        if (levelQueue.Count != 0 ) {
+            blackScreen.SetActive(false);
+        }
+        
+        GameStateManager.GetInstance().LoadLevelIntro();
+    }
 
 
 

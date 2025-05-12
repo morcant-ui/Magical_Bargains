@@ -5932,6 +5932,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Thermometer
       objectReference: {fileID: 0}
+    - target: {fileID: 7984928347777563908, guid: 8b585118c571dee4193eec2a4a0d09f4, type: 3}
+      propertyPath: m_SortingOrder
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 7984928347777563909, guid: 8b585118c571dee4193eec2a4a0d09f4, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -5975,6 +5979,10 @@ PrefabInstance:
     - target: {fileID: 7984928347777563909, guid: 8b585118c571dee4193eec2a4a0d09f4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7984928348845922372, guid: 8b585118c571dee4193eec2a4a0d09f4, type: 3}
+      propertyPath: m_SortingOrder
+      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8b585118c571dee4193eec2a4a0d09f4, type: 3}

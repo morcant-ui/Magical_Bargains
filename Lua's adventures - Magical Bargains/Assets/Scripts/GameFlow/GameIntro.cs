@@ -87,7 +87,6 @@ public class GameIntro : MonoBehaviour
     }
 
     private void ContinueStory() {
-        Debug.Log(currentStory.canContinue);
         if (currentStory.canContinue)
         {
             string nextLine = currentStory.Continue();

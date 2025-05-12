@@ -5,8 +5,8 @@
             "grandpaIntroDialogue":"gid1"
         },
         {
-            "listClientsName":"lvl2"
-        },
-        {}
+            "listClientsName":"lvl2",
+            "grandpaIntroDialogue":"gid2"
+        }
     ]
 }
