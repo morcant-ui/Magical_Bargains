@@ -6,10 +6,11 @@ using UnityEngine.SceneManagement;
 public class GameStateManager : MonoBehaviour
 {
     [SerializeField] private LevelManager levelManager;
+    [SerializeField] private GameIntro gameIntro;
 
     private static GameStateManager instance;
 
-    private static double savings = 60.0;
+    private static double savings = 80.0;
 
     private string state;
 
@@ -28,8 +29,6 @@ public class GameStateManager : MonoBehaviour
     private void Awake()
     {
 
-        state = "intro";
-
         if (instance != null && instance != this)
         {
             Destroy(this.gameObject); // kill extra copies
@@ -39,19 +38,31 @@ public class GameStateManager : MonoBehaviour
 
             instance = this;
         }
-
-        
     }
 
     public static GameStateManager GetInstance() {
         return instance;
     }
 
-
-    public string GetState() {
-        return state;
+    private void Start() {
+        LoadGameIntro();
     }
 
+
+    ///////////////////////////////////////////////
+
+    public void LoadGameIntro() {
+        state = "game intro";
+        gameIntro.ShowIntroCutscene();
+    }
+
+    public void LoadLevelIntro() {
+        state = "level intro";
+        DialogueManager.GetInstance().Reset();
+        levelManager.LoadLevelIntro();
+    }
+
+    public void LoadClientIntro() { }
 
     public void LoadIntroState() 
     {
@@ -84,6 +95,15 @@ public class GameStateManager : MonoBehaviour
     {
         state = "bargainDone";
         levelManager.FinishBargainState();
+    }
+
+
+
+    /////////////////////////////////
+
+    public string GetState()
+    {
+        return state;
     }
 
 

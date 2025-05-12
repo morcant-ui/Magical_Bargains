@@ -21,7 +21,37 @@ public class ClientData
 }
 
 [System.Serializable]
-public class LevelData
+public class ListClients
 {
     public List<ClientData> clients;
+}
+
+
+[System.Serializable]
+public class LevelData
+{
+    public string listClientsName;
+    public int max_time;
+}
+
+
+[System.Serializable]
+public class ListLevels
+{
+    public List<LevelData> levelData;
+}
+
+
+
+[System.Serializable]
+public class CutsceneData
+{
+    public List<CutsceneImageData> imageNames;
+    public string textName;
+}
+
+[System.Serializable]
+public class CutsceneImageData
+{
+    public string imageName;
 }

@@ -212,7 +212,7 @@ public class ButtonManager : MonoBehaviour
         bool bargainInProgress = false;
 
         // if state is intro and dialogue is finished -> show inspect button
-        if (currentState == "intro" && DialogueManager.GetInstance().dialogueIsFinished)
+        if (currentState == "level intro" && DialogueManager.GetInstance().dialogueIsFinished)
         {
             isInspectActive = true;
         }

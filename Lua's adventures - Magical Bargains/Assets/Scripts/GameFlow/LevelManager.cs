@@ -9,7 +9,7 @@ using TMPro;
 public class LevelManager : MonoBehaviour
 {
     [Header("Game Data")]
-    [SerializeField] private TextAsset levelDataJSON;
+    [SerializeField] private TextAsset gameDataJSON;
 
     [Header("Assets Spawners")]
     [SerializeField] private ClientSpawner clientSpawner;
@@ -27,6 +27,9 @@ public class LevelManager : MonoBehaviour
 
     private double savings;
 
+    private Queue<LevelData> levelQueue; // this queue will let us iterate thru game data
+    private LevelData currentLevel; // index to keep track of current client/artifact
+
     private Queue<ClientData> clientQueue; // this queue will let us iterate thru game data
     private ClientData currentClient; // index to keep track of current client/artifact
 
@@ -35,6 +38,8 @@ public class LevelManager : MonoBehaviour
 
     private string artifactSpriteName;
     private bool hadDefects;
+
+    private string JSONPathName = "JSON";
 
     private string spritePathName = "Sprites";
     private string dialogueAPathName = "Dialogues/dialogueA";
@@ -48,8 +53,8 @@ public class LevelManager : MonoBehaviour
     void Start()
     {
         blackScreen.SetActive(false);
-        LoadLevelData();
-        LoadNextClient();
+        //LoadGameData();
+        //LoadLevelIntro();
         //GameStateManager.GetInstance().LoadIntroState();
     }
 
@@ -62,11 +67,24 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    void LoadLevelData()
+    void LoadGameData()
     {
-        LevelData levelData = JsonUtility.FromJson<LevelData>(levelDataJSON.text);
-        clientQueue = new Queue<ClientData>(levelData.clients);
+        ListLevels listLevels = JsonUtility.FromJson<ListLevels>(gameDataJSON.text);
+        levelQueue = new Queue<LevelData>(listLevels.levelData);
+
+        currentLevel = levelQueue.Dequeue();
     }
+
+    public void LoadLevelIntro()
+    {
+        //string currentLevelName = currentLevel.listClientsName;
+        //TextAsset clientDataJSON = Resources.Load<TextAsset>(Path.Combine(JSONPathName, currentLevelName))
+
+        ListClients listClients = JsonUtility.FromJson<ListClients>(gameDataJSON.text);
+        clientQueue = new Queue<ClientData>(listClients.clients);
+        LoadNextClient();
+    }
+
 
     public void LoadNextClient()
     {
@@ -91,12 +109,6 @@ public class LevelManager : MonoBehaviour
         // retreive necessary information from game data
         string clientSpriteName = currentClient.clientSprite;
         string dialogueNameA = currentClient.dialogueA;
-
-
-
-        
-
-        
 
 
 
