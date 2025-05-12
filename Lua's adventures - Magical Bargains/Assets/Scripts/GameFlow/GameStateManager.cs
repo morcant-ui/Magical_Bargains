@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class GameStateManager : MonoBehaviour
 {
+    [SerializeField] private GameObject grandpa;
+
     [SerializeField] private LevelManager levelManager;
     [SerializeField] private GameIntro gameIntro;
 
@@ -53,16 +55,25 @@ public class GameStateManager : MonoBehaviour
 
     public void LoadGameIntro() {
         state = "game intro";
+
         gameIntro.ShowIntroCutscene();
+
+        levelManager.LoadGameData();
     }
 
     public void LoadLevelIntro() {
         state = "level intro";
         DialogueManager.GetInstance().Reset();
-        levelManager.LoadLevelIntro();
+
+        grandpa.SetActive(true);
+        levelManager.LoadNextLevel();
     }
 
-    public void LoadClientIntro() { }
+    public void LoadClientIntro() {
+        state = "client intro";
+        Debug.Log("------we arrived here !!");
+        grandpa.SetActive(false);
+    }
 
     public void LoadIntroState() 
     {

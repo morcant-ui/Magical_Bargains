@@ -8,6 +8,7 @@ public class ButtonManager : MonoBehaviour
 {
 
     [Header("State Buttons")]
+    [SerializeField] private Button openShopButton;
     [SerializeField] private Button inspectButton;
     [SerializeField] private Button bargainButton;
     [SerializeField] private Button introButton;
@@ -42,6 +43,9 @@ public class ButtonManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        openShopButton.gameObject.SetActive(true);
+        openShopButton.interactable = true;
+
         inspectButton.gameObject.SetActive(true);
         inspectButton.interactable = true;
 
@@ -58,6 +62,7 @@ public class ButtonManager : MonoBehaviour
         minusButton.gameObject.SetActive(false);
         minusButton.interactable = false;
 
+        openShopButton.onClick.AddListener(OnOpenShopClick);
         inspectButton.onClick.AddListener(OnInspectButtonClick);
         bargainButton.onClick.AddListener(OnBargainButtonClick);
         introButton.onClick.AddListener(OnIntroButtonClick);
@@ -72,6 +77,13 @@ public class ButtonManager : MonoBehaviour
         addButton.onClick.AddListener(OnAddOfferButtonClick);
         minusButton.onClick.AddListener(OnReduceOfferButtonClick);
 
+    }
+
+    public void OnOpenShopClick() {
+        if (DialogueManager.GetInstance().dialogueIsFinished) {
+            GameStateManager.GetInstance().LoadClientIntro();
+            EventSystem.current.SetSelectedGameObject(null);
+        }
     }
 
     public void OnInspectButtonClick() {
@@ -203,6 +215,7 @@ public class ButtonManager : MonoBehaviour
 
         string currentState = GameStateManager.GetInstance().GetState();
 
+        bool isOpenShopActive = false;
         bool isInspectActive = false;
         bool isBargainActive = false;
         bool isIntroActive = false;
@@ -211,8 +224,12 @@ public class ButtonManager : MonoBehaviour
 
         bool bargainInProgress = false;
 
+        if (currentState == "level intro" && DialogueManager.GetInstance().dialogueIsFinished) {
+            isOpenShopActive = true;
+        }
+
         // if state is intro and dialogue is finished -> show inspect button
-        if (currentState == "level intro" && DialogueManager.GetInstance().dialogueIsFinished)
+        if (currentState == "client intro" && DialogueManager.GetInstance().dialogueIsFinished)
         {
             isInspectActive = true;
         }
@@ -237,6 +254,9 @@ public class ButtonManager : MonoBehaviour
             
 
         }
+
+        openShopButton.gameObject.SetActive(isOpenShopActive);
+        openShopButton.interactable = isOpenShopActive;
 
         inspectButton.gameObject.SetActive(isInspectActive);
         inspectButton.interactable = isInspectActive;

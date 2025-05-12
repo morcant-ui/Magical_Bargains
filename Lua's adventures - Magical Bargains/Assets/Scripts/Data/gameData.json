@@ -1,0 +1,12 @@
+{
+    "levelData": [
+        {
+            "listClientsName":"lvl1",
+            "grandpaIntroDialogue":"gid1"
+        },
+        {
+            "listClientsName":"lvl2"
+        },
+        {}
+    ]
+}

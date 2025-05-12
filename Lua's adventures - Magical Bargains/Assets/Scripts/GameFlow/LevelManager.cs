@@ -15,8 +15,10 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private ClientSpawner clientSpawner;
     [SerializeField] private ArtifactSpawner artifactSpawner;
 
-    [Header("black screen UI")]
+    [Header("Stuff")]
     [SerializeField] private GameObject blackScreen;
+
+    
 
     [Header("Offers")]
     [SerializeField] private OfferManager offerManager;
@@ -39,12 +41,16 @@ public class LevelManager : MonoBehaviour
     private string artifactSpriteName;
     private bool hadDefects;
 
-    private string JSONPathName = "JSON";
+    private string JSONPathName = "ClientLists";
 
     private string spritePathName = "Sprites";
+  
     private string dialogueAPathName = "Dialogues/dialogueA";
     private string dialogueBPathName = "Dialogues/dialogueB";
     private string dialogueCPathName = "Dialogues/dialogueC";
+
+    private string grandpaDialoguesPathName = "Dialogues/grandpa";
+
 
     private string menuScene = "SimpleMenu";
 
@@ -67,25 +73,46 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    void LoadGameData()
+    // THIS NEEDS TO RUN ONCE AT THE BEGINNING OF THE GAME
+    public void LoadGameData()
     {
         ListLevels listLevels = JsonUtility.FromJson<ListLevels>(gameDataJSON.text);
+        Debug.Log(listLevels.levelData);
         levelQueue = new Queue<LevelData>(listLevels.levelData);
-
-        currentLevel = levelQueue.Dequeue();
+        Debug.Log(levelQueue.Count);
+        
     }
 
-    public void LoadLevelIntro()
+    // THIS NEEDS TO RUN ONCE FOR EACH LEVEL
+    public void LoadNextLevel()
     {
-        //string currentLevelName = currentLevel.listClientsName;
-        //TextAsset clientDataJSON = Resources.Load<TextAsset>(Path.Combine(JSONPathName, currentLevelName))
 
-        ListClients listClients = JsonUtility.FromJson<ListClients>(gameDataJSON.text);
+        // if level queue is empty then the game is finished
+        if (levelQueue.Count == 0) {
+            // GAME IS DONE
+            
+        }
+
+        // else: we dequeue and retrieve the JSON file for the list of clients of this level
+        currentLevel = levelQueue.Dequeue();
+
+        string currentLevelName = currentLevel.listClientsName;
+        TextAsset clientDataJSON = Resources.Load<TextAsset>(Path.Combine(JSONPathName, currentLevelName));
+
+        // we load the client queue with updated information
+        ListClients listClients = JsonUtility.FromJson<ListClients>(clientDataJSON.text);
         clientQueue = new Queue<ClientData>(listClients.clients);
-        LoadNextClient();
+
+        // the level starts with this next function:
+        // Note: if we want the grandpa to show up before each level, run another function before this one
+        string grandpaDialogueName = currentLevel.grandpaIntroDialogue;
+        TextAsset grandpaIntroDialogue = Resources.Load<TextAsset>(Path.Combine(grandpaDialoguesPathName, grandpaDialogueName));
+
+        
+        DialogueManager.GetInstance().EnterDialogueMode(grandpaIntroDialogue);
     }
 
-
+    // THIS NEEDS TO RUN ONCE FOR EACH CLIENT FOR EACH LEVEL 
     public void LoadNextClient()
     {
 
@@ -101,6 +128,7 @@ public class LevelManager : MonoBehaviour
             Debug.Log("All clients processed.");
             processingClients = false;
             return;
+            // reset current level current client and the client queue
         }
 
         // if not done: pop the queue

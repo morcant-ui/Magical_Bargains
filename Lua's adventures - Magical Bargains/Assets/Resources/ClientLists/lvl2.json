@@ -1,0 +1,29 @@
+{
+    "clients": [
+        {
+            "clientID": "client_04",
+            "clientSprite": "client4",
+            "dialogueA":"dia4a",
+            "dialogueB":"dia4b",
+            "dialogueC":"dia4c",
+            "artifactID": "item_04",
+            "artifactSprite": "artifact1",
+            "magnifierSprite":"hidden-artifact4",
+            "thermoColor":"#FFFF00",
+            "artifactOffer": "250",
+            "minOfferAccepted": "250"
+        },
+        {
+            "clientID": "client_05",
+            "clientSprite": "client5",
+            "dialogueA":"dia5a",
+            "dialogueB":"dia5b",
+            "dialogueC":"dia5c",
+            "artifactID": "item_05",
+            "artifactSprite": "artifact3",
+            "thermoColor":"#FFFF00",
+            "artifactOffer": "20",
+            "minOfferAccepted": "10"
+        }
+    ]
+}

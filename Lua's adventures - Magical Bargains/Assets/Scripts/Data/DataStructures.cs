@@ -26,11 +26,13 @@ public class ListClients
     public List<ClientData> clients;
 }
 
+//////////////////////////////////////////////////////////////////////////
 
 [System.Serializable]
 public class LevelData
 {
     public string listClientsName;
+    public string grandpaIntroDialogue;
     public int max_time;
 }
 
@@ -41,7 +43,7 @@ public class ListLevels
     public List<LevelData> levelData;
 }
 
-
+//////////////////////////////////////////////////////////////////////////
 
 [System.Serializable]
 public class CutsceneData
