@@ -33,9 +33,10 @@ public class ArtifactSpawner : MonoBehaviour
         sr.sprite = sprite;
 
         // adapt bounding box
-        Vector2 S = sr.sprite.bounds.size;
-        obj.GetComponent<BoxCollider2D>().size = S;
-        //obj.GetComponent<BoxCollider2D>().offset = new Vector2((S.x / 2), 0);
+        //Vector2 S = sr.sprite.bounds.size;
+        //obj.GetComponent<BoxCollider2D>().size = S;
+
+        obj.AddComponent<PolygonCollider2D>();
 
         // adapt color and intensity for thermo
         Color thermometerColor = ColorUtility.TryParseHtmlString(thermoColor, out var colorInfo)
@@ -86,7 +87,5 @@ public class ArtifactSpawner : MonoBehaviour
 
         return obj;
     }
-
-
 
 }

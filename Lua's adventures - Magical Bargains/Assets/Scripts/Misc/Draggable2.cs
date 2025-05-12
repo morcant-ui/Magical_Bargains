@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Draggable2 : MonoBehaviour
 {
@@ -49,8 +50,15 @@ public class Draggable2 : MonoBehaviour
     }
 
 
-    private void OnMouseDown() {
-        offset = transform.position - Camera.main.ScreenToWorldPoint(Input.mousePosition); // diff from object center to mouse coords
+    private void OnMouseDown()
+    {
+        if (EventSystem.current.IsPointerOverGameObject())
+        {
+            // if pointer is over UI element, don't drag the sprite
+            return;
+        }
+
+        offset = transform.position - Camera.main.ScreenToWorldPoint(Input.mousePosition);
         held = true;
     }
 

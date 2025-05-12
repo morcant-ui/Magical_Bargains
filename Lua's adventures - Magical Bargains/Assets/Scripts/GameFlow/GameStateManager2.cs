@@ -5,14 +5,25 @@ using UnityEngine.SceneManagement;
 
 public class GameStateManager2 : MonoBehaviour
 {
+    [SerializeField] private LevelManager2 levelManager;
+
+    private static GameStateManager2 instance;
 
     private static double savings = 60.0;
 
     private string state;
 
-    private static GameStateManager2 instance;
+    // ALL STATES:
+        // "game intro"
+            // "level intro"
+                // "client intro"
+                // "inspect"
+                // "bargain"
+            // "client outro"
+        // "level outro"
+    // "game outro"
 
-    [SerializeField] private LevelManager2 levelManager;
+
 
     private void Awake()
     {
