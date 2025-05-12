@@ -55,7 +55,6 @@ public class LevelManager : MonoBehaviour
     private string menuScene = "SimpleMenu";
 
     private bool processingClients = true;
-    private bool processingLevels = true;
 
     void Start()
     {
@@ -88,7 +87,7 @@ public class LevelManager : MonoBehaviour
             Debug.Log("--------Game is done !!");
             GoBackToMenuWithoutDelay();
             return;
-        } 
+        }
 
         // else: we dequeue and retrieve the JSON file for the list of clients of this level
         currentLevel = levelQueue.Dequeue();
@@ -282,11 +281,16 @@ public class LevelManager : MonoBehaviour
 
         yield return new WaitForSeconds(delay);
 
-        if (levelQueue.Count != 0 ) {
+        if (levelQueue.Count != 0)
+        {
             blackScreen.SetActive(false);
+            GameStateManager.GetInstance().LoadLevelOutro();
+        }
+        else {
+            GameStateManager.GetInstance().LoadLevelIntro();
         }
         
-        GameStateManager.GetInstance().LoadLevelIntro();
+        
     }
 
 

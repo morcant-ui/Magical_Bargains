@@ -25,6 +25,8 @@ public class GameIntro : MonoBehaviour
 
     private string inputKey = "space";
 
+    private bool introActivated = false;
+
 
     void Update()
     {
@@ -33,8 +35,8 @@ public class GameIntro : MonoBehaviour
             return;
         }
 
-        if (isDialoguePlaying && Input.GetKeyDown(inputKey))
-        {   
+        if (introActivated && isDialoguePlaying && Input.GetKeyDown(inputKey))
+        {
             ContinueStory();
             NextImage();
         }
@@ -43,6 +45,8 @@ public class GameIntro : MonoBehaviour
 
 
     public void ShowIntroCutscene() {
+
+        introActivated = true;
 
         backgroundColor.SetActive(true);
 
@@ -104,8 +108,7 @@ public class GameIntro : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
 
         isDialoguePlaying = false;
-
-        
+        introActivated = false;
 
         GameStateManager.GetInstance().LoadLevelIntro();
         

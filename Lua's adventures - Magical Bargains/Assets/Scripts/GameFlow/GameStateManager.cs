@@ -9,6 +9,7 @@ public class GameStateManager : MonoBehaviour
 
     [SerializeField] private LevelManager levelManager;
     [SerializeField] private GameIntro gameIntro;
+    [SerializeField] private LevelOutro levelOutro;
 
     private static GameStateManager instance;
 
@@ -64,7 +65,7 @@ public class GameStateManager : MonoBehaviour
         {
             gameIntro.ShowIntroCutscene();
         } else {
-            LoadLevelIntro();
+            //LoadLevelIntro();
         }
 
         
@@ -86,13 +87,12 @@ public class GameStateManager : MonoBehaviour
         levelManager.LoadNextClient();
     }
 
+    // to delete (make sure it isnt refered anywhere before)
     public void LoadIntroState() 
     {
         state = "intro";
         DialogueManager.GetInstance().Reset();
         levelManager.LoadNextClient();
-        
-        //buttonManager.Reset();
     }
 
     public void LoadInspectState()
@@ -119,6 +119,11 @@ public class GameStateManager : MonoBehaviour
         levelManager.FinishBargainState();
     }
 
+
+    public void LoadLevelOutro() {
+        state = "level outro";
+        levelOutro.ShowLevelOutroScreen();
+    }
 
 
     /////////////////////////////////
