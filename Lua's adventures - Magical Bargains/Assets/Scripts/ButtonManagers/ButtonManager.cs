@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class ProperButtonManager : MonoBehaviour
+public class ButtonManager : MonoBehaviour
 {
 
     [Header("State Buttons")]
@@ -78,14 +78,14 @@ public class ProperButtonManager : MonoBehaviour
         if (DialogueManager.GetInstance().dialogueIsFinished) 
         {
             // load inspect state
-            GameStateManager2.GetInstance().LoadInspectState();
+            GameStateManager.GetInstance().LoadInspectState();
             EventSystem.current.SetSelectedGameObject(null);
         }
     }
 
     public void OnBargainButtonClick() {
         // load bargain state
-        GameStateManager2.GetInstance().LoadBargainState();
+        GameStateManager.GetInstance().LoadBargainState();
         EventSystem.current.SetSelectedGameObject(null);
 
         magnifier.gameObject.SetActive(false);
@@ -123,7 +123,7 @@ public class ProperButtonManager : MonoBehaviour
 
         offerManager.AcceptOffer();
 
-        GameStateManager2.GetInstance().LoadBargainDoneState();
+        GameStateManager.GetInstance().LoadBargainDoneState();
         
 
         magnifier.gameObject.SetActive(false);
@@ -138,7 +138,7 @@ public class ProperButtonManager : MonoBehaviour
         if (DialogueManager.GetInstance().dialogueIsFinished) 
         {
             // load intro state
-            GameStateManager2.GetInstance().LoadIntroState();
+            GameStateManager.GetInstance().LoadIntroState();
             EventSystem.current.SetSelectedGameObject(null);
 
             magnifier.gameObject.SetActive(false);
@@ -201,7 +201,7 @@ public class ProperButtonManager : MonoBehaviour
 
     void Update() {
 
-        string currentState = GameStateManager2.GetInstance().GetState();
+        string currentState = GameStateManager.GetInstance().GetState();
 
         bool isInspectActive = false;
         bool isBargainActive = false;

@@ -14,13 +14,4 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/ProperScene.unity
     guid: 522b61852c3b3c8439a83fdc7e2d2f9f
-  - enabled: 1
-    path: Assets/Scenes/tentative.unity
-    guid: 527a7bcbcbff08041978fa2fb14495ce
-  - enabled: 1
-    path: Assets/Scenes/TestDialogueMode.unity
-    guid: 984f6b984fc549845938ca4320f89909
-  - enabled: 1
-    path: Assets/Scenes/TestInspectMode.unity
-    guid: 831d7a22d0b410d4f8270ca15c564e69
   m_configObjects: {}

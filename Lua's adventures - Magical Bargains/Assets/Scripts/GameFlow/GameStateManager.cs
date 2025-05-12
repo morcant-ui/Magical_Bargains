@@ -5,15 +5,30 @@ using UnityEngine.SceneManagement;
 
 public class GameStateManager : MonoBehaviour
 {
+    [SerializeField] private LevelManager levelManager;
+
+    private static GameStateManager instance;
+
+    private static double savings = 60.0;
 
     private string state;
 
-    private static GameStateManager instance;
+    // ALL STATES:
+        // "game intro"
+            // "level intro"
+                // "client intro"
+                // "inspect"
+                // "bargain"
+            // "client outro"
+        // "level outro"
+    // "game outro"
+
+
 
     private void Awake()
     {
 
-
+        state = "intro";
 
         if (instance != null && instance != this)
         {
@@ -23,41 +38,70 @@ public class GameStateManager : MonoBehaviour
         {
 
             instance = this;
-            DontDestroyOnLoad(this.gameObject); // keep across scenes
         }
 
         
-    }
-
-    private void Start()
-    {
-        if (string.IsNullOrEmpty(state))
-        {
-
-            // THE FOLLOWING USE OF SCENE MANAGEMENT LIBRARY IS ONLY FOR TESTING STUFF, 
-            // WE SHOULD NOT BE CREATING AN INSTANCE RN FROM INSPECTION SCENE
-            string currentSceneName = SceneManager.GetActiveScene().name;
-            Debug.Log("Current scene: " + currentSceneName);
-
-            if (string.Equals(currentSceneName, "TestDialogueMode")) {
-                state = "dialogue1"; // Default state
-            } else if (string.Equals(currentSceneName, "TestInspectMode")) {
-                state = "examination";
-            }
-            
-        }
     }
 
     public static GameStateManager GetInstance() {
         return instance;
     }
 
-    public void SetState(string str) {
-        state = str;
-        Debug.Log("State set to: " + state);
-    }
 
     public string GetState() {
         return state;
+    }
+
+
+    public void LoadIntroState() 
+    {
+        state = "intro";
+        DialogueManager.GetInstance().Reset();
+        levelManager.LoadNextClient();
+        
+        //buttonManager.Reset();
+    }
+
+    public void LoadInspectState()
+    {
+        state = "inspect";
+        // move Desk and other stuff for layout change
+        levelManager.CreateArtifact();
+        // spawn tools as well
+    }
+
+    public void LoadBargainState()
+    {
+        state = "bargain";
+        // move Desk and stuff for layout change
+        //hide tools + show bargaining buttons
+        DialogueManager.GetInstance().Reset();
+        levelManager.PrepareBargainState();
+
+    }
+
+    public void LoadBargainDoneState()
+    {
+        state = "bargainDone";
+        levelManager.FinishBargainState();
+    }
+
+
+    public double RetrieveMoney(double amount) {
+        if (savings >= amount)
+        {
+
+            savings -= amount;
+            return savings;
+
+        }
+        else {
+            return savings;
+        }
+
+    }
+
+    public double CheckMoney() {
+        return savings;
     }
 }
