@@ -1,9 +1,0 @@
-{
-    "imageNames": [
-        {"imageName":"image1"},
-        {"imageName":"image2"},
-        {"imageName":"image3"}
-    ],
-
-    "textName":"cutsceneText"
-}

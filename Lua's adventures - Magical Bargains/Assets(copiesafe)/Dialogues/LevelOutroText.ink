@@ -1,1 +1,0 @@
-This is the end of the day.. We could structure this differently but this will do for now ! this is just to see what the game as a whole will feel like... Good night soldier, rest well !
