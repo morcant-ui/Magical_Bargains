@@ -17,8 +17,14 @@ public class GameStateManager : MonoBehaviour
     [SerializeField] private LevelOutro levelOutro;
     [SerializeField] private Timer timer;
 
+    [Header("Music")]
+    [SerializeField] private AudioClip music;
+    [SerializeField] private float volume = 0.6f;
+
     [Header("Fixed Game Parameters")]
     [SerializeField] private float maxTime;
+
+
 
     private static double savings = 80.0; // static vars cannot show in inspector
 
@@ -86,6 +92,10 @@ public class GameStateManager : MonoBehaviour
         state = "level intro";
         DialogueManager.GetInstance().Reset();
 
+        // start playing the level music
+        Transform position = instance.GetComponent<Transform>();
+        AudioManager.instance.StartMusic(music, position, volume);
+
         grandpa.SetActive(true);
         levelManager.LoadNextLevel();
     }
@@ -93,7 +103,10 @@ public class GameStateManager : MonoBehaviour
     public void LoadClientIntro() {
 
             state = "client intro";
+
             grandpa.SetActive(false);
+
+            
 
             DialogueManager.GetInstance().Reset();
             levelManager.LoadNextClient( timerEnded );
@@ -143,6 +156,9 @@ public class GameStateManager : MonoBehaviour
 
     public void LoadLevelOutro() {
         state = "level outro";
+
+        // stop music
+        AudioManager.instance.StopMusic();
 
         float elapsedTime = timer.CheckTimer();
 
