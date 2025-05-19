@@ -17,13 +17,16 @@ public class GameStateManager : MonoBehaviour
     [SerializeField] private LevelOutro levelOutro;
     [SerializeField] private Timer timer;
 
+    [Header("Fixed Game Parameters")]
     [SerializeField] private float maxTime;
+
+    private static double savings = 80.0; // static vars cannot show in inspector
+
+    private bool timerEnded = false;
 
     private static GameStateManager instance;
 
-    public bool timerEnded = false;
-
-    private static double savings = 80.0;
+    
 
     private string state;
 
@@ -174,5 +177,9 @@ public class GameStateManager : MonoBehaviour
 
     public double CheckMoney() {
         return savings;
+    }
+
+    public void setTimerEnded(bool te) {
+        timerEnded = te;
     }
 }

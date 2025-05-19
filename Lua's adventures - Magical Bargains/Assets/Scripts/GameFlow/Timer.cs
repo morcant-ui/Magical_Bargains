@@ -35,8 +35,6 @@ public class Timer : MonoBehaviour
 
             if (elapsedTime >= maxTime)
             {
-                Debug.Log("Timer finished !");
-
                 //timerText.text = "Timer Over";
                 timerText.color = Color.red;
                 isTimerOn = false;
@@ -51,7 +49,7 @@ public class Timer : MonoBehaviour
 
         isTimerOn = true;
 
-        GameStateManager.GetInstance().timerEnded = false;
+        GameStateManager.GetInstance().setTimerEnded(false);
     }
 
     public float CheckTimer()
@@ -80,6 +78,6 @@ public class Timer : MonoBehaviour
     }
 
     private void NotifyManager() {
-        GameStateManager.GetInstance().timerEnded = true;
+        GameStateManager.GetInstance().setTimerEnded(true);
     }
 }
