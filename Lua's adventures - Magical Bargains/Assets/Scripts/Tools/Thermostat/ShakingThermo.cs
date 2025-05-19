@@ -15,7 +15,6 @@ public class ShakingThermo : MonoBehaviour
     private Coroutine flashCoroutine;
     private Coroutine shakeCoroutine;
 
-    public float shakeDuration = 0.5f;
     public float shakeMagnitude = 0.1f;
 
     public Image screenOverlay;
@@ -36,12 +35,12 @@ public class ShakingThermo : MonoBehaviour
         {
             holdTime += Time.deltaTime;
             // if you forgot to reset
-            if (holdTime < 5f && !isShaking)
+            if (holdTime < 1f && !isShaking)
             {
                 triedShaking = true;
             }
             // if you hold mouse down for holdTime it will shake == reset
-            if (holdTime >= 5f && !isShaking)
+            if (holdTime >= 1f && !isShaking)
             {
                 //StartCoroutine(Shake());
                 shakeCoroutine = StartCoroutine(Shake());
