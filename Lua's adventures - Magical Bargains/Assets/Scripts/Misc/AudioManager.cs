@@ -8,7 +8,7 @@ public class AudioManager : MonoBehaviour
 {
     [SerializeField] private AudioSource obj;
 
-    private AudioSource musicSource;
+    [SerializeField] private AudioSource musicSource;
 
     public static AudioManager instance;
 
@@ -42,8 +42,7 @@ public class AudioManager : MonoBehaviour
     }
 
 
-    public void StartMusic(AudioClip audio, Transform spawnTransform, float volume) {
-        musicSource = Instantiate(obj, spawnTransform.position, Quaternion.identity);
+    public void StartMusic(AudioClip audio, float volume) {
 
         musicSource.clip = audio;
 
@@ -54,6 +53,6 @@ public class AudioManager : MonoBehaviour
     }
 
     public void StopMusic() {
-        Destroy(musicSource);
+        musicSource.Stop();
     }
 }

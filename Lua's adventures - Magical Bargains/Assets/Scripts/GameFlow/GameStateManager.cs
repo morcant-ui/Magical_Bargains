@@ -18,8 +18,11 @@ public class GameStateManager : MonoBehaviour
     [SerializeField] private Timer timer;
 
     [Header("Music")]
-    [SerializeField] private AudioClip music;
+    [SerializeField] private AudioClip gameIntroMusic;
+    [SerializeField] private AudioClip levelOutroMusic;
+    [SerializeField] private AudioClip levelMusic;
     [SerializeField] private float volume = 0.6f;
+    [SerializeField] private float introVolume = 0.1f;
 
     [Header("Fixed Game Parameters")]
     [SerializeField] private float maxTime;
@@ -76,6 +79,9 @@ public class GameStateManager : MonoBehaviour
     public void LoadGameIntro() {
         state = "game intro";
 
+        // start playing the game intro music
+        AudioManager.instance.StartMusic(gameIntroMusic, introVolume);
+
         levelManager.LoadGameData();
 
         if (playIntroCutscene)
@@ -93,8 +99,7 @@ public class GameStateManager : MonoBehaviour
         DialogueManager.GetInstance().Reset();
 
         // start playing the level music
-        Transform position = instance.GetComponent<Transform>();
-        AudioManager.instance.StartMusic(music, position, volume);
+        AudioManager.instance.StartMusic(levelMusic, volume);
 
         grandpa.SetActive(true);
         levelManager.LoadNextLevel();
@@ -159,6 +164,8 @@ public class GameStateManager : MonoBehaviour
 
         // stop music
         AudioManager.instance.StopMusic();
+        // start playing the level outro music
+        AudioManager.instance.StartMusic(levelOutroMusic, volume);
 
         float elapsedTime = timer.CheckTimer();
 
