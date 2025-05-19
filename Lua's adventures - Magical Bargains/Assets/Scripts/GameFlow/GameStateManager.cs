@@ -5,15 +5,23 @@ using UnityEngine.SceneManagement;
 
 public class GameStateManager : MonoBehaviour
 {
+    [Header("SEE OR SKIP CUTSCENE ?")]
+    [SerializeField] private bool playIntroCutscene = true;
+
+    [Header("Grandpa sprite")]
     [SerializeField] private GameObject grandpa;
 
+    [Header("Managers")]
     [SerializeField] private LevelManager levelManager;
     [SerializeField] private GameIntro gameIntro;
     [SerializeField] private LevelOutro levelOutro;
+    [SerializeField] private Timer timer;
+
+    [SerializeField] private float maxTime;
 
     private static GameStateManager instance;
 
-    private bool playIntroCutscene = true;
+    public bool timerEnded = false;
 
     private static double savings = 80.0;
 
@@ -65,7 +73,7 @@ public class GameStateManager : MonoBehaviour
         {
             gameIntro.ShowIntroCutscene();
         } else {
-            //LoadLevelIntro();
+            LoadLevelIntro();
         }
 
         
@@ -80,11 +88,19 @@ public class GameStateManager : MonoBehaviour
     }
 
     public void LoadClientIntro() {
-        state = "client intro";
-        grandpa.SetActive(false);
 
-        DialogueManager.GetInstance().Reset();
-        levelManager.LoadNextClient();
+        if (!timerEnded)
+        {
+            state = "client intro";
+            grandpa.SetActive(false);
+
+            DialogueManager.GetInstance().Reset();
+            levelManager.LoadNextClient();
+
+        }
+        else {
+            LoadLevelOutro();
+        }
     }
 
     // to delete (make sure it isnt refered anywhere before)
@@ -98,6 +114,10 @@ public class GameStateManager : MonoBehaviour
     public void LoadInspectState()
     {
         state = "inspect";
+
+        // start timer
+        timer.StartTimer( maxTime );
+
         // move Desk and other stuff for layout change
         levelManager.CreateArtifact();
         // spawn tools as well
@@ -106,6 +126,10 @@ public class GameStateManager : MonoBehaviour
     public void LoadBargainState()
     {
         state = "bargain";
+
+        // stop timer
+        timer.PauseTimer();
+
         // move Desk and stuff for layout change
         //hide tools + show bargaining buttons
         DialogueManager.GetInstance().Reset();
@@ -122,7 +146,15 @@ public class GameStateManager : MonoBehaviour
 
     public void LoadLevelOutro() {
         state = "level outro";
-        levelOutro.ShowLevelOutroScreen();
+
+        float elapsedTime = timer.CheckTimer();
+
+        Debug.Log("CHECK: elapsed time: " + elapsedTime);
+
+        levelOutro.ShowLevelOutroScreen( elapsedTime );
+
+        timer.ResetTimer();
+        timerEnded = false;
     }
 
 
