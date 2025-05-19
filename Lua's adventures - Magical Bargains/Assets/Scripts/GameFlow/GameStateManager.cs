@@ -89,18 +89,12 @@ public class GameStateManager : MonoBehaviour
 
     public void LoadClientIntro() {
 
-        if (!timerEnded)
-        {
             state = "client intro";
             grandpa.SetActive(false);
 
             DialogueManager.GetInstance().Reset();
-            levelManager.LoadNextClient();
+            levelManager.LoadNextClient( timerEnded );
 
-        }
-        else {
-            LoadLevelOutro();
-        }
     }
 
     // to delete (make sure it isnt refered anywhere before)
@@ -108,7 +102,7 @@ public class GameStateManager : MonoBehaviour
     {
         state = "intro";
         DialogueManager.GetInstance().Reset();
-        levelManager.LoadNextClient();
+        levelManager.LoadNextClient( timerEnded );
     }
 
     public void LoadInspectState()
@@ -148,8 +142,6 @@ public class GameStateManager : MonoBehaviour
         state = "level outro";
 
         float elapsedTime = timer.CheckTimer();
-
-        Debug.Log("CHECK: elapsed time: " + elapsedTime);
 
         levelOutro.ShowLevelOutroScreen( elapsedTime );
 

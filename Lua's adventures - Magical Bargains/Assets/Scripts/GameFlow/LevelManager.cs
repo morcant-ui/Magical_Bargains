@@ -110,7 +110,7 @@ public class LevelManager : MonoBehaviour
     }
 
     // THIS NEEDS TO RUN ONCE FOR EACH CLIENT FOR EACH LEVEL 
-    public void LoadNextClient()
+    public void LoadNextClient(bool timerEnded)
     {
         DialogueManager.GetInstance().Reset();
         bool bo = DialogueManager.GetInstance().dialogueIsFinished;
@@ -121,9 +121,14 @@ public class LevelManager : MonoBehaviour
         }
 
         // we now check the queue (not dependent on coroutine above): if empty we'll put up a black screen
-        if (clientQueue.Count == 0)
+        if (clientQueue.Count == 0 || timerEnded)
         {
-            Debug.Log("All clients processed.");
+            if (timerEnded) {
+                Debug.Log("Max timer has ended");
+            } else { 
+                Debug.Log("All clients processed.");
+                }
+
             processingClients = false;
 
             currentClient = null;
