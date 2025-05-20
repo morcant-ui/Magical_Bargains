@@ -12,6 +12,8 @@ public class FishingGame : MonoBehaviour
 
     private bool hitRegistered = false;
 
+    
+
     private void Start()
     {
         center.gameObject.SetActive(false);
@@ -31,6 +33,7 @@ public class FishingGame : MonoBehaviour
 
         while (!hitRegistered)
         {
+
             angle += rotationSpeed * Time.deltaTime;
 
             // Move the rotatingRect in a circle

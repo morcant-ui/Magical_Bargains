@@ -9,6 +9,7 @@ using Ink.Runtime;
 public class LevelOutro : MonoBehaviour
 {
 
+    [SerializeField] private GameObject holder;
     [SerializeField] private GameObject backgroundColor;
     [SerializeField] private GameObject cutsceneImage;
     [SerializeField] private TextMeshProUGUI cutsceneTextDisplay;
@@ -26,7 +27,7 @@ public class LevelOutro : MonoBehaviour
 
     void Update() {
         if (outroActivated && Input.GetKeyDown(inputKey)) {
-            
+
             cutsceneImage.SetActive(false);
             cutsceneTextDisplay.text = "";
             savingsTextDisplay.text = "";
@@ -42,7 +43,7 @@ public class LevelOutro : MonoBehaviour
     public void ShowLevelOutroScreen(float elapsedTime) {
 
         outroActivated = true;
-        backgroundColor.SetActive(true);
+        holder.SetActive(true);
         cutsceneImage.SetActive(true);
 
         double savings = GameStateManager.GetInstance().CheckMoney();
@@ -64,7 +65,7 @@ public class LevelOutro : MonoBehaviour
     {
 
         yield return new WaitForSeconds(delay);
-        backgroundColor.SetActive(false);
+        holder.SetActive(false);
 
         GameStateManager.GetInstance().LoadLevelIntro();
     }

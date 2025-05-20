@@ -22,7 +22,7 @@ public class CameraScript : MonoBehaviour
     [SerializeField] private AudioClip audioClip;
     [SerializeField] private float volume = 0.1f;
 
-
+    private bool isActivated = false;
 
     private void Start()
     {
@@ -32,6 +32,7 @@ public class CameraScript : MonoBehaviour
     public void StartProcess()
     {
         //Debug.Log("are you here");
+        isActivated = true;
         if (!viewingPhoto)
         {
             StartCoroutine(HandleFishingSequence());
@@ -41,18 +42,21 @@ public class CameraScript : MonoBehaviour
 
     private IEnumerator HandleFishingSequence()
     {
-        viewingPhoto = true; // Prevent retriggering
+        if (isActivated)
+        {
+            viewingPhoto = true; // Prevent retriggering
 
-        FishingGame minigame = GameObject.Find("FishingGame").GetComponent<FishingGame>();
-        //minigame.gameObject.SetActive(true);
+            FishingGame minigame = GameObject.Find("FishingGame").GetComponent<FishingGame>();
+            //minigame.gameObject.SetActive(true);
 
-        // Wait for the minigame to finish
-        yield return StartCoroutine(minigame.PlayFishingGame());
+            // Wait for the minigame to finish
+            yield return StartCoroutine(minigame.PlayFishingGame());
 
-        //minigame.gameObject.SetActive(false);
+            //minigame.gameObject.SetActive(false);
 
-        // Now take the photo
-        yield return StartCoroutine(CapturePhoto());
+            // Now take the photo
+            yield return StartCoroutine(CapturePhoto());
+        }
 
     }
 
@@ -60,23 +64,26 @@ public class CameraScript : MonoBehaviour
     // only capture the screen after everything else is rendered
     IEnumerator CapturePhoto()
     {
+        if (isActivated)
+        {
+            // cameraUI false
+            viewingPhoto = true;
 
-        // cameraUI false
-        viewingPhoto = true;
+            yield return new WaitForEndOfFrame();
 
-        yield return new WaitForEndOfFrame();
+            photoCamera.Render();
 
-        photoCamera.Render();
+            RenderTexture currentRT = RenderTexture.active;
+            RenderTexture.active = photoRenderTexture;
 
-        RenderTexture currentRT = RenderTexture.active;
-        RenderTexture.active = photoRenderTexture;
+            screenCapture.ReadPixels(new Rect(0, 0, photoRenderTexture.width, photoRenderTexture.height), 0, 0);
+            screenCapture.Apply();
 
-        screenCapture.ReadPixels(new Rect(0, 0, photoRenderTexture.width, photoRenderTexture.height), 0, 0);
-        screenCapture.Apply();
+            RenderTexture.active = currentRT;
 
-        RenderTexture.active = currentRT;
+            ShowPhoto();
+        }
 
-        ShowPhoto();
         yield return null;
     }
 
@@ -96,28 +103,33 @@ public class CameraScript : MonoBehaviour
     // IEnumerator to create a coroutine
     IEnumerator CameraFlashEffect()
     {
-        // play audio
-        Transform position = photoCamera.GetComponent<Transform>();
-        AudioManager.instance.PlayClip(audioClip, position, volume);
-
-
-        cameraFlash.SetActive(true);
-
-        // Fade out the image to transparent
-        float timeElapsed = 0f;
-        while (timeElapsed < flashTime)
+        if (isActivated)
         {
-            cameraFlash.GetComponent<Image>().color = Color.Lerp(cameraFlash.GetComponent<Image>().color, new Color(1f, 1f, 1f, 0f), timeElapsed / flashTime);
-            timeElapsed += Time.deltaTime;
-            yield return null;
-        }
+            // play audio
+            Transform position = photoCamera.GetComponent<Transform>();
+            AudioManager.instance.PlayClip(audioClip, position, volume);
 
-        cameraFlash.SetActive(false);
-        cameraFlash.GetComponent<Image>().color = new Color(1f, 1f, 1f, 1f);
+
+            cameraFlash.SetActive(true);
+
+            // Fade out the image to transparent
+            float timeElapsed = 0f;
+            while (timeElapsed < flashTime)
+            {
+                cameraFlash.GetComponent<Image>().color = Color.Lerp(cameraFlash.GetComponent<Image>().color, new Color(1f, 1f, 1f, 0f), timeElapsed / flashTime);
+                timeElapsed += Time.deltaTime;
+                yield return null;
+            }
+
+            cameraFlash.SetActive(false);
+            cameraFlash.GetComponent<Image>().color = new Color(1f, 1f, 1f, 1f);
+        }
     }
 
     public void Abort()
     {
+        isActivated = false;
+
         viewingPhoto = false;
         photoFrame.SetActive(false);
         // Destroy minigame...

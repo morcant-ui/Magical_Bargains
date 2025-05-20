@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class ShakingThermo : MonoBehaviour
 {
+    public GameObject holder;
+
     private float holdTime = 0f;
     private bool isMouseOver = false;
     private bool isShaking = false;
@@ -138,7 +140,7 @@ public class ShakingThermo : MonoBehaviour
 
     private IEnumerator FlashEffect(Color flashColor)
     {
-        
+        holder.SetActive(true);
         // Fade in
         float t = 0;
         float fadeInDuration = 0.3f;
@@ -165,5 +167,6 @@ public class ShakingThermo : MonoBehaviour
         }
         
         screenOverlay.color = Color.clear;
+        holder.SetActive(false);
     }
 }

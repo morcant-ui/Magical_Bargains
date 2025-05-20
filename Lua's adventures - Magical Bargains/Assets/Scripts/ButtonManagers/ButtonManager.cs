@@ -200,10 +200,12 @@ public class ButtonManager : MonoBehaviour
             fishingGame.SetActive(true);
             cameraScript.StartProcess();
         }
+        EventSystem.current.SetSelectedGameObject(null);
     }
 
     public void OnThermometerButtonClick()
     {
+        Debug.Log("CLICK");
         if (thermometerButtonActivated)
         {
 
@@ -282,7 +284,10 @@ public class ButtonManager : MonoBehaviour
         acceptButton.interactable = bargainInProgress;
         addButton.interactable = bargainInProgress;
         minusButton.interactable = bargainInProgress;
-         
+
+
+        thermometerButton.gameObject.SetActive(isToolsActive);
+        thermometerButton.interactable = !(magnifierButtonActivated || cameraButtonActivated);
 
         magnifierButton.gameObject.SetActive(isToolsActive);
         magnifierButton.interactable = !(cameraButtonActivated || thermometerButtonActivated);
@@ -290,8 +295,7 @@ public class ButtonManager : MonoBehaviour
         cameraButton.gameObject.SetActive(isToolsActive);
         cameraButton.interactable = !(magnifierButtonActivated || thermometerButtonActivated);
 
-        thermometerButton.gameObject.SetActive(isToolsActive);
-        thermometerButton.interactable = !(magnifierButtonActivated || cameraButtonActivated);
+
 
         if (!magnifierButtonActivated)
         {

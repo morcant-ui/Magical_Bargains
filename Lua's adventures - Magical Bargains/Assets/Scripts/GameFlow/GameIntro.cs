@@ -11,6 +11,7 @@ public class GameIntro : MonoBehaviour
 
     [SerializeField] private TextAsset introDataJSON;
 
+    [SerializeField] private GameObject holder;
     [SerializeField] private GameObject backgroundColor;
     [SerializeField] private GameObject cutsceneImage;
     [SerializeField] private TextMeshProUGUI cutsceneText;
@@ -48,7 +49,7 @@ public class GameIntro : MonoBehaviour
 
         introActivated = true;
 
-        backgroundColor.SetActive(true);
+        holder.SetActive(true);
 
         // pull JSON data for intro cutscene
         CutsceneData cutsceneData = JsonUtility.FromJson<CutsceneData>(introDataJSON.text);
@@ -114,6 +115,6 @@ public class GameIntro : MonoBehaviour
         
         cutsceneText.text = "";
         cutsceneImage.SetActive(false);
-        backgroundColor.SetActive(false);
+        holder.SetActive(false);
     }
 }

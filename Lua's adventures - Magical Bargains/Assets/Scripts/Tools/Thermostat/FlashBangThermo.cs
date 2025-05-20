@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 public class FlashBangThermo : MonoBehaviour
 {
+    
     public Image screenOverlay;
 
     public float fadeDuration = 1.5f;
@@ -14,6 +15,7 @@ public class FlashBangThermo : MonoBehaviour
 
     private IEnumerator FlashEffect(Color flashColor)
     {
+        
         // Fade in
         float t = 0;
         float fadeInDuration = 0.3f;
@@ -39,5 +41,6 @@ public class FlashBangThermo : MonoBehaviour
         }
 
         screenOverlay.color = Color.clear;
+
     }
 }
