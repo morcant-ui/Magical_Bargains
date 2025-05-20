@@ -66,13 +66,13 @@ public class CameraScript : MonoBehaviour
     {
         if (isActivated)
         {
-            // cameraUI false
             viewingPhoto = true;
 
             yield return new WaitForEndOfFrame();
 
             photoCamera.Render();
 
+            screenCapture = new Texture2D(photoRenderTexture.width, photoRenderTexture.height, TextureFormat.RGB24, false);
             RenderTexture currentRT = RenderTexture.active;
             RenderTexture.active = photoRenderTexture;
 
@@ -81,6 +81,7 @@ public class CameraScript : MonoBehaviour
 
             RenderTexture.active = currentRT;
 
+            // create sprite out of texture:
             ShowPhoto();
         }
 
