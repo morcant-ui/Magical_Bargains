@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 
 public class ButtonManager : MonoBehaviour
 {
+    [SerializeField] private OfferManager offerManager;
 
     [Header("State Buttons")]
     [SerializeField] private Button openShopButton;
@@ -18,16 +19,17 @@ public class ButtonManager : MonoBehaviour
     [SerializeField] private Button addButton;
     [SerializeField] private Button minusButton;
 
-    [SerializeField] private OfferManager offerManager;
+    
 
     [Header("Tools Buttons")]
     [SerializeField] private Button magnifierButton;
     [SerializeField] private Button cameraButton;
     [SerializeField] private Button thermometerButton;
 
-
+    [Header("Tools Themselves")]
     [SerializeField] private GameObject magnifier;
     [SerializeField] private CameraScript cameraScript;
+    [SerializeField] private GameObject fishingGame;
     [SerializeField] private GameObject thermometer;
     [SerializeField] private ShakingThermo thermometerScript;
 
@@ -57,8 +59,10 @@ public class ButtonManager : MonoBehaviour
 
         acceptButton.gameObject.SetActive(false);
         acceptButton.interactable = false;
+
         addButton.gameObject.SetActive(false);
         addButton.interactable = false;
+
         minusButton.gameObject.SetActive(false);
         minusButton.interactable = false;
 
@@ -69,7 +73,10 @@ public class ButtonManager : MonoBehaviour
 
         magnifierButton.onClick.AddListener(OnMagnifierButtonClick);
         magnifier.SetActive(false);
+
         cameraButton.onClick.AddListener(OnCameraButtonClick);
+        fishingGame.SetActive(false);
+
         thermometerButton.onClick.AddListener(OnThermometerButtonClick);
         thermometer.SetActive(false);
 
@@ -184,11 +191,13 @@ public class ButtonManager : MonoBehaviour
         if (cameraButtonActivated)
         {
             cameraButtonActivated = false;
+            fishingGame.SetActive(false);
             cameraScript.Abort();
         }
         else
         {
             cameraButtonActivated = true;
+            fishingGame.SetActive(true);
             cameraScript.StartProcess();
         }
     }
@@ -291,6 +300,7 @@ public class ButtonManager : MonoBehaviour
         if (!cameraButtonActivated) 
         {
             cameraScript.Abort();
+            fishingGame.SetActive(false);
         }
         if (!thermometerButtonActivated)
         {
