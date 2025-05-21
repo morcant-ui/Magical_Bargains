@@ -205,4 +205,8 @@ public class GameStateManager : MonoBehaviour
     public void setTimerEnded(bool te) {
         timerEnded = te;
     }
+
+    public bool WillIntroPlay() {
+        return playIntroCutscene;
+    }
 }

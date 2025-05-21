@@ -54,7 +54,7 @@ public class LevelManager : MonoBehaviour
 
     private string menuScene = "SimpleMenu";
 
-    private bool processingClients = true;
+    private bool processingClients = false;
 
     void Start()
     {
@@ -86,6 +86,11 @@ public class LevelManager : MonoBehaviour
             // GAME IS DONE
             Debug.Log("--------Game is done !!");
             GoBackToMenuWithoutDelay();
+            return;
+        }
+
+        if (processingClients) { 
+            Debug.Log("I see u");
             return;
         }
 
@@ -282,6 +287,8 @@ public class LevelManager : MonoBehaviour
     // once client queue is done: blackscreen for a few seconds then go back to menu
     IEnumerator NextLevelAfterDelay(float delay)
     {
+
+        Debug.Log("youre not coming here, are you ?");
         blackScreen.SetActive(true);
 
         yield return new WaitForSeconds(delay);

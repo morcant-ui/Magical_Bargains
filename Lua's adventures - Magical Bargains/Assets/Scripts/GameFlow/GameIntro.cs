@@ -18,7 +18,7 @@ public class GameIntro : MonoBehaviour
 
     private TextAsset textAsset;
     private Story currentStory;
-    private bool isDialoguePlaying = false;
+    private bool isTextPlaying = false;
 
     private Queue<CutsceneImageData> imagesQueue; // this queue will let us iterate thru game data
     private string currentImageName; // index to keep track of current client/artifact
@@ -26,17 +26,19 @@ public class GameIntro : MonoBehaviour
 
     private string inputKey = "space";
 
-    private bool introActivated = false;
+    public bool introActivated = false;
+
+    private Coroutine exitOnlyOnce;
 
 
     void Update()
     {
-        if (!isDialoguePlaying)
+        if (!isTextPlaying)
         {
             return;
         }
 
-        if (introActivated && isDialoguePlaying && Input.GetKeyDown(inputKey))
+        if (introActivated && isTextPlaying && Input.GetKeyDown(inputKey))
         {
             ContinueStory();
             NextImage();
@@ -48,6 +50,7 @@ public class GameIntro : MonoBehaviour
     public void ShowIntroCutscene() {
 
         introActivated = true;
+        DialogueManager.GetInstance().CutsceneStarted();
 
         holder.SetActive(true);
 
@@ -86,7 +89,7 @@ public class GameIntro : MonoBehaviour
     private void EnterTextMode(TextAsset textAsset) {
 
         currentStory = new Story(textAsset.text);
-        isDialoguePlaying = true;
+        isTextPlaying = true;
 
         ContinueStory();
     }
@@ -100,7 +103,9 @@ public class GameIntro : MonoBehaviour
         }
         else
         {
-            StartCoroutine(ExitTextMode());
+            if (exitOnlyOnce != null) { return; }
+
+            exitOnlyOnce = StartCoroutine(ExitTextMode());
         }
     }
 
@@ -108,13 +113,17 @@ public class GameIntro : MonoBehaviour
     {
         yield return new WaitForSeconds(0.2f);
 
-        isDialoguePlaying = false;
+        isTextPlaying = false;
         introActivated = false;
 
+
+        DialogueManager.GetInstance().CutsceneStopped();
         GameStateManager.GetInstance().LoadLevelIntro();
         
         cutsceneText.text = "";
         cutsceneImage.SetActive(false);
         holder.SetActive(false);
+
+        
     }
 }

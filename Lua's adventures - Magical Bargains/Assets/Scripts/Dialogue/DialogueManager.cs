@@ -15,7 +15,12 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private GameObject dialoguePanel;
     [SerializeField] private TextMeshProUGUI dialogueText;
 
+    [SerializeField] private Image spaceBarIcon;
 
+    [SerializeField] private float normalSpeed = 0.05f;
+    [SerializeField] private float fasterSpeed = 0.05f;
+
+    [SerializeField] private float spacebarFlutterSpeed = 0.5f;
 
     private Story currentStory;
 
@@ -23,8 +28,15 @@ public class DialogueManager : MonoBehaviour
 
     public bool dialogueIsPlaying { get; private set; }
     public bool dialogueIsFinished { get; private set; }
-    
 
+    private Coroutine typingCoroutine;
+    private bool isCurrentlyTyping;
+
+    private Coroutine SpaceBarFlutterCoroutine;
+
+    private float typingSpeed;
+
+    private bool isCutscenePlaying;
 
     private static DialogueManager instance;
 
@@ -45,6 +57,10 @@ public class DialogueManager : MonoBehaviour
         dialogueIsPlaying = false;
         dialogueIsFinished = false;
         dialoguePanel.SetActive(false);
+
+        isCutscenePlaying = GameStateManager.GetInstance().WillIntroPlay();
+
+        typingSpeed = normalSpeed;
     }
 
     public static DialogueManager GetInstance() {
@@ -57,8 +73,32 @@ public class DialogueManager : MonoBehaviour
             return;
         }
 
-        if (dialogueIsPlaying && Input.GetKeyDown(inputKey)) {
-            ContinueStory();
+
+        if (dialogueIsPlaying && !isCutscenePlaying) {
+
+            if (isCurrentlyTyping )
+            {
+                spaceBarIcon.color = Color.white;
+
+                if (Input.GetKeyDown(inputKey)) {
+                    typingSpeed = fasterSpeed;
+                }
+            }
+            else if (!isCurrentlyTyping) {
+
+                // make space bar icon's color flutter when dialogue is ready to go on
+                if (SpaceBarFlutterCoroutine == null) {
+                    SpaceBarFlutterCoroutine = StartCoroutine(makeSpaceBarFlutter()); 
+                }
+
+
+                if (Input.GetKeyDown(inputKey))
+                {        
+
+                    ContinueStory();
+                    
+                }
+            }
         }
     }
 
@@ -74,14 +114,38 @@ public class DialogueManager : MonoBehaviour
         if (currentStory.canContinue)
         {
             string nextLine = currentStory.Continue();
-            Debug.Log(nextLine);
-            dialogueText.text = nextLine;
+
+            // display new line using a typing effect:
+            if (typingCoroutine != null) { StopCoroutine(typingCoroutine); }
+
+            typingCoroutine = StartCoroutine(TypeLine(nextLine));
         }
         else
         {
             StartCoroutine(ExitDialogueMode());
         }
     }
+
+
+    private IEnumerator TypeLine(string line) {
+        isCurrentlyTyping = true;
+
+        dialogueText.maxVisibleCharacters = 0;
+        dialogueText.text = line;
+
+        for (int i = 0; i <= line.Length; i++) {
+
+            dialogueText.maxVisibleCharacters = i;
+            yield return new WaitForSeconds(typingSpeed);
+        }
+
+        isCurrentlyTyping = false;
+        typingSpeed = normalSpeed;
+
+
+        //Debug.Log(line);
+    }
+
 
     private IEnumerator ExitDialogueMode() {
         yield return new WaitForSeconds(0.2f);
@@ -93,6 +157,12 @@ public class DialogueManager : MonoBehaviour
         dialoguePanel.SetActive(false);
         dialogueText.text = "";
 
+        if (SpaceBarFlutterCoroutine != null)
+        {
+            StopCoroutine(SpaceBarFlutterCoroutine);
+            SpaceBarFlutterCoroutine = null;
+        }
+
     }
 
     public void Reset() {
@@ -100,4 +170,42 @@ public class DialogueManager : MonoBehaviour
         dialogueIsFinished = false;
     }
 
+
+    private IEnumerator makeSpaceBarFlutter() {
+
+        Color flutterColor = new Color (0.9f, 0.9f, 0.9f);
+
+        while ( dialogueIsPlaying && !isCurrentlyTyping ) { 
+        
+            if ( spaceBarIcon.color == Color.white ) {
+                spaceBarIcon.color = flutterColor;
+            } else if (spaceBarIcon.color == flutterColor) {
+                spaceBarIcon.color = Color.white;
+            }
+
+            yield return new WaitForSeconds( spacebarFlutterSpeed );
+
+        }
+
+        StopFluttering();
+    }
+
+    private void StopFluttering() {
+
+        StopCoroutine(SpaceBarFlutterCoroutine);
+        SpaceBarFlutterCoroutine = null;
+        spaceBarIcon.color = Color.white;
+
+    }
+
+
+    public void CutsceneStarted() {
+
+        isCutscenePlaying = true;
+    }
+
+    public void CutsceneStopped() {
+
+        isCutscenePlaying = false;
+    }
 }
