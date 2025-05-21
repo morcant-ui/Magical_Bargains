@@ -7395,6 +7395,10 @@ PrefabInstance:
       value: -4
       objectReference: {fileID: 0}
     - target: {fileID: 1547683466380201390, guid: 04f4d52fae0e575479b8f08fa21ff1a9, type: 3}
+      propertyPath: leftBoundX
+      value: -4.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1547683466380201390, guid: 04f4d52fae0e575479b8f08fa21ff1a9, type: 3}
       propertyPath: upperBoundY
       value: -0.75
       objectReference: {fileID: 0}
