@@ -22,6 +22,7 @@ public class LevelManager : MonoBehaviour
 
     [Header("Offers")]
     [SerializeField] private OfferManager offerManager;
+    [SerializeField] private OfferDecisionManager offerDecision;
 
     [Header("Savings Indication")]
     [SerializeField] private GameObject savingsImage;
@@ -35,21 +36,20 @@ public class LevelManager : MonoBehaviour
     private Queue<ClientData> clientQueue; // this queue will let us iterate thru game data
     private ClientData currentClient; // index to keep track of current client/artifact
 
-    private TextAsset dialogueA;
-    private TextAsset dialogueB;
-
     private string artifactSpriteName;
     private bool hadDefects;
 
     private string JSONPathName = "ClientLists";
-
     private string spritePathName = "Sprites";
-  
+
+    private TextAsset dialogueA;
+    private TextAsset dialogueB;
+
     private string dialogueAPathName = Path.Combine("Dialogues", "dialogueA");
-    private string dialogueBPathName = Path.Combine("Dialogues", "dialogueB");
-    private string dialogueCPathName = Path.Combine("Dialogues", "dialogueC");
 
     private string grandpaDialoguesPathName = Path.Combine("Dialogues", "grandpa");
+
+    
 
 
     private string menuScene = "SimpleMenu";
@@ -89,10 +89,7 @@ public class LevelManager : MonoBehaviour
             return;
         }
 
-        if (processingClients) { 
-            Debug.Log("I see u");
-            return;
-        }
+
 
         // else: we dequeue and retrieve the JSON file for the list of clients of this level
         currentLevel = levelQueue.Dequeue();
@@ -118,6 +115,9 @@ public class LevelManager : MonoBehaviour
     public void LoadNextClient(bool timerEnded)
     {
         DialogueManager.GetInstance().Reset();
+
+        
+
         bool bo = DialogueManager.GetInstance().dialogueIsFinished;
         // after every processed client we destroy them and reset dialogueManager
         if (currentClient != null)
@@ -198,10 +198,11 @@ public class LevelManager : MonoBehaviour
         savings = GameStateManager.GetInstance().CheckMoney();
         savingsText.text = "$" + savings.ToString("00.00");
 
+        savingsText.color = Color.white;
         savingsImage.SetActive(true);
 
         string currentOffer = currentClient.artifactOffer;
-        Debug.Log(currentOffer);
+ 
         offerManager.StartBargain(currentOffer);
     }
 
@@ -210,21 +211,18 @@ public class LevelManager : MonoBehaviour
         int finalOffer = offerManager.FinalOffer;
         int minOfferAccepted = int.Parse(currentClient.minOfferAccepted);
 
+
         if (finalOffer >= minOfferAccepted && savings >= finalOffer)
         {
             Debug.Log("offer went through !");
 
+
             savings = GameStateManager.GetInstance().RetrieveMoney(finalOffer);
             savingsText.text = "$" + savings.ToString("00.00");
 
-            // Load Dialogue B
+            // Load Dialogue
             string dialogueNameB = currentClient.dialogueB;
-            TextAsset dialogueB = Resources.Load<TextAsset>(Path.Combine(dialogueBPathName, dialogueNameB));
-
-            if (dialogueB == null)
-            {
-                Debug.Log("DIALOGUE B NOT FOUND");
-            }
+            TextAsset dialogueB = offerDecision.LoadDialogue(dialogueNameB, "dialogueB");
 
             DialogueManager.GetInstance().EnterDialogueMode(dialogueB);
 
@@ -233,26 +231,27 @@ public class LevelManager : MonoBehaviour
             // if this feels order of priority feels weird we can remove the final offer >= min offer condition above to prioritize them bashing you for having no money
             Debug.Log("You are trying to retrieve " + finalOffer + " gold, but you only have " + savings + " in grandpa's bank account !");
 
-            savings = GameStateManager.GetInstance().RetrieveMoney(finalOffer);
-            savingsText.text = "$" + savings.ToString("00.00");
+            // if player is broke the game will let them know
+            DialogueManager.GetInstance().TriggerSavingsFlickering();
 
-            TextAsset NotEnoughMoneyDialogue = Resources.Load<TextAsset>(Path.Combine("Dialogues", "NotEnoughMoney"));
+            // Load Dialogue
+            string dialogueNameD = currentClient.dialogueD;
+            TextAsset dialogueD = offerDecision.LoadDialogue(dialogueNameD, "dialogueD");
 
-            DialogueManager.GetInstance().EnterDialogueMode(NotEnoughMoneyDialogue);
+            DialogueManager.GetInstance().EnterDialogueMode(dialogueD);
         }
         else
         {
             Debug.Log("HUM OFFER IS NOT ACCEPTED");
-            // Load Dialogue C
-            string dialogueNameC = currentClient.dialogueC;
-            TextAsset dialogueC = Resources.Load<TextAsset>(Path.Combine(dialogueCPathName, dialogueNameC));
 
-            if (dialogueC == null) {
-                Debug.Log("DIALOGUE C NOT FOUND");
-            }
+            // Load Dialogue
+            string dialogueNameC = currentClient.dialogueC;
+            TextAsset dialogueC = offerDecision.LoadDialogue(dialogueNameC, "dialogueC");
 
             DialogueManager.GetInstance().EnterDialogueMode(dialogueC);
         }
+
+        
 
     }
 
@@ -297,7 +296,7 @@ public class LevelManager : MonoBehaviour
     // once client queue is done: blackscreen for a few seconds then go back to menu
     IEnumerator NextLevelAfterDelay(float delay)
     {
-
+        Debug.Log("--------: count = " + levelQueue.Count);
         
         blackScreen.SetActive(true);
 
@@ -323,6 +322,8 @@ public class LevelManager : MonoBehaviour
         ColorUtility.TryParseHtmlString(hex, out var color);
         return color;
     }
+
+    
 }
 
 

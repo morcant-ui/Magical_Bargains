@@ -7,6 +7,10 @@
         {
             "listClientsName":"lvl2",
             "grandpaIntroDialogue":"gid2"
+        },
+        {
+            "listClientsName":"lvl3",
+            "grandpaIntroDialogue":"gid1"
         }
     ]
 }

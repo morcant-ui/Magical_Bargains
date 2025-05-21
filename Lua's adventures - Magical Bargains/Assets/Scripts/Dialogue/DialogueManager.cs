@@ -20,7 +20,10 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private float normalSpeed = 0.05f;
     [SerializeField] private float fasterSpeed = 0.05f;
 
-    [SerializeField] private float spacebarFlutterSpeed = 0.5f;
+    [SerializeField] private float flutterSpeed = 0.5f;
+
+    [SerializeField] private GameObject savingsImage;
+    [SerializeField] private TextMeshProUGUI savingsText;
 
     private Story currentStory;
 
@@ -33,6 +36,7 @@ public class DialogueManager : MonoBehaviour
     private bool isCurrentlyTyping;
 
     private Coroutine SpaceBarFlutterCoroutine;
+    private Coroutine FlickerSavingsCoroutine;
 
     private float typingSpeed;
 
@@ -103,6 +107,12 @@ public class DialogueManager : MonoBehaviour
     }
 
     public void EnterDialogueMode(TextAsset inkJSON) {
+
+        if (inkJSON == null) {
+            Debug.Log("EnterDialogueMode: NO DIALOGUE TO READ");
+            return;
+        }
+
         currentStory = new Story(inkJSON.text);
         dialogueIsPlaying = true;
         dialoguePanel.SetActive(true);
@@ -155,14 +165,12 @@ public class DialogueManager : MonoBehaviour
 
 
         dialoguePanel.SetActive(false);
+        savingsImage.SetActive(false);
         dialogueText.text = "";
 
-        if (SpaceBarFlutterCoroutine != null)
-        {
-            StopCoroutine(SpaceBarFlutterCoroutine);
-            SpaceBarFlutterCoroutine = null;
-        }
+        StopFluttering();
 
+        StopFlickering();
     }
 
     public void Reset() {
@@ -183,7 +191,7 @@ public class DialogueManager : MonoBehaviour
                 spaceBarIcon.color = Color.white;
             }
 
-            yield return new WaitForSeconds( spacebarFlutterSpeed );
+            yield return new WaitForSeconds( flutterSpeed );
 
         }
 
@@ -191,11 +199,52 @@ public class DialogueManager : MonoBehaviour
     }
 
     private void StopFluttering() {
+        if (SpaceBarFlutterCoroutine != null)
+        {
+            StopCoroutine(SpaceBarFlutterCoroutine);
+            SpaceBarFlutterCoroutine = null;
+        }
 
-        StopCoroutine(SpaceBarFlutterCoroutine);
-        SpaceBarFlutterCoroutine = null;
         spaceBarIcon.color = Color.white;
 
+    }
+
+    public void TriggerSavingsFlickering() {
+        if (FlickerSavingsCoroutine != null)
+        {
+            StopFlickering();
+        }
+
+        FlickerSavingsCoroutine = StartCoroutine(FlickerSavings());
+    }
+
+    IEnumerator FlickerSavings()
+    {
+
+        while ( !dialogueIsFinished )
+        {
+            if (savingsText.color == Color.red)
+            {
+                savingsText.color = Color.white;
+            }
+            else if (savingsText.color == Color.white)
+            {
+                savingsText.color = Color.red;
+            }
+
+            yield return new WaitForSeconds(flutterSpeed);
+
+        }
+    }
+
+    private void StopFlickering() {
+        if (FlickerSavingsCoroutine != null)
+        {
+            StopCoroutine(FlickerSavingsCoroutine);
+            FlickerSavingsCoroutine = null;
+        }
+
+        savingsText.color = Color.white;
     }
 
 

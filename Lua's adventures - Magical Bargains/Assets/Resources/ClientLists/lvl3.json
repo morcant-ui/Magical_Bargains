@@ -1,0 +1,38 @@
+{
+    "clients": [
+        {
+            "clientID": "client_01",
+            "clientSprite": "client1",
+            "dialogueA":"dia6a",
+            "artifactID": "item_01",
+            "artifactSprite": "artifact1",
+            "isMagnifierDefective": true,
+            "magnifierSprite":"hidden-artifact1",
+            "thermoColor": "#FF0000",
+            "artifactOffer": "200",
+            "minOfferAccepted": "180"
+        },
+        {
+            "clientID": "client_02",
+            "clientSprite": "client2",
+            "dialogueA":"dia6a",
+            "artifactID": "item_02",
+            "artifactSprite": "artifact2",
+            "cameraSprite":"hidden-artifact2",
+            "thermoColor": "#0000FF",
+            "artifactOffer": "100",
+            "minOfferAccepted": "90"
+        },
+        {
+            "clientID": "client_03",
+            "clientSprite": "client3",
+            "dialogueA":"dia6a",
+            "artifactID": "item_03",
+            "artifactSprite": "artifact3",
+            "thermoColor": "#FFFFFF",
+            "artifactOffer": "50",
+            "minOfferAccepted": "10"
+        
+        }
+    ]
+}
