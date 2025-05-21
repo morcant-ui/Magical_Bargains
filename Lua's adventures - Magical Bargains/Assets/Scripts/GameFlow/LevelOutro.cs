@@ -25,6 +25,8 @@ public class LevelOutro : MonoBehaviour
     private string savingsTextBase = "Savings: ";
     private string timerTextBase = "Elapsed Investigation Time: ";
 
+    private Coroutine exitCutsceneCoroutine;
+
     void Update() {
         if (outroActivated && Input.GetKeyDown(inputKey)) {
 
@@ -34,7 +36,12 @@ public class LevelOutro : MonoBehaviour
             timerTextDisplay.text = "";
 
             outroActivated = false;
-            StartCoroutine(NewLevelAfterDelay(0.5f));
+
+            if (exitCutsceneCoroutine != null) {
+                return;
+            }
+
+            exitCutsceneCoroutine = StartCoroutine(NewLevelAfterDelay(0.5f));
         }
     }
 
@@ -45,6 +52,8 @@ public class LevelOutro : MonoBehaviour
         outroActivated = true;
         holder.SetActive(true);
         cutsceneImage.SetActive(true);
+
+        DialogueManager.GetInstance().CutsceneStarted();
 
         double savings = GameStateManager.GetInstance().CheckMoney();
 
@@ -67,6 +76,7 @@ public class LevelOutro : MonoBehaviour
         yield return new WaitForSeconds(delay);
         holder.SetActive(false);
 
+        DialogueManager.GetInstance().CutsceneStopped();
         GameStateManager.GetInstance().LoadLevelIntro();
     }
 }

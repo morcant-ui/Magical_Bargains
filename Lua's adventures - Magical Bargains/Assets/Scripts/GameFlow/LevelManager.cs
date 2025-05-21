@@ -45,11 +45,11 @@ public class LevelManager : MonoBehaviour
 
     private string spritePathName = "Sprites";
   
-    private string dialogueAPathName = "Dialogues/dialogueA";
-    private string dialogueBPathName = "Dialogues/dialogueB";
-    private string dialogueCPathName = "Dialogues/dialogueC";
+    private string dialogueAPathName = Path.Combine("Dialogues", "dialogueA");
+    private string dialogueBPathName = Path.Combine("Dialogues", "dialogueB");
+    private string dialogueCPathName = Path.Combine("Dialogues", "dialogueC");
 
-    private string grandpaDialoguesPathName = "Dialogues/grandpa";
+    private string grandpaDialoguesPathName = Path.Combine("Dialogues", "grandpa");
 
 
     private string menuScene = "SimpleMenu";
@@ -221,9 +221,15 @@ public class LevelManager : MonoBehaviour
             string dialogueNameB = currentClient.dialogueB;
             TextAsset dialogueB = Resources.Load<TextAsset>(Path.Combine(dialogueBPathName, dialogueNameB));
 
+            if (dialogueB == null)
+            {
+                Debug.Log("DIALOGUE B NOT FOUND");
+            }
+
             DialogueManager.GetInstance().EnterDialogueMode(dialogueB);
 
         } else if (finalOffer >= minOfferAccepted && savings < finalOffer) {
+
             // if this feels order of priority feels weird we can remove the final offer >= min offer condition above to prioritize them bashing you for having no money
             Debug.Log("You are trying to retrieve " + finalOffer + " gold, but you only have " + savings + " in grandpa's bank account !");
 
@@ -240,6 +246,10 @@ public class LevelManager : MonoBehaviour
             // Load Dialogue C
             string dialogueNameC = currentClient.dialogueC;
             TextAsset dialogueC = Resources.Load<TextAsset>(Path.Combine(dialogueCPathName, dialogueNameC));
+
+            if (dialogueC == null) {
+                Debug.Log("DIALOGUE C NOT FOUND");
+            }
 
             DialogueManager.GetInstance().EnterDialogueMode(dialogueC);
         }
@@ -288,7 +298,7 @@ public class LevelManager : MonoBehaviour
     IEnumerator NextLevelAfterDelay(float delay)
     {
 
-        Debug.Log("youre not coming here, are you ?");
+        
         blackScreen.SetActive(true);
 
         yield return new WaitForSeconds(delay);
