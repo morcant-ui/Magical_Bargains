@@ -2,10 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System;
 
 public class Timer : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI timerText;
+
+    [SerializeField] private GameObject bg;
 
     private float maxTime;
 
@@ -13,10 +16,25 @@ public class Timer : MonoBehaviour
 
     private bool isTimerOn;
 
+    private float R = 1f;
+    private float G = 1f;
+
+    private float RGoal = 0f;
+    private float GGoal = 0.66f;
+
+    private float RStep;
+    private float GStep;
+
+
+
+
 
     // Start is called before the first frame update
     void Start()
     {
+
+
+
         isTimerOn = false;
         elapsedTime = 0.00F;
     }
@@ -26,6 +44,8 @@ public class Timer : MonoBehaviour
     {
         if (isTimerOn)
         {
+            float oldSeconds = Mathf.FloorToInt(elapsedTime % 60);
+
             elapsedTime += Time.deltaTime;
 
             int minutes = Mathf.FloorToInt(elapsedTime / 60);
@@ -33,9 +53,15 @@ public class Timer : MonoBehaviour
 
             timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
 
+            if (oldSeconds != seconds) {
+                UpdateBackground();
+            }
+            
+
             if (elapsedTime >= maxTime)
             {
                 //timerText.text = "Timer Over";
+
                 timerText.color = Color.red;
                 isTimerOn = false;
                 NotifyManager();
@@ -45,7 +71,14 @@ public class Timer : MonoBehaviour
     }
 
     public void StartTimer(float maximumTime) {
-        if (elapsedTime == 0.00F) { maxTime = maximumTime; }
+        if (elapsedTime == 0.00F) { 
+
+            maxTime = maximumTime;
+
+            StartBackgroundChanges();
+        }
+
+
 
         isTimerOn = true;
 
@@ -74,10 +107,42 @@ public class Timer : MonoBehaviour
         timerText.text = "";
         timerText.color = Color.white;
 
+        ResetBackground();
+
         return returnTime;
     }
 
     private void NotifyManager() {
         GameStateManager.GetInstance().setTimerEnded(true);
     }
+
+
+    private void StartBackgroundChanges() {
+        
+        RStep = Mathf.Abs(R - RGoal) / maxTime;
+        GStep = Mathf.Abs(G - GGoal) / maxTime;
+    }
+
+    private void UpdateBackground() { 
+        
+        R -= RStep;
+        G -= GStep;
+
+        R = Mathf.Clamp(R, 0f, 1f);
+        G = Mathf.Clamp(G, 0f, 1f);
+
+        bg.GetComponent<SpriteRenderer>().color = new Color(R, G, 1f);
+    
+    }
+
+    public void ResetBackground() {
+
+        Debug.Log("Timer Finished - R = " + R + ", G = " + G);
+
+        R = 1f;
+        G = 1f;
+
+        bg.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f);
+    }
+
 }

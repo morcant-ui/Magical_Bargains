@@ -98,7 +98,7 @@ public class GameIntro : MonoBehaviour
         if (currentStory.canContinue)
         {
             string nextLine = currentStory.Continue();
-            Debug.Log(nextLine);
+            //Debug.Log(nextLine);
             cutsceneText.text = nextLine;
         }
         else

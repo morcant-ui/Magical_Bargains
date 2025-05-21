@@ -223,6 +223,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timerText: {fileID: 975663988}
+  bg: {fileID: 1738320444}
 --- !u!4 &30763426 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 782895449440128221, guid: bdaeed502d5a4da4a94a2876a11d913b, type: 3}
@@ -2887,7 +2888,7 @@ MonoBehaviour:
   dialoguePanel: {fileID: 580364078}
   dialogueText: {fileID: 967757406}
   spaceBarIcon: {fileID: 1403057124}
-  normalSpeed: 0.08
+  normalSpeed: 0.05
   fasterSpeed: 0.01
   spacebarFlutterSpeed: 0.5
 --- !u!1001 &824145722
@@ -6134,7 +6135,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 15cde5639d65c5442af514f4dad2ba8a, type: 3}
-  m_Color: {r: 0.740566, g: 0.9134183, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

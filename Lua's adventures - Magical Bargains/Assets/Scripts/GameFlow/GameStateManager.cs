@@ -172,6 +172,7 @@ public class GameStateManager : MonoBehaviour
         levelOutro.ShowLevelOutroScreen( elapsedTime );
 
         timer.ResetTimer();
+        //timer.ResetBackGround();
         timerEnded = false;
     }
 
