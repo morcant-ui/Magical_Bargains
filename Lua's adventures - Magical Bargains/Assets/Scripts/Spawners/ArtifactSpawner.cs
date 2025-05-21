@@ -31,6 +31,7 @@ public class ArtifactSpawner : MonoBehaviour
         var obj = Instantiate(objectPrefab, position, Quaternion.identity);
         var sr = obj.GetComponent<SpriteRenderer>();
         sr.sprite = sprite;
+        sr.sortingOrder = 3;
 
         // adapt bounding box
         //Vector2 S = sr.sprite.bounds.size;

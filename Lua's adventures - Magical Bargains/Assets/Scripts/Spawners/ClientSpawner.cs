@@ -27,6 +27,8 @@ public class ClientSpawner : MonoBehaviour
         var obj = Instantiate(clientPrefab, position, Quaternion.identity);
         obj.GetComponent<SpriteRenderer>().sprite = sprite;
 
+        obj.GetComponent<SpriteRenderer>().sortingOrder = 1;
+
         obj.tag = "currentClient";
         obj.transform.SetParent(spawnContainer.transform);
 
