@@ -49,6 +49,8 @@ public class LevelOutro : MonoBehaviour
     // simplistic stuff for now:
     public void ShowLevelOutroScreen(float elapsedTime) {
 
+        exitCutsceneCoroutine = null;
+
         outroActivated = true;
         holder.SetActive(true);
         cutsceneImage.SetActive(true);
@@ -72,6 +74,8 @@ public class LevelOutro : MonoBehaviour
     // THIS IS NOT A PROBLEM IF WE USE A BUTTON INSTEAD OF SPACE !
     IEnumerator NewLevelAfterDelay(float delay)
     {
+
+        Debug.Log("DO WE ENTER HERE");
 
         yield return new WaitForSeconds(delay);
         holder.SetActive(false);
