@@ -1,0 +1,1 @@
+This is placeholder text for the endings ! This is the bad ending

@@ -303,7 +303,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   properSceneButton: {fileID: 1315578030}
-  properScene: ProperScene
+  properScene: MainScene
 --- !u!1 &870107330
 GameObject:
   m_ObjectHideFlags: 0

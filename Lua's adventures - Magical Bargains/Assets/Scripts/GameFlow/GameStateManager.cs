@@ -15,6 +15,7 @@ public class GameStateManager : MonoBehaviour
     [SerializeField] private LevelManager levelManager;
     [SerializeField] private GameIntro gameIntro;
     [SerializeField] private LevelOutro levelOutro;
+    [SerializeField] private GameOutro gameOutro;
     [SerializeField] private Timer timer;
 
     [Header("Music")]
@@ -70,6 +71,10 @@ public class GameStateManager : MonoBehaviour
     }
 
     private void Start() {
+
+        savings = 80.0;
+        currentPurchases = new Queue<ClientData>();
+
         LoadGameIntro();
     }
 
@@ -174,6 +179,16 @@ public class GameStateManager : MonoBehaviour
         timer.ResetTimer();
         //timer.ResetBackGround();
         timerEnded = false;
+    }
+
+    public void LoadGameOutro()
+    {
+        DialogueManager.GetInstance().Reset();
+
+        levelOutro.CalculateEarnings(currentPurchases, savings);
+
+        gameOutro.ShowGameOutro(savings);
+
     }
 
 

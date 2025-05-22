@@ -27,7 +27,7 @@ public class GameIntro : MonoBehaviour
     private string currentImageName;
 
     // where in RESOURCES to find the images and text
-    private string introPath = "Cutscene";
+    private string introPath = System.IO.Path.Combine("Cutscene", "gameIntro");
 
     // input to go to next line of text and image
     private string inputKey = "space";

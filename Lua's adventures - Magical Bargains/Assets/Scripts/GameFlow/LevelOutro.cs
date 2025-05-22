@@ -74,7 +74,7 @@ public class LevelOutro : MonoBehaviour
         earnings = CalculateEarnings(purchases, savings);
 
         savings = GameStateManager.GetInstance().CheckMoney();
-        Debug.Log("EARNINGS: " + earnings + "jkCount: " + junkCount + "hntCount: " + hauntedCount + "nb purchase: " + nbPurchases);
+        Debug.Log("EARNINGS: " + earnings + ", jkCount: " + junkCount + ", hntCount: " + hauntedCount + ", nb purchase: " + nbPurchases);
 
         // set coroutine var to null again so that we can exit safely
         exitCutsceneCoroutine = null;
@@ -97,7 +97,7 @@ public class LevelOutro : MonoBehaviour
     }
 
 
-    private double CalculateEarnings(Queue<ClientData> purchases, double savings) {
+    public double CalculateEarnings(Queue<ClientData> purchases, double savings) {
 
         earnings = 0.0;
 

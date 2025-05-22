@@ -10,7 +10,7 @@ public class MenuButtonManager : MonoBehaviour
     [SerializeField] private Button properSceneButton;
 
     [Header("Scenes")]
-    [SerializeField] private string properScene = "ProperScene";
+    [SerializeField] private string properScene = "MainScene";
 
 
 

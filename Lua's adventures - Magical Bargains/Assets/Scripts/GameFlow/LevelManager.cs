@@ -56,9 +56,9 @@ public class LevelManager : MonoBehaviour
     private string grandpaDialoguesPathName = Path.Combine("Dialogues", "grandpa");
 
     // to be deleted
-    private string menuScene = "SimpleMenu";
     private Coroutine destroyClientCoroutine;
-    
+    private Coroutine endGameCoroutine;
+
 
     void Start()
     {
@@ -89,8 +89,10 @@ public class LevelManager : MonoBehaviour
 
         // N) when level queue is empty we enter game outro
         if (levelQueue.Count == 0) {
-            Debug.Log("--------Game is done !!");
-            GoBackToMenuWithoutDelay();
+
+            if (endGameCoroutine != null) { return; }
+
+            endGameCoroutine = StartCoroutine(LoadGameOutroAfterDelay(0.5f));
             return;
         }
 
@@ -289,12 +291,17 @@ public class LevelManager : MonoBehaviour
     //////////////////////////////////// Next Step to Take ////////////////////////////////////////////////
 
     
-    private void GoBackToMenuWithoutDelay() { SceneManager.LoadScene(menuScene); }
+    //private void GoBackToMenuWithoutDelay() { SceneManager.LoadScene(menuScene); }
 
-    IEnumerator GoBackToMenuAfterDelay(float delay)
+    IEnumerator LoadGameOutroAfterDelay(float delay)
     {
+        blackScreen.SetActive(true);
+
         yield return new WaitForSeconds(delay);
-        SceneManager.LoadScene(menuScene);
+
+        GameStateManager.GetInstance().LoadGameOutro();
+
+        blackScreen.SetActive(false);
     }
 
     IEnumerator NextLevelAfterDelay(float delay)
