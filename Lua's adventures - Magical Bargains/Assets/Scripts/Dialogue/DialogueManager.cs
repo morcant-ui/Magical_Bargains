@@ -11,58 +11,64 @@ public class DialogueManager : MonoBehaviour
     // "manage and display the dialogue that's written to the UI"
 
     [Header("Dialogue UI")]
-
     [SerializeField] private GameObject dialoguePanel;
     [SerializeField] private TextMeshProUGUI dialogueText;
 
+    [SerializeField] private GameObject savingsImage;
+    [SerializeField] private TextMeshProUGUI savingsText;
     [SerializeField] private Image spaceBarIcon;
 
+    [Header("Typing Speed")]
     [SerializeField] private float normalSpeed = 0.05f;
     [SerializeField] private float fasterSpeed = 0.05f;
 
+    [Header("Flutter Effect")]
     [SerializeField] private float flutterSpeed = 0.5f;
 
-    [SerializeField] private GameObject savingsImage;
-    [SerializeField] private TextMeshProUGUI savingsText;
-
-    private Story currentStory;
-
-    private string inputKey = "space";
-
+    // Booleans
     public bool dialogueIsPlaying { get; private set; }
     public bool dialogueIsFinished { get; private set; }
 
-    private Coroutine typingCoroutine;
     private bool isCurrentlyTyping;
 
+    private bool isCutscenePlaying;
+
+    // user input to get next line of dialogue
+    private string inputKey = "space";
+
+    // to keep track of Story
+    private Story currentStory;
+
+
+    // coroutines to avoid having them called more than once at a time
+    private Coroutine ExitDialogueCoroutine;
+    private Coroutine typingCoroutine;
+    
     private Coroutine SpaceBarFlutterCoroutine;
     private Coroutine FlickerSavingsCoroutine;
 
+    // typing speed variable
     private float typingSpeed;
-
-    private bool isCutscenePlaying;
 
     private static DialogueManager instance;
 
     private void Awake() {
         if (instance != null && instance != this)
         {
-            Debug.Log("what's up with this ?");
-            Destroy(this.gameObject); // kill extra copies
-
+            Destroy(this.gameObject); 
         }
         else
         {
-
             instance = this;
         }
 
 
+        // initialize the booleans
         dialogueIsPlaying = false;
         dialogueIsFinished = false;
-        dialoguePanel.SetActive(false);
-
         isCutscenePlaying = GameStateManager.GetInstance().WillIntroPlay();
+
+        dialoguePanel.SetActive(!isCutscenePlaying);
 
         typingSpeed = normalSpeed;
     }
@@ -88,13 +94,13 @@ public class DialogueManager : MonoBehaviour
                     typingSpeed = fasterSpeed;
                 }
             }
+
             else if (!isCurrentlyTyping) {
 
                 // make space bar icon's color flutter when dialogue is ready to go on
                 if (SpaceBarFlutterCoroutine == null) {
                     SpaceBarFlutterCoroutine = StartCoroutine(makeSpaceBarFlutter()); 
                 }
-
 
                 if (Input.GetKeyDown(inputKey))
                 {        
@@ -113,9 +119,15 @@ public class DialogueManager : MonoBehaviour
             return;
         }
 
+        if (isCutscenePlaying) {
+            Debug.Log("EnterDialogueMode: you cannot do that !");
+        }
+
         currentStory = new Story(inkJSON.text);
         dialogueIsPlaying = true;
+
         dialoguePanel.SetActive(true);
+        ExitDialogueCoroutine = null;
 
         ContinueStory();
     }
@@ -132,12 +144,15 @@ public class DialogueManager : MonoBehaviour
         }
         else
         {
-            StartCoroutine(ExitDialogueMode());
+            if (ExitDialogueCoroutine != null) { return; }
+
+            ExitDialogueCoroutine = StartCoroutine(ExitDialogueMode());
         }
     }
 
 
     private IEnumerator TypeLine(string line) {
+
         isCurrentlyTyping = true;
 
         dialogueText.maxVisibleCharacters = 0;
@@ -151,9 +166,6 @@ public class DialogueManager : MonoBehaviour
 
         isCurrentlyTyping = false;
         typingSpeed = normalSpeed;
-
-
-        //Debug.Log(line);
     }
 
 
@@ -162,7 +174,6 @@ public class DialogueManager : MonoBehaviour
 
         dialogueIsPlaying = false;
         dialogueIsFinished = true;
-
 
         dialoguePanel.SetActive(false);
         savingsImage.SetActive(false);
@@ -176,6 +187,7 @@ public class DialogueManager : MonoBehaviour
     public void Reset() {
         dialogueIsPlaying = false;
         dialogueIsFinished = false;
+        isCurrentlyTyping = false;
     }
 
 

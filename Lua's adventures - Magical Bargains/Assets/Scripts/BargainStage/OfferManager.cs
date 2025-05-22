@@ -14,7 +14,9 @@ public class OfferManager : MonoBehaviour
     private int yourOffer;
 
     private bool isBargainOn = false;
-    // Start is called before the first frame update
+
+
+
     public void StartBargain(string currentOffer)
     {
 

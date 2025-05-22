@@ -8,7 +8,6 @@ public class OfferDecisionManager : MonoBehaviour
 {
     private string srcToDialoguePath = Path.Combine("Assets", "Resources");
 
-
     public void tryRand() {
 
         Debug.Log("RAND: " + Random.Range(1,4));
@@ -37,7 +36,6 @@ public class OfferDecisionManager : MonoBehaviour
             dialogue = Resources.Load<TextAsset>(Path.Combine(PathName, dialogueName));
         }
 
- 
 
         if (dialogue != null)
         {

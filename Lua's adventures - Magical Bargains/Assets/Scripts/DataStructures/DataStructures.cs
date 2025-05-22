@@ -5,20 +5,23 @@ using UnityEngine;
 [System.Serializable]
 public class ClientData
 {
-    public string clientID;
     public string clientSprite;
-    public string dialogueA;
-    public string dialogueB;
-    public string dialogueC;
-    public string dialogueD;
-    public string artifactID;
-    public string artifactSprite; // store as hex, convert to Color
+    public string artifactSprite;
+
     public string magnifierSprite;
     public string cameraSprite;
     public string thermoColor;
     public string thermoIntensity;
+
+    public string dialogueA;
+    public string dialogueB;
+    public string dialogueC;
+    public string dialogueD;
+    
     public string artifactOffer;
     public string minOfferAccepted;
+    public string finalPrice;
+    public string grade;
 }
 
 [System.Serializable]

@@ -26,15 +26,8 @@ public class Timer : MonoBehaviour
     private float GStep;
 
 
-
-
-
-    // Start is called before the first frame update
     void Start()
     {
-
-
-
         isTimerOn = false;
         elapsedTime = 0.00F;
     }
@@ -66,7 +59,6 @@ public class Timer : MonoBehaviour
                 isTimerOn = false;
                 NotifyManager();
             }
-
         }
     }
 

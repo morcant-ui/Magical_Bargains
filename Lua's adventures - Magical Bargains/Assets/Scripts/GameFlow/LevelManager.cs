@@ -8,17 +8,12 @@ using TMPro;
 
 public class LevelManager : MonoBehaviour
 {
-    [Header("Game Data")]
+    [Header("Data OF each Level")]
     [SerializeField] private TextAsset gameDataJSON;
 
     [Header("Assets Spawners")]
     [SerializeField] private ClientSpawner clientSpawner;
     [SerializeField] private ArtifactSpawner artifactSpawner;
-
-    [Header("Stuff")]
-    [SerializeField] private GameObject blackScreen;
-
-    
 
     [Header("Offers")]
     [SerializeField] private OfferManager offerManager;
@@ -28,111 +23,119 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private GameObject savingsImage;
     [SerializeField] private TextMeshProUGUI savingsText;
 
+    [Header("Transitional blackscreen")]
+    [SerializeField] private GameObject blackScreen;
+
+    // boolean to keep track of if we're processing a client
+    private bool processingClients = false;
+
+    // savings kept track of by state manager
     private double savings;
 
-    private Queue<LevelData> levelQueue; // this queue will let us iterate thru game data
-    private LevelData currentLevel; // index to keep track of current client/artifact
+    // queue for List of levels
+    private Queue<LevelData> levelQueue;
+    private LevelData currentLevel;
 
-    private Queue<ClientData> clientQueue; // this queue will let us iterate thru game data
-    private ClientData currentClient; // index to keep track of current client/artifact
+    // queue for list of clients per level
+    private Queue<ClientData> clientQueue;
+    private ClientData currentClient;
 
+    // vars that i keep track of
+    // ARTIFACT
     private string artifactSpriteName;
     private bool hadDefects;
 
-    private string JSONPathName = "ClientLists";
-    private string spritePathName = "Sprites";
-
+    // DIALOGUES
     private TextAsset dialogueA;
     private TextAsset dialogueB;
 
+    // PATH NAMES
+    private string JSONPathName = "ClientLists";
+    private string spritePathName = "Sprites";
     private string dialogueAPathName = Path.Combine("Dialogues", "dialogueA");
-
     private string grandpaDialoguesPathName = Path.Combine("Dialogues", "grandpa");
 
-    
-
-
+    // to be deleted
     private string menuScene = "SimpleMenu";
-
-    private bool processingClients = false;
+    private Coroutine destroyClientCoroutine;
+    
 
     void Start()
     {
         blackScreen.SetActive(false);
-        //LoadGameData();
-        //LoadLevelIntro();
-        //GameStateManager.GetInstance().LoadIntroState();
     }
 
-    void Update()
-    {
+    void Update(){ }
 
-    }
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////// Handling lists /////////////////////////////////////////////////
 
     // THIS NEEDS TO RUN ONCE AT THE BEGINNING OF THE GAME
     public void LoadGameData()
     {
+        // simply pull the list of levels înto the queue
         ListLevels listLevels = JsonUtility.FromJson<ListLevels>(gameDataJSON.text);
         levelQueue = new Queue<LevelData>(listLevels.levelData);
         
     }
 
     // THIS NEEDS TO RUN ONCE FOR EACH LEVEL
+    // Steps:   1. pull a new level from the queue
+    //          2. pull a new list of clients to go through
+    //          3. get the grandpa dialogue from current level and run it
+    //          N. when the level queue is empty we start the game outro process
     public void LoadNextLevel()
     {
 
-        // if level queue is empty then the game is finished
+        // N) when level queue is empty we enter game outro
         if (levelQueue.Count == 0) {
-            // GAME IS DONE
             Debug.Log("--------Game is done !!");
             GoBackToMenuWithoutDelay();
             return;
         }
 
-
-
-        // else: we dequeue and retrieve the JSON file for the list of clients of this level
+        // 1)
         currentLevel = levelQueue.Dequeue();
-
         string currentLevelName = currentLevel.listClientsName;
+
+        // 2)
         TextAsset clientDataJSON = Resources.Load<TextAsset>(Path.Combine(JSONPathName, currentLevelName));
 
-        // we load the client queue with updated information
         ListClients listClients = JsonUtility.FromJson<ListClients>(clientDataJSON.text);
         clientQueue = new Queue<ClientData>(listClients.clients);
 
         processingClients = true;
 
-        // make grandpa talk before opening the shop
+        // 3)
         string grandpaDialogueName = currentLevel.grandpaIntroDialogue;
         TextAsset grandpaIntroDialogue = Resources.Load<TextAsset>(Path.Combine(grandpaDialoguesPathName, grandpaDialogueName));
 
-        
         DialogueManager.GetInstance().EnterDialogueMode(grandpaIntroDialogue);
     }
 
     // THIS NEEDS TO RUN ONCE FOR EACH CLIENT FOR EACH LEVEL 
+    // Steps:   1. pull a new client from the queue
+    //          2. retrieve the sprite and dialogue and make the client spawn
+    //          3. retrieve the dialogue and call dialogue manager
+    //          4. once we load a new client, we need to destroy the previous one
+    //          N. when the client queue is empty OR timer ran out, we start the level outro process
     public void LoadNextClient(bool timerEnded)
     {
+
+        // 4) after every processed client we delete client and reset dialogue
         DialogueManager.GetInstance().Reset();
-
-        
-
-        bool bo = DialogueManager.GetInstance().dialogueIsFinished;
-        // after every processed client we destroy them and reset dialogueManager
         if (currentClient != null)
         {
-            StartCoroutine(DestroyAfterDelay(0.5f));
+            //if (destroyClientCoroutine != null) { return; }
+            //destroyClientCoroutine = StartCoroutine(DestroyAfterDelay(0.5f));
+            DestroyClient(0.5f);
         }
 
-        // we now check the queue (not dependent on coroutine above): if empty we'll put up a black screen
+
+        // N) when queue is empty or timer ran out, we go to level outro
         if (clientQueue.Count == 0 || timerEnded)
         {
-            if (timerEnded) {
-                Debug.Log("Max timer has ended");
-            } else { 
-                Debug.Log("All clients processed.");
-                }
+            if (timerEnded) { Debug.Log("Max timer has ended"); } else {  Debug.Log("All clients processed."); }
 
             processingClients = false;
 
@@ -141,163 +144,161 @@ public class LevelManager : MonoBehaviour
 
             StartCoroutine(NextLevelAfterDelay(0.5f));
             return;
-            // reset current level current client and the client queue
         }
 
-        // if not done: pop the queue
+        // 1)
         currentClient = clientQueue.Dequeue();
 
-        // retreive necessary information from game data
-        string clientSpriteName = currentClient.clientSprite;
+        // 2)
+        CreateClient();
+
+        // 3)
         string dialogueNameA = currentClient.dialogueA;
-
-
-
-        //Color objectColor = ParseColor(currentClient.objectColor);
-
-        // now we call the client and artifact spawner feeding them necessary information
-        ///// WARNING: THIS CURRENTLY ONLY WORKS BC OLD OBJ ARE DESTROYED BEFORE THE CALL
-        ///// TO SPAWNERS: ideally we should wrap all those instructions inside another coroutine
-        ///// and write "yield return StartCoroutine(DestroyAfterDelay(0.5f));
-        /// (i think... not sure)
-
-        clientSpawner.SpawnClient(Path.Combine(spritePathName, clientSpriteName));
-        
-
-        // retrieve the dialogue from Resources
-        dialogueA = Resources.Load<TextAsset>(Path.Combine(dialogueAPathName, dialogueNameA));
-
-        // now we have a new client on our hand, we should load the new Dialogue
-        DialogueManager.GetInstance().EnterDialogueMode(dialogueA); // dia not playing and dia not finished
+        dialogueA = Resources.Load<TextAsset>(Path.Combine(dialogueAPathName, dialogueNameA)); 
+        DialogueManager.GetInstance().EnterDialogueMode(dialogueA); 
     }
 
-    public void CreateArtifact() {
+    //////////////////////////////////// Handling lists ///////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////// Handle Bargain State /////////////////////////////////////////////
 
-        string artifactSpriteName = currentClient.artifactSprite;
-        string magnifierSpriteName = currentClient.magnifierSprite;
-        string cameraSpriteName = currentClient.cameraSprite;
-        string thermoColor = currentClient.thermoColor;
-        
-        //bool isThermostatDefective = currentClient.isThermostatDefective;
-        //bool isCameraDefective = currentClient.isCameraDefective;
-
-        artifactSpawner.SpawnObject(artifactSpriteName, magnifierSpriteName, cameraSpriteName, thermoColor);
-    }
-
+    // Steps:   1. destroy the artifact
+    //          2. show the savings
+    //          3. retrieve the current offer and give it to offer Manager
     public void PrepareBargainState()
     {
-        // Destroy Artifact
-        GameObject[] oldObjects = GameObject.FindGameObjectsWithTag("currentArtifact");
+        // 1)
+        DestroyArtifact();
 
-        foreach (GameObject obj in oldObjects)
-        {
-            Destroy(obj);
-        }
-
-
+        // 2)
         savings = GameStateManager.GetInstance().CheckMoney();
         savingsText.text = "$" + savings.ToString("00.00");
 
         savingsText.color = Color.white;
         savingsImage.SetActive(true);
 
+        // 3)
         string currentOffer = currentClient.artifactOffer;
- 
         offerManager.StartBargain(currentOffer);
     }
 
+    // Steps:   1. retrieve final offer from offer manager and min offer from the current client
+    //          2. determine the outcome of the offer
+    //          3. for any outcome, call offer dialogue manager to obtain a working dialogue
+    //          4. feed the dialogue to dialogue Manager
     public void FinishBargainState()
     {   
+        // 1)
         int finalOffer = offerManager.FinalOffer;
         int minOfferAccepted = int.Parse(currentClient.minOfferAccepted);
+        TextAsset dialogue;
 
-
+        // 2)
+        // Outcome B: offer accepted
         if (finalOffer >= minOfferAccepted && savings >= finalOffer)
         {
-            Debug.Log("offer went through !");
+            Debug.Log("Finish Bargain State: Outcome B");
 
-
+            // update savings
             savings = GameStateManager.GetInstance().RetrieveMoney(finalOffer);
             savingsText.text = "$" + savings.ToString("00.00");
 
-            // Load Dialogue
+            // add new purchase info to list in state manager
+            currentClient.finalPrice = finalOffer.ToString();
+            GameStateManager.GetInstance().AddToListPurchases(currentClient);
+
+            // 3)
             string dialogueNameB = currentClient.dialogueB;
-            TextAsset dialogueB = offerDecision.LoadDialogue(dialogueNameB, "dialogueB");
+            dialogue = offerDecision.LoadDialogue(dialogueNameB, "dialogueB");
 
-            DialogueManager.GetInstance().EnterDialogueMode(dialogueB);
-
+        // Outcome D: not enough money
         } else if (finalOffer >= minOfferAccepted && savings < finalOffer) {
 
-            // if this feels order of priority feels weird we can remove the final offer >= min offer condition above to prioritize them bashing you for having no money
-            Debug.Log("You are trying to retrieve " + finalOffer + " gold, but you only have " + savings + " in grandpa's bank account !");
+            Debug.Log("Finish Bargain State: Outcome D");
 
-            // if player is broke the game will let them know
+            // make savings flicker for some visual cue
             DialogueManager.GetInstance().TriggerSavingsFlickering();
 
-            // Load Dialogue
+            // 3)
             string dialogueNameD = currentClient.dialogueD;
-            TextAsset dialogueD = offerDecision.LoadDialogue(dialogueNameD, "dialogueD");
+            dialogue = offerDecision.LoadDialogue(dialogueNameD, "dialogueD");
 
-            DialogueManager.GetInstance().EnterDialogueMode(dialogueD);
-        }
-        else
-        {
-            Debug.Log("HUM OFFER IS NOT ACCEPTED");
+        // Outcome C: client refuses
+        } else {
 
-            // Load Dialogue
+            Debug.Log("Finish Bargain State: Outcome D");
+
+            // 3)
             string dialogueNameC = currentClient.dialogueC;
-            TextAsset dialogueC = offerDecision.LoadDialogue(dialogueNameC, "dialogueC");
-
-            DialogueManager.GetInstance().EnterDialogueMode(dialogueC);
+            dialogue = offerDecision.LoadDialogue(dialogueNameC, "dialogueC");
         }
 
-        
-
+        // 4)
+        DialogueManager.GetInstance().EnterDialogueMode(dialogue);
     }
 
-    // destroy a client and artifact
-    IEnumerator DestroyAfterDelay(float delay)
+    //////////////////////////////////// Handle Bargain State /////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////// Use the Spawners /////////////////////////////////////////////////
+    
+    public void CreateArtifact()
     {
 
-        blackScreen.SetActive(true);
+        string artifactSpriteName = currentClient.artifactSprite;
+        string magnifierSpriteName = currentClient.magnifierSprite;
+        string cameraSpriteName = currentClient.cameraSprite;
+        string thermoColor = currentClient.thermoColor;
 
-        // to destroy them i use the "delete all object with tag" strategy
+        artifactSpawner.SpawnObject(artifactSpriteName, magnifierSpriteName, cameraSpriteName, thermoColor);
+    }
+
+    private void CreateClient()
+    {
+        string clientSpriteName = currentClient.clientSprite;
+
+        clientSpawner.SpawnClient(Path.Combine(spritePathName, clientSpriteName));
+    }
+
+    private void DestroyArtifact() 
+    {
+        GameObject[] oldObjects = GameObject.FindGameObjectsWithTag("currentArtifact");
+
+        foreach (GameObject obj in oldObjects) { Destroy(obj); }
+    }
+
+    private void DestroyClient(float delay)
+    {
+        blackScreen.SetActive(true);
         GameObject[] oldObjects = GameObject.FindGameObjectsWithTag("currentClient");
 
-        foreach (GameObject obj in oldObjects)
-        {
-            Destroy(obj);
-        }
+        foreach (GameObject obj in oldObjects) { Destroy(obj); }
 
         // wait for a few seconds: could use this time for animation maybe instead of blackscreen
-        yield return new WaitForSeconds(delay);
+        //yield return new WaitForSeconds(delay);
 
-
-        // ugly repeating of code but whatever: its to prevent blackscreen to oscillate at the very end
         if (clientQueue.Count != 0 || processingClients)
         {
             blackScreen.SetActive(false);
         }
     }
+    //////////////////////////////////// Use the Spawners /////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////// Next Step to Take ////////////////////////////////////////////////
 
-    //// once LEVEL queue is done: blackscreen for a few seconds then go back to menu
-    private void GoBackToMenuWithoutDelay() {
-        SceneManager.LoadScene(menuScene);
-    }
+    
+    private void GoBackToMenuWithoutDelay() { SceneManager.LoadScene(menuScene); }
+
     IEnumerator GoBackToMenuAfterDelay(float delay)
     {
-        
         yield return new WaitForSeconds(delay);
-
         SceneManager.LoadScene(menuScene);
     }
 
-
-    // once client queue is done: blackscreen for a few seconds then go back to menu
     IEnumerator NextLevelAfterDelay(float delay)
     {
-        Debug.Log("--------: count = " + levelQueue.Count);
-        
         blackScreen.SetActive(true);
 
         yield return new WaitForSeconds(delay);
@@ -306,15 +307,17 @@ public class LevelManager : MonoBehaviour
         {
             blackScreen.SetActive(false);
             GameStateManager.GetInstance().LoadLevelOutro();
-        }
-        else {
+        } 
+        else 
+        {
+            blackScreen.SetActive(true);
             GameStateManager.GetInstance().LoadLevelIntro();
         }
         
         
     }
-
-
+    //////////////////////////////////// Next Step to Take ////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
     // helper function to get color from game data
     Color ParseColor(string hex)

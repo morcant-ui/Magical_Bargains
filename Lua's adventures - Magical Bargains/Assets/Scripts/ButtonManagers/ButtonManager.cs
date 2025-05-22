@@ -205,7 +205,6 @@ public class ButtonManager : MonoBehaviour
 
     public void OnThermometerButtonClick()
     {
-        Debug.Log("CLICK");
         if (thermometerButtonActivated)
         {
 
@@ -245,7 +244,6 @@ public class ButtonManager : MonoBehaviour
             isInspectActive = true;
         }
 
-
         if (currentState == "inspect") 
         {
             isBargainActive = true;
@@ -257,13 +255,11 @@ public class ButtonManager : MonoBehaviour
             bargainInProgress = true;
         }
 
-        if (currentState == "bargainDone" && DialogueManager.GetInstance().dialogueIsFinished)
+        if (currentState == "client outro" && DialogueManager.GetInstance().dialogueIsFinished)
         {
             offerAccepted = false;
             bargainInProgress = false;
             isIntroActive = true;
-            
-
         }
 
         openShopButton.gameObject.SetActive(isOpenShopActive);
@@ -294,8 +290,6 @@ public class ButtonManager : MonoBehaviour
 
         cameraButton.gameObject.SetActive(isToolsActive);
         cameraButton.interactable = !(magnifierButtonActivated || thermometerButtonActivated);
-
-
 
         if (!magnifierButtonActivated)
         {

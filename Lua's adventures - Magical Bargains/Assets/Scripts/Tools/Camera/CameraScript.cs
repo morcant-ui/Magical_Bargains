@@ -108,7 +108,7 @@ public class CameraScript : MonoBehaviour
         {
             // play audio
             Transform position = photoCamera.GetComponent<Transform>();
-            AudioManager.instance.PlayClip(audioClip, position, volume);
+            AudioManager.GetInstance().PlayClip(audioClip, position, volume);
 
 
             cameraFlash.SetActive(true);

@@ -1,38 +1,42 @@
 {
     "clients": [
         {
-            "clientID": "client_01",
             "clientSprite": "client1",
-            "dialogueA":"dia6a",
-            "artifactID": "item_01",
             "artifactSprite": "artifact1",
-            "isMagnifierDefective": true,
+
             "magnifierSprite":"hidden-artifact1",
             "thermoColor": "#FF0000",
+
+            "dialogueA":"dia6a",
+            
             "artifactOffer": "200",
-            "minOfferAccepted": "180"
+            "minOfferAccepted": "180",
+            "grade": "bad"
         },
         {
-            "clientID": "client_02",
             "clientSprite": "client2",
-            "dialogueA":"dia6a",
-            "artifactID": "item_02",
             "artifactSprite": "artifact2",
+
             "cameraSprite":"hidden-artifact2",
             "thermoColor": "#0000FF",
+            
+            "dialogueA":"dia6a",
+            
             "artifactOffer": "100",
-            "minOfferAccepted": "90"
+            "minOfferAccepted": "90",
+            "grade": "junk"
         },
         {
-            "clientID": "client_03",
             "clientSprite": "client3",
-            "dialogueA":"dia6a",
-            "artifactID": "item_03",
             "artifactSprite": "artifact3",
+
             "thermoColor": "#FFFFFF",
+
+            "dialogueA":"dia6a",
+            
             "artifactOffer": "50",
-            "minOfferAccepted": "10"
-        
+            "minOfferAccepted": "10",
+            "grade": "good"
         }
     ]
 }

@@ -27,7 +27,7 @@ public class GameStateManager : MonoBehaviour
     [Header("Fixed Game Parameters")]
     [SerializeField] private float maxTime;
 
-
+    private Queue<ClientData> currentPurchases = new Queue<ClientData>();
 
     private static double savings = 80.0; // static vars cannot show in inspector
 
@@ -80,7 +80,7 @@ public class GameStateManager : MonoBehaviour
         state = "game intro";
 
         // start playing the game intro music
-        AudioManager.instance.StartMusic(gameIntroMusic, introVolume);
+        AudioManager.GetInstance().StartMusic(gameIntroMusic, introVolume);
 
         levelManager.LoadGameData();
 
@@ -99,7 +99,7 @@ public class GameStateManager : MonoBehaviour
         DialogueManager.GetInstance().Reset();
 
         // start playing the level music
-        AudioManager.instance.StartMusic(levelMusic, volume);
+        AudioManager.GetInstance().StartMusic(levelMusic, volume);
 
         grandpa.SetActive(true);
         levelManager.LoadNextLevel();
@@ -154,7 +154,7 @@ public class GameStateManager : MonoBehaviour
 
     public void LoadBargainDoneState()
     {
-        state = "bargainDone";
+        state = "client outro";
         levelManager.FinishBargainState();
     }
 
@@ -163,13 +163,13 @@ public class GameStateManager : MonoBehaviour
         state = "level outro";
 
         // stop music
-        AudioManager.instance.StopMusic();
+        AudioManager.GetInstance().StopMusic();
         // start playing the level outro music
-        AudioManager.instance.StartMusic(levelOutroMusic, volume);
+        AudioManager.GetInstance().StartMusic(levelOutroMusic, volume);
 
         float elapsedTime = timer.CheckTimer();
 
-        levelOutro.ShowLevelOutroScreen( elapsedTime );
+        levelOutro.ShowLevelOutroScreen( currentPurchases, elapsedTime );
 
         timer.ResetTimer();
         //timer.ResetBackGround();
@@ -199,9 +199,26 @@ public class GameStateManager : MonoBehaviour
 
     }
 
+    public double EarnMoney(double amount) {
+        savings += amount;
+        return savings;
+    }
+
     public double CheckMoney() {
         return savings;
     }
+
+
+    public void AddToListPurchases(ClientData newPurchase) {
+        currentPurchases.Enqueue(newPurchase);
+    }
+
+    public void ResetListPurchases() { currentPurchases = null; }
+
+    public Queue<ClientData> GetListPurchases() {
+        return currentPurchases;
+    }
+
 
     public void setTimerEnded(bool te) {
         timerEnded = te;
