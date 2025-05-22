@@ -64,8 +64,13 @@ public class LevelOutro : MonoBehaviour
         // simplistic cutscene: called from game state manager
         outroActivated = true;
 
+        // retrieve STATISTICS
+        float elapsedMin = Mathf.FloorToInt(elapsedTime / 60);
+        float elapsedSec = Mathf.FloorToInt(elapsedTime % 60);
+
         double savings = GameStateManager.GetInstance().CheckMoney();
 
+        // CALCULATE EARNINGS
         earnings = CalculateEarnings(purchases, savings);
 
         savings = GameStateManager.GetInstance().CheckMoney();
@@ -81,21 +86,14 @@ public class LevelOutro : MonoBehaviour
         holder.SetActive(true);
         cutsceneImage.SetActive(true);
 
-        // STATISTICS: retrieve savings and display them on screen
-        
-
+        // display STATISTICS on screen
         savingsTextDisplay.text = savingsTextBase + "$" + savings.ToString("00.00");
-
-        // We retrieve elapsed time as argument from state manager: display that (MAY BE DELETED)
-        float elapsedMin = Mathf.FloorToInt(elapsedTime / 60);
-        float elapsedSec = Mathf.FloorToInt(elapsedTime % 60);
-
         timerTextDisplay.text = timerTextBase + string.Format("{0:00}:{1:00}", elapsedMin, elapsedSec);
 
         // Retrieve the cutscene main text and display it directly (MAY BE DELETED)
         Story story = new Story(cutsceneTextContent.text);
 
-        cutsceneTextDisplay.text = story.Continue(); ; 
+        cutsceneTextDisplay.text = story.Continue(); 
     }
 
 
