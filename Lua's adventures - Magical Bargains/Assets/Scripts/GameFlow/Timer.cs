@@ -129,7 +129,6 @@ public class Timer : MonoBehaviour
 
     public void ResetBackground() {
 
-        Debug.Log("Timer Finished - R = " + R + ", G = " + G);
 
         R = 1f;
         G = 1f;

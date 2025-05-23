@@ -11,6 +11,7 @@ public class GameStateManager : MonoBehaviour
     [Header("Grandpa sprite")]
     [SerializeField] private GameObject grandpa;
 
+
     [Header("Managers")]
     [SerializeField] private LevelManager levelManager;
     [SerializeField] private GameIntro gameIntro;
@@ -112,24 +113,16 @@ public class GameStateManager : MonoBehaviour
 
     public void LoadClientIntro() {
 
-            state = "client intro";
+        state = "client intro";
 
-            grandpa.SetActive(false);
+        grandpa.SetActive(false);
 
-            
-
-            DialogueManager.GetInstance().Reset();
-            levelManager.LoadNextClient( timerEnded );
-
-    }
-
-    // to delete (make sure it isnt refered anywhere before)
-    public void LoadIntroState() 
-    {
-        state = "intro";
         DialogueManager.GetInstance().Reset();
         levelManager.LoadNextClient( timerEnded );
+
     }
+
+    
 
     public void LoadInspectState()
     {

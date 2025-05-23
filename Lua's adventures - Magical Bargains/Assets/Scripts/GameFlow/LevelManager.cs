@@ -60,6 +60,9 @@ public class LevelManager : MonoBehaviour
     private Coroutine endGameCoroutine;
 
 
+    private string menuScene = "SimpleMenu";
+
+
     void Start()
     {
         blackScreen.SetActive(false);
@@ -234,6 +237,12 @@ public class LevelManager : MonoBehaviour
             // 3)
             string dialogueNameC = currentClient.dialogueC;
             dialogue = offerDecision.LoadDialogue(dialogueNameC, "dialogueC");
+        }
+
+        if (dialogue == null) {
+            Debug.Log("finishBargainState: dialogue is null");
+            SceneManager.LoadScene(menuScene);
+            return;
         }
 
         // 4)
