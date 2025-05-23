@@ -232,7 +232,7 @@ public class LevelManager : MonoBehaviour
         // Outcome C: client refuses
         } else {
 
-            Debug.Log("Finish Bargain State: Outcome D");
+            Debug.Log("Finish Bargain State: Outcome C");
 
             // 3)
             string dialogueNameC = currentClient.dialogueC;

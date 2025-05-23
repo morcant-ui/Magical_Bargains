@@ -16,15 +16,15 @@ public class FishingGame : MonoBehaviour
 
     private void Start()
     {
-        center.gameObject.SetActive(false);
-        fish.gameObject.SetActive(false);
-        targetArrow.gameObject.SetActive(false);
+        //center.gameObject.SetActive(false);
+        //fish.gameObject.SetActive(false);
+        //targetArrow.gameObject.SetActive(false);
     }
     public IEnumerator PlayFishingGame()
     {
-        center.gameObject.SetActive(true);
-        fish.gameObject.SetActive(true);
-        targetArrow.gameObject.SetActive(true);
+        //center.gameObject.SetActive(true);
+        //fish.gameObject.SetActive(true);
+        //targetArrow.gameObject.SetActive(true);
         // Reset state
         hitRegistered = false;
 

@@ -9,6 +9,9 @@ public class CameraScript : MonoBehaviour
     private bool viewingPhoto;
 
     [Header("CameraCanvas Objects")]
+
+    //[SerializeField] private FishingGame minigame;
+
     [SerializeField] private Image photoDisplayArea;
     [SerializeField] private GameObject photoFrame;
     [SerializeField] private GameObject cameraFlash;
@@ -31,10 +34,11 @@ public class CameraScript : MonoBehaviour
 
     public void StartProcess()
     {
-        //Debug.Log("are you here");
+
         isActivated = true;
         if (!viewingPhoto)
         {
+
             StartCoroutine(HandleFishingSequence());
             //StartCoroutine(CapturePhoto());
         }
@@ -47,6 +51,7 @@ public class CameraScript : MonoBehaviour
             viewingPhoto = true; // Prevent retriggering
 
             FishingGame minigame = GameObject.Find("FishingGame").GetComponent<FishingGame>();
+
             //minigame.gameObject.SetActive(true);
 
             // Wait for the minigame to finish
@@ -134,6 +139,8 @@ public class CameraScript : MonoBehaviour
         viewingPhoto = false;
         photoFrame.SetActive(false);
         // Destroy minigame...
+
+        //minigame.gameObject.SetActive(false);
 
         // cameraUI true
     }
