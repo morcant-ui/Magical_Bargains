@@ -48,9 +48,9 @@ public class FishingGame : MonoBehaviour
 
             yield return null;
         }
-        center.gameObject.SetActive(false);
-        fish.gameObject.SetActive(false);
-        targetArrow.gameObject.SetActive(false);
+        //center.gameObject.SetActive(false);
+        //fish.gameObject.SetActive(false);
+        //targetArrow.gameObject.SetActive(false);
 
         //Debug.Log("fISHY CATCHED");
     }
