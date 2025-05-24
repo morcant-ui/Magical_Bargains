@@ -1,0 +1,61 @@
+{
+    "clients": [
+        {
+            "clientSprite": "c3",
+            "artifactSprite": "a3",
+
+            "thermoColor": "#FF0000",
+
+            "dialogueA":"dia1a",
+            "dialogueB":"dia1b",
+            "dialogueC":"dia1c",
+            
+            "artifactOffer": "90",
+            "minOfferAccepted": "70",
+            "grade": "bad"
+        },
+        {
+            "clientSprite": "c2",
+            "artifactSprite": "a6",
+
+            "cameraSprite":"a6-hidden",
+            "thermoColor": "#0000FF",
+
+            "dialogueA":"dia2a",
+            "dialogueB":"dia2b",
+            "dialogueC":"dia2c",
+            
+            "artifactOffer": "80",
+            "minOfferAccepted": "30",
+            "grade": "junk"
+        },
+        {
+            "clientSprite": "c1",
+            "artifactSprite": "a4",
+
+            "thermoColor": "#0000FF",
+
+            "dialogueA":"dia2a",
+            "dialogueB":"dia2b",
+            "dialogueC":"dia2c",
+            
+            "artifactOffer": "80",
+            "minOfferAccepted": "50",
+            "grade": "ok"
+        },
+        {
+            "clientSprite": "c3",
+            "artifactSprite": "a7",
+
+            "thermoColor": "#0000FF",
+
+            "dialogueA":"dia2a",
+            "dialogueB":"dia2b",
+            "dialogueC":"dia2c",
+            
+            "artifactOffer": "80",
+            "minOfferAccepted": "50",
+            "grade": "ok"
+        }
+    ]
+}

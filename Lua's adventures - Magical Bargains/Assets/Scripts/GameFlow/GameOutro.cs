@@ -66,7 +66,7 @@ public class GameOutro : MonoBehaviour
 
         else if (savings >= 50){ appreciation = "bad"; }
 
-        else if (savings < 50 && savings > 0){ appreciation = "terrible"; }
+        //else if (savings < 50 && savings > 0){ appreciation = "terrible"; }
 
         else { appreciation = "bankrupt"; }
 

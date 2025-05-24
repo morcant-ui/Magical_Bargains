@@ -176,9 +176,14 @@ public class GameStateManager : MonoBehaviour
 
     public void LoadGameOutro()
     {
+
+        
         DialogueManager.GetInstance().Reset();
 
         levelOutro.CalculateEarnings(currentPurchases, savings);
+
+
+        Debug.Log("FINISHED WITH THIS AMOUNT IN THE BANK : " + savings);
 
         gameOutro.ShowGameOutro(savings);
 
