@@ -3092,7 +3092,7 @@ MonoBehaviour:
   savingsText: {fileID: 1674551690}
   spaceBarIcon: {fileID: 1403057124}
   normalSpeed: 0.05
-  fasterSpeed: 0.005
+  fasterSpeed: 0.001
   flutterSpeed: 0.5
 --- !u!1001 &824145722
 PrefabInstance:
