@@ -6,7 +6,7 @@
 
             "thermoColor": "#FF0000",
 
-            "dialogueA":"dia1a",
+            "dialogueA":"dia2a",
             "dialogueB":"dia1b",
             "dialogueC":"dia1c",
             
@@ -23,7 +23,6 @@
 
             "dialogueA":"dia2a",
             "dialogueB":"dia2b",
-            "dialogueC":"dia2c",
             
             "artifactOffer": "80",
             "minOfferAccepted": "30",
@@ -36,7 +35,6 @@
             "thermoColor": "#0000FF",
 
             "dialogueA":"dia2a",
-            "dialogueB":"dia2b",
             "dialogueC":"dia2c",
             
             "artifactOffer": "80",
@@ -49,7 +47,7 @@
 
             "thermoColor": "#0000FF",
 
-            "dialogueA":"dia2a",
+            
             "dialogueB":"dia2b",
             "dialogueC":"dia2c",
             

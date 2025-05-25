@@ -179,21 +179,26 @@ public class DialogueManager : MonoBehaviour
     private IEnumerator ExitDialogueMode() {
         yield return new WaitForSeconds(0.2f);
 
-        dialogueIsPlaying = false;
-        dialogueIsFinished = true;
-
-        dialoguePanel.SetActive(false);
-        savingsImage.SetActive(false);
-        dialogueText.text = "";
-
-        StopFluttering();
-
-        StopFlickering();
-
-        if (secondInk != null) {
+        if (secondInk != null)
+        {
 
             EnterDialogueMode(secondInk);
             secondInk = null;
+        }
+        else
+        {
+
+            dialogueIsPlaying = false;
+            dialogueIsFinished = true;
+
+            dialoguePanel.SetActive(false);
+            savingsImage.SetActive(false);
+            dialogueText.text = "";
+
+            StopFluttering();
+
+            StopFlickering();
+
         }
     }
 

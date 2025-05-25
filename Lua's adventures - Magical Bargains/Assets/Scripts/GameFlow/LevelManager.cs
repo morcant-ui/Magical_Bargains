@@ -17,7 +17,7 @@ public class LevelManager : MonoBehaviour
 
     [Header("Offers")]
     [SerializeField] private OfferManager offerManager;
-    [SerializeField] private OfferDecisionManager offerDecision;
+    [SerializeField] private DialogueLoader dialogueLoader;
 
     [Header("Savings Indication")]
     [SerializeField] private GameObject savingsImage;
@@ -121,17 +121,11 @@ public class LevelManager : MonoBehaviour
         nbProcessedClients = 0;
 
         // 3)
-        //TextAsset finalGrandpaDialogue = new TextAsset();
-
-        Debug.Log("Arrived here..");
-
         string grandpaDialogueName = currentLevel.grandpaIntroDialogue;
         TextAsset grandpaIntroDialogue = Resources.Load<TextAsset>(Path.Combine(grandpaDialoguesPathName, grandpaDialogueName));
 
 
         if (lastLevelAppreciation != "") {
-
-            Debug.Log("--- last level appreciation is not null");
 
             TextAsset grandpaAppreciationDialogue;
             string dialogueName = "";
@@ -143,26 +137,17 @@ public class LevelManager : MonoBehaviour
 
             if (dialogueName != "")
             {
-                Debug.Log("dialogueName: " + dialogueName);
 
                 grandpaAppreciationDialogue = Resources.Load<TextAsset>(Path.Combine(grandpaDialoguesPathName, dialogueName));
 
                 if (grandpaAppreciationDialogue != null) {
                     DialogueManager.GetInstance().EnterDialogueMode(grandpaAppreciationDialogue, grandpaIntroDialogue);
                     return;
-                }
-                
-                
+                }  
             }
-
-            Debug.Log("unsuccessful search");
-
-            //finalGrandpaDialogue.text = grandpaAppreciationDialogue.text + grandpaIntroDialogue.text;
-            
         }
 
-        //finalGrandpaDialogue = grandpaIntroDialogue;
-        Debug.Log("loading just one dialogue");
+        // if no appreciation text just load this one
         DialogueManager.GetInstance().EnterDialogueMode(grandpaIntroDialogue);
     }
 
@@ -210,8 +195,10 @@ public class LevelManager : MonoBehaviour
 
         // 3)
         string dialogueNameA = currentClient.dialogueA;
-        dialogueA = Resources.Load<TextAsset>(Path.Combine(dialogueAPathName, dialogueNameA)); 
-        DialogueManager.GetInstance().EnterDialogueMode(dialogueA); 
+
+        TextAsset dialogue = dialogueLoader.LoadDialogue(dialogueNameA, "dialogueA");
+
+        DialogueManager.GetInstance().EnterDialogueMode(dialogue); 
     }
 
     //////////////////////////////////// Handling lists ///////////////////////////////////////////////////
@@ -266,7 +253,7 @@ public class LevelManager : MonoBehaviour
 
             // 3)
             string dialogueNameB = currentClient.dialogueB;
-            dialogue = offerDecision.LoadDialogue(dialogueNameB, "dialogueB");
+            dialogue = dialogueLoader.LoadDialogue(dialogueNameB, "dialogueB");
 
         // Outcome D: not enough money
         } else if (finalOffer >= minOfferAccepted && savings < finalOffer) {
@@ -278,7 +265,7 @@ public class LevelManager : MonoBehaviour
 
             // 3)
             string dialogueNameD = currentClient.dialogueD;
-            dialogue = offerDecision.LoadDialogue(dialogueNameD, "dialogueD");
+            dialogue = dialogueLoader.LoadDialogue(dialogueNameD, "dialogueD");
 
         // Outcome C: client refuses
         } else {
@@ -287,7 +274,7 @@ public class LevelManager : MonoBehaviour
 
             // 3)
             string dialogueNameC = currentClient.dialogueC;
-            dialogue = offerDecision.LoadDialogue(dialogueNameC, "dialogueC");
+            dialogue = dialogueLoader.LoadDialogue(dialogueNameC, "dialogueC");
         }
 
         if (dialogue == null) {
