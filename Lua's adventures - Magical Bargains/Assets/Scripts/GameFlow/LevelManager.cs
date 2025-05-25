@@ -172,9 +172,9 @@ public class LevelManager : MonoBehaviour
         DialogueManager.GetInstance().Reset();
         if (currentClient != null)
         {
-            //if (destroyClientCoroutine != null) { return; }
-            //destroyClientCoroutine = StartCoroutine(DestroyAfterDelay(0.5f));
-            DestroyClient(0.5f);
+            if (destroyClientCoroutine != null) { StopCoroutine(destroyClientCoroutine); }
+            destroyClientCoroutine = StartCoroutine(DestroyClient(0.5f));
+            //DestroyClient(0.5f);
             nbProcessedClients += 1;
         }
 
@@ -323,7 +323,7 @@ public class LevelManager : MonoBehaviour
         foreach (GameObject obj in oldObjects) { Destroy(obj); }
     }
 
-    private void DestroyClient(float delay)
+    private IEnumerator DestroyClient(float delay)
     {
         blackScreen.SetActive(true);
         GameObject[] oldObjects = GameObject.FindGameObjectsWithTag("currentClient");
@@ -331,7 +331,7 @@ public class LevelManager : MonoBehaviour
         foreach (GameObject obj in oldObjects) { Destroy(obj); }
 
         // wait for a few seconds: could use this time for animation maybe instead of blackscreen
-        //yield return new WaitForSeconds(delay);
+        yield return new WaitForSeconds(delay);
 
         if (clientQueue.Count != 0 || processingClients)
         {
