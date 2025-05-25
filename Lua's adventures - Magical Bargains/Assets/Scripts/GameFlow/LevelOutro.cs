@@ -65,7 +65,7 @@ public class LevelOutro : MonoBehaviour
     }
 
 
-    public void ShowLevelOutroScreen( Queue<ClientData> purchases, double initialSavings, int nbProcessedClients ) {
+    public string ShowLevelOutroScreen( Queue<ClientData> purchases, double initialSavings, int nbProcessedClients ) {
 
         // simplistic cutscene: called from game state manager
         outroActivated = true;
@@ -113,18 +113,21 @@ public class LevelOutro : MonoBehaviour
         grossEarningTextDisplay.text = "$" + grossEarnings.ToString("00.00");
 
         // end of level appreciation:
-        string appreciation = "";
+        string textToDisplay = ""; // text to display is the little message at bottom of level outro cutscene
+        string appreciation = ""; // appreciation is the string we return from this function to let game state manager know
 
-        if (hauntedCount > 0) { appreciation = hauntedTextBase; }
-        if (junkCount > 1) { appreciation = junkTextBase; }
+        if (hauntedCount > 0) { textToDisplay = hauntedTextBase; appreciation = "haunted"; }
+        if (junkCount > 1) { textToDisplay = junkTextBase; appreciation = "junk"; }
         if (hauntedCount == 0 && junkCount <= 1) {
-            if (newSavings >= 80) { appreciation = okTextBase; }
-            else { appreciation = badTextBase; }
+            if (newSavings >= 80) { textToDisplay = okTextBase; appreciation = "ok";  }
+            else { textToDisplay = badTextBase; appreciation = "bad"; }
         }
 
-        appreciationTextDisplay.text = appreciation;
+        appreciationTextDisplay.text = textToDisplay;
 
         Debug.Log("---- INITIAL SAVINGS: " + initialSavings.ToString("00.0") + ", LOSS: " + totalLoss.ToString("00.0") + ", NET EARNING: " + (newSavings - initialSavings).ToString("00.0"));
+
+        return appreciation;
     }
 
 

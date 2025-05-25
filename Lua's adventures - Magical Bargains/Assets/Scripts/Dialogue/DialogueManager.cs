@@ -39,6 +39,8 @@ public class DialogueManager : MonoBehaviour
     // to keep track of Story
     private Story currentStory;
 
+    private TextAsset secondInk;
+
 
     // coroutines to avoid having them called more than once at a time
     private Coroutine ExitDialogueCoroutine;
@@ -112,11 +114,16 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    public void EnterDialogueMode(TextAsset inkJSON) {
+    public void EnterDialogueMode(TextAsset inkJSON, TextAsset secondInkJSON = null) {
 
         if (inkJSON == null) {
             Debug.Log("EnterDialogueMode: NO DIALOGUE TO READ");
             return;
+        }
+        
+        if (secondInkJSON != null)
+        {
+            secondInk = secondInkJSON;
         }
 
         if (isCutscenePlaying) {
@@ -182,12 +189,19 @@ public class DialogueManager : MonoBehaviour
         StopFluttering();
 
         StopFlickering();
+
+        if (secondInk != null) {
+
+            EnterDialogueMode(secondInk);
+            secondInk = null;
+        }
     }
 
     public void Reset() {
         dialogueIsPlaying = false;
         dialogueIsFinished = false;
         isCurrentlyTyping = false;
+        secondInk = null;
     }
 
 

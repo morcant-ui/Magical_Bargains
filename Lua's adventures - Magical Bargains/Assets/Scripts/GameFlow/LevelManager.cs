@@ -88,9 +88,11 @@ public class LevelManager : MonoBehaviour
     // THIS NEEDS TO RUN ONCE FOR EACH LEVEL
     // Steps:   1. pull a new level from the queue
     //          2. pull a new list of clients to go through
-    //          3. get the grandpa dialogue from current level and run it
+    //          3. run grandpa dialogue(s)
+    //              3.1 if there is a last level, show grandpa appreciation dialogue
+    //              3.2 then show the grandpa dialogue from current level
     //          N. when the level queue is empty we start the game outro process
-    public void LoadNextLevel()
+    public void LoadNextLevel(string lastLevelAppreciation)
     {
 
         // N) when level queue is empty we enter game outro
@@ -119,11 +121,52 @@ public class LevelManager : MonoBehaviour
         nbProcessedClients = 0;
 
         // 3)
+        //TextAsset finalGrandpaDialogue = new TextAsset();
+
+        Debug.Log("Arrived here..");
+
         string grandpaDialogueName = currentLevel.grandpaIntroDialogue;
         TextAsset grandpaIntroDialogue = Resources.Load<TextAsset>(Path.Combine(grandpaDialoguesPathName, grandpaDialogueName));
 
+
+        if (lastLevelAppreciation != "") {
+
+            Debug.Log("--- last level appreciation is not null");
+
+            TextAsset grandpaAppreciationDialogue;
+            string dialogueName = "";
+
+            if (lastLevelAppreciation == "haunted") { dialogueName = "appreciationHaunted"; }
+            if (lastLevelAppreciation == "junk") { dialogueName = "appreciationJunk"; }
+            if (lastLevelAppreciation == "bad") { dialogueName = "appreciationbad"; }
+            if (lastLevelAppreciation == "ok") { dialogueName = "appreciationOk"; }
+
+            if (dialogueName != "")
+            {
+                Debug.Log("dialogueName: " + dialogueName);
+
+                grandpaAppreciationDialogue = Resources.Load<TextAsset>(Path.Combine(grandpaDialoguesPathName, dialogueName));
+
+                if (grandpaAppreciationDialogue != null) {
+                    DialogueManager.GetInstance().EnterDialogueMode(grandpaAppreciationDialogue, grandpaIntroDialogue);
+                    return;
+                }
+                
+                
+            }
+
+            Debug.Log("unsuccessful search");
+
+            //finalGrandpaDialogue.text = grandpaAppreciationDialogue.text + grandpaIntroDialogue.text;
+            
+        }
+
+        //finalGrandpaDialogue = grandpaIntroDialogue;
+        Debug.Log("loading just one dialogue");
         DialogueManager.GetInstance().EnterDialogueMode(grandpaIntroDialogue);
     }
+
+
 
     // THIS NEEDS TO RUN ONCE FOR EACH CLIENT FOR EACH LEVEL 
     // Steps:   1. pull a new client from the queue

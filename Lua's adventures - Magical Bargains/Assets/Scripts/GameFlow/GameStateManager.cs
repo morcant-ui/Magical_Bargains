@@ -34,6 +34,8 @@ public class GameStateManager : MonoBehaviour
 
     private double initialSavings;
 
+    private string lastAppreciation = "";
+
     private bool timerEnded = false;
 
     private static GameStateManager instance;
@@ -112,7 +114,7 @@ public class GameStateManager : MonoBehaviour
         AudioManager.GetInstance().StartMusic(levelMusic, volume);
 
         grandpa.SetActive(true);
-        levelManager.LoadNextLevel();
+        levelManager.LoadNextLevel(lastAppreciation); // we send last level's evaluation to influence grandpa dialogue
     }
 
     public void LoadClientIntro() {
@@ -171,7 +173,7 @@ public class GameStateManager : MonoBehaviour
 
         float elapsedTime = timer.CheckTimer();
 
-        levelOutro.ShowLevelOutroScreen( currentPurchases, initialSavings, nbProcessedClients );
+        lastAppreciation = levelOutro.ShowLevelOutroScreen( currentPurchases, initialSavings, nbProcessedClients );
 
         timer.ResetTimer();
         //timer.ResetBackGround();
