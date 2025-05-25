@@ -26,8 +26,9 @@ public class LevelManager : MonoBehaviour
     [Header("Transitional blackscreen")]
     [SerializeField] private GameObject blackScreen;
 
-    // boolean to keep track of if we're processing a client
+    // BOOLEANS
     private bool processingClients = false;
+    private bool tutoActivated = false;
 
     // savings kept track of by state manager
     private double savings;
@@ -121,6 +122,11 @@ public class LevelManager : MonoBehaviour
         nbProcessedClients = 0;
 
         // 3)
+        
+
+        // if tuto: play tuto and return. another dialogue gets played from state manager normally
+        if (tutoActivated) { return; }
+
         string grandpaDialogueName = currentLevel.grandpaIntroDialogue;
         TextAsset grandpaIntroDialogue = Resources.Load<TextAsset>(Path.Combine(grandpaDialoguesPathName, grandpaDialogueName));
 
@@ -138,7 +144,7 @@ public class LevelManager : MonoBehaviour
             if (dialogueName != "")
             {
 
-                grandpaAppreciationDialogue = Resources.Load<TextAsset>(Path.Combine(grandpaDialoguesPathName, dialogueName));
+                grandpaAppreciationDialogue = Resources.Load<TextAsset>(Path.Combine(grandpaDialoguesPathName, "Appreciations", dialogueName));
 
                 if (grandpaAppreciationDialogue != null) {
                     DialogueManager.GetInstance().EnterDialogueMode(grandpaAppreciationDialogue, grandpaIntroDialogue);
@@ -380,7 +386,13 @@ public class LevelManager : MonoBehaviour
         return color;
     }
 
-    
+
+    public void SetTutoStatus(bool isTutoActivated)
+    {
+        tutoActivated = isTutoActivated;
+    }
+
+
 }
 
 

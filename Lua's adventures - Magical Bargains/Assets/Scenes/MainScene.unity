@@ -1250,6 +1250,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playIntroCutscene: 1
+  tutoActivated: 1
   grandpa: {fileID: 777833723}
   levelManager: {fileID: 547474431}
   gameIntro: {fileID: 209753678}

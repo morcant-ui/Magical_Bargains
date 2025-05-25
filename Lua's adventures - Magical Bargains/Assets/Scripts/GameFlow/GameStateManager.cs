@@ -2,11 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.IO;
 
 public class GameStateManager : MonoBehaviour
 {
     [Header("SEE OR SKIP CUTSCENE ?")]
     [SerializeField] private bool playIntroCutscene = true;
+
+    [Header("SKIP TUTO ?")]
+    [SerializeField] public bool tutoActivated = true;
 
     [Header("Grandpa sprite")]
     [SerializeField] private GameObject grandpa;
@@ -38,7 +42,14 @@ public class GameStateManager : MonoBehaviour
 
     private bool timerEnded = false;
 
+    private string tutoPathName = Path.Combine("Dialogues", "grandpa", "Tuto");
+
+    private Coroutine tutoWaitsForClient;
+    private Coroutine tutoWaitForGrandpa;
+    private Coroutine tutoWaitForBargain;
+
     private static GameStateManager instance;
+
 
     
 
@@ -92,6 +103,7 @@ public class GameStateManager : MonoBehaviour
         AudioManager.GetInstance().StartMusic(gameIntroMusic, introVolume);
 
         levelManager.LoadGameData();
+        levelManager.SetTutoStatus(tutoActivated);
 
         if (playIntroCutscene)
         {
@@ -114,6 +126,8 @@ public class GameStateManager : MonoBehaviour
         AudioManager.GetInstance().StartMusic(levelMusic, volume);
 
         grandpa.SetActive(true);
+
+        if (tutoActivated) { Debug.Log("yoo this is it please ?"); ReadTutoDialogue("tuto1"); }
         levelManager.LoadNextLevel(lastAppreciation); // we send last level's evaluation to influence grandpa dialogue
     }
 
@@ -121,10 +135,20 @@ public class GameStateManager : MonoBehaviour
 
         state = "client intro";
 
-        grandpa.SetActive(false);
+
+        if (!tutoActivated)
+        {
+            grandpa.SetActive(false);
+        }
 
         DialogueManager.GetInstance().Reset();
         levelManager.LoadNextClient( timerEnded );
+
+        if (tutoActivated) { 
+            if (tutoWaitsForClient != null) { StopCoroutine(tutoWaitsForClient); }
+
+            tutoWaitsForClient = StartCoroutine(WaitForClientToFinish());
+        }
 
     }
 
@@ -134,12 +158,25 @@ public class GameStateManager : MonoBehaviour
     {
         state = "inspect";
 
-        // start timer
-        timer.StartTimer( maxTime );
+        DialogueManager.GetInstance().Reset();
 
-        // move Desk and other stuff for layout change
-        levelManager.CreateArtifact();
-        // spawn tools as well
+        if (!tutoActivated)
+        {
+
+            // start timer
+            timer.StartTimer(maxTime);
+            // spawn tools as well
+            levelManager.CreateArtifact();
+            
+        } else {
+
+            ReadTutoDialogue("tuto3");
+
+            if (tutoWaitForGrandpa != null) { StopCoroutine(tutoWaitForGrandpa); }
+
+            tutoWaitForGrandpa = StartCoroutine(WaitForGrandpaToFinish());
+        
+        }
     }
 
     public void LoadBargainState()
@@ -152,6 +189,7 @@ public class GameStateManager : MonoBehaviour
         // move Desk and stuff for layout change
         //hide tools + show bargaining buttons
         DialogueManager.GetInstance().Reset();
+
         levelManager.PrepareBargainState();
 
     }
@@ -160,6 +198,13 @@ public class GameStateManager : MonoBehaviour
     {
         state = "client outro";
         levelManager.FinishBargainState();
+
+        if (tutoActivated)
+        {
+            if (tutoWaitForBargain != null) { StopCoroutine(tutoWaitForBargain); }
+
+            tutoWaitForBargain = StartCoroutine(WaitForBargainToFinish());
+        }
     }
 
 
@@ -249,5 +294,59 @@ public class GameStateManager : MonoBehaviour
     {
 
         maxTime = newMaxTime;
+    }
+
+
+    public void ReadTutoDialogue(string dialogueName)
+    {
+
+        TextAsset dialogue = Resources.Load<TextAsset>(Path.Combine(tutoPathName, dialogueName));
+        DialogueManager.GetInstance().EnterDialogueMode(dialogue);
+
+    }
+
+    private IEnumerator WaitForClientToFinish()
+    {
+
+        while (!DialogueManager.GetInstance().dialogueIsFinished)
+        {
+
+            yield return null;
+        }
+
+        DialogueManager.GetInstance().Reset();
+
+        ReadTutoDialogue("tuto2");
+
+    }
+
+    private IEnumerator WaitForBargainToFinish()
+    {
+
+        while (!DialogueManager.GetInstance().dialogueIsFinished)
+        {
+
+            yield return null;
+        }
+
+        DialogueManager.GetInstance().Reset();
+
+        ReadTutoDialogue("tuto4");
+        tutoActivated = false;
+        levelManager.SetTutoStatus(tutoActivated);
+
+    }
+
+    private IEnumerator WaitForGrandpaToFinish() {
+
+
+        while (!DialogueManager.GetInstance().dialogueIsFinished) {
+
+            yield return null;
+        }
+        //yield return new WaitUntil();
+
+        timer.StartTimer(maxTime);
+        levelManager.CreateArtifact();
     }
 }

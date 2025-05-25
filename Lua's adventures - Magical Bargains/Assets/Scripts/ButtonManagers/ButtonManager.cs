@@ -225,6 +225,11 @@ public class ButtonManager : MonoBehaviour
 
         string currentState = GameStateManager.GetInstance().GetState();
 
+        bool dialogueFinished = DialogueManager.GetInstance().dialogueIsFinished;
+        bool tutoActive = GameStateManager.GetInstance().tutoActivated;
+        bool additionalCheck = true;
+        
+
         bool isOpenShopActive = false;
         bool isInspectActive = false;
         bool isBargainActive = false;
@@ -234,28 +239,34 @@ public class ButtonManager : MonoBehaviour
 
         bool bargainInProgress = false;
 
-        if (currentState == "level intro" && DialogueManager.GetInstance().dialogueIsFinished) {
+        if (currentState == "level intro" && dialogueFinished) {
             isOpenShopActive = true;
         }
 
         // if state is intro and dialogue is finished -> show inspect button
-        if (currentState == "client intro" && DialogueManager.GetInstance().dialogueIsFinished)
+        if (currentState == "client intro" && dialogueFinished)
         {
             isInspectActive = true;
+
+            if (tutoActive && !dialogueFinished) { additionalCheck = false; }
         }
 
-        if (currentState == "inspect") 
-        {
+        if (currentState == "inspect" ) 
+        {       
             isBargainActive = true;
             isToolsActive = true;
+
+            if ( tutoActive && !dialogueFinished ) { additionalCheck = false; }
         }
 
         if (currentState == "bargain" && !offerAccepted){
            
             bargainInProgress = true;
+
+            if (tutoActive && !dialogueFinished) { additionalCheck = false; }
         }
 
-        if (currentState == "client outro" && DialogueManager.GetInstance().dialogueIsFinished)
+        if (currentState == "client outro" && dialogueFinished)
         {
             offerAccepted = false;
             bargainInProgress = false;
@@ -265,14 +276,14 @@ public class ButtonManager : MonoBehaviour
         openShopButton.gameObject.SetActive(isOpenShopActive);
         openShopButton.interactable = isOpenShopActive;
 
-        inspectButton.gameObject.SetActive(isInspectActive);
-        inspectButton.interactable = isInspectActive;
+        inspectButton.gameObject.SetActive(isInspectActive && additionalCheck);
+        inspectButton.interactable = isInspectActive && additionalCheck;
 
         bargainButton.gameObject.SetActive(isBargainActive);
-        bargainButton.interactable = isBargainActive;
+        bargainButton.interactable = isBargainActive && additionalCheck;
 
-        introButton.gameObject.SetActive(isIntroActive);
-        introButton.interactable = isIntroActive;
+        introButton.gameObject.SetActive(isIntroActive && additionalCheck);
+        introButton.interactable = isIntroActive && additionalCheck;
 
         acceptButton.gameObject.SetActive(bargainInProgress);
         addButton.gameObject.SetActive(bargainInProgress);
@@ -283,13 +294,13 @@ public class ButtonManager : MonoBehaviour
 
 
         thermometerButton.gameObject.SetActive(isToolsActive);
-        thermometerButton.interactable = !(magnifierButtonActivated || cameraButtonActivated);
+        thermometerButton.interactable = (!(magnifierButtonActivated || cameraButtonActivated)) && additionalCheck;
 
         magnifierButton.gameObject.SetActive(isToolsActive);
-        magnifierButton.interactable = !(cameraButtonActivated || thermometerButtonActivated);
+        magnifierButton.interactable = (!(cameraButtonActivated || thermometerButtonActivated)) && additionalCheck;
 
         cameraButton.gameObject.SetActive(isToolsActive);
-        cameraButton.interactable = !(magnifierButtonActivated || thermometerButtonActivated);
+        cameraButton.interactable = (!(magnifierButtonActivated || thermometerButtonActivated)) && additionalCheck;
 
         if (!magnifierButtonActivated)
         {
