@@ -29,6 +29,8 @@ public class LevelOutro : MonoBehaviour
     int junkCount;
     int nbPurchases;
 
+    private System.Random rand = new System.Random();
+
     // input to exit cutscene
     private string inputKey = "space";
 
@@ -117,34 +119,48 @@ public class LevelOutro : MonoBehaviour
             double prior = earnings;
             Debug.Log("OBJECT: " + p.artifactSprite + ", GRADE: " + grade + ", FINAL PRICE: " + finalPrice);
 
+            double range;
+            double max = 1.0;
+            double min = 1.0;
+
             switch (grade)
             {
                 case "excellent":
-                    earnings += 3 * (originalPrice);
+                    min = 2;
+                    max = 3;
                     break;
                 case "good":
-                    earnings += 1.8 * (originalPrice);
+                    min = 1.5;
+                    max = 2.0;
                     break;
                 case "ok":
-                    earnings += 1.2 * (originalPrice);
+                    min = 1.0;
+                    max = 1.4;
                     break;
                 case "bad":
-                    earnings += 0.8 * (originalPrice);
+                    min = 0.5;
+                    max = 0.9;
                     break;
                 case "haunted":
                     hauntedCount += 1;
-                    earnings -= 3 * (originalPrice);
+                    min = -3.0;
+                    max = -1.8;
                     break;
                 case "junk":
                     junkCount += 1;
-                    earnings += 0.2 * (originalPrice);
+                    min = 0.05;
+                    max = 0.4;
                     break;
                 default:
                     Debug.Log("Level outro: what why ?");
                     break;
             };
 
-            Debug.Log("EARNED: " + (earnings - prior));
+            range = rand.NextDouble() * (max - min) + min;
+
+            earnings += range * originalPrice;
+
+            Debug.Log("RANGE: " + range + "EARNED: " + (earnings - prior));
         }
 
         // update earnings

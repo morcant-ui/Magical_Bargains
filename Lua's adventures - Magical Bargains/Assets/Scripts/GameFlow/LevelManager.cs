@@ -102,6 +102,9 @@ public class LevelManager : MonoBehaviour
         // 1)
         currentLevel = levelQueue.Dequeue();
         string currentLevelName = currentLevel.listClientsName;
+        int currentMaxTime = currentLevel.maxTime;
+
+        GameStateManager.GetInstance().UpdateMaxTime(currentMaxTime);
 
         // 2)
         TextAsset clientDataJSON = Resources.Load<TextAsset>(Path.Combine(JSONPathName, currentLevelName));

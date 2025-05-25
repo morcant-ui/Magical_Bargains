@@ -37,7 +37,7 @@ public class LevelData
 {
     public string listClientsName;
     public string grandpaIntroDialogue;
-    public int max_time;
+    public int maxTime;
 }
 
 

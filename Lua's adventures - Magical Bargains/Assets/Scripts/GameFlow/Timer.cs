@@ -63,14 +63,19 @@ public class Timer : MonoBehaviour
     }
 
     public void StartTimer(float maximumTime) {
-        if (elapsedTime == 0.00F) { 
+        if (elapsedTime == 0.00F) {
 
-            maxTime = maximumTime;
+            if (maximumTime == 0)
+            {
+                return;
+            }
+            else {
 
-            StartBackgroundChanges();
+                maxTime = maximumTime;
+
+                StartBackgroundChanges();
+            }
         }
-
-
 
         isTimerOn = true;
 

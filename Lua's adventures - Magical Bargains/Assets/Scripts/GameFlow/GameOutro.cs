@@ -86,9 +86,6 @@ public class GameOutro : MonoBehaviour
 
         TextAsset textAsset = Resources.Load<TextAsset>(System.IO.Path.Combine(outroPath, textFileName));
 
-
-        Debug.Log(": "  + cardFileName + ", : " + textFileName + ", : " + textAsset );
-
         Story story = new Story(textAsset.text);
 
         cutsceneTextDisplay.text = story.Continue();

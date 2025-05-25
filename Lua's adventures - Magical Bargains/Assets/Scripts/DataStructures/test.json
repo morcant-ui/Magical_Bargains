@@ -3,6 +3,11 @@
         {
             "listClientsName":"test",
             "grandpaIntroDialogue":"gid1"
+        },
+        {
+            "listClientsName":"test",
+            "grandpaIntroDialogue":"gid2",
+            "maxTime":60
         }
     ]
 }

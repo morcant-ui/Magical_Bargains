@@ -26,8 +26,7 @@ public class GameStateManager : MonoBehaviour
     [SerializeField] private float volume = 0.6f;
     [SerializeField] private float introVolume = 0.1f;
 
-    [Header("Fixed Game Parameters")]
-    [SerializeField] private float maxTime;
+    private float maxTime = -1;
 
     private Queue<ClientData> currentPurchases = new Queue<ClientData>();
 
@@ -239,5 +238,12 @@ public class GameStateManager : MonoBehaviour
 
     public bool WillIntroPlay() {
         return playIntroCutscene;
+    }
+
+
+    public void UpdateMaxTime(int newMaxTime)
+    {
+
+        maxTime = newMaxTime;
     }
 }
