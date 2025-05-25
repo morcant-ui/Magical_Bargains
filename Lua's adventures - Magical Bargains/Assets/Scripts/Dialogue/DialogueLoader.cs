@@ -53,8 +53,6 @@ public class DialogueLoader : MonoBehaviour
 
         dialogue = Resources.Load<TextAsset>(finalPath);
 
-        Debug.Log("Search for a path: \n" + finalPath);
-
         if (dialogue != null)
         {
             return dialogue;
