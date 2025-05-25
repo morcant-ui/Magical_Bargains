@@ -183,7 +183,7 @@ public class GameStateManager : MonoBehaviour
     public void LoadGameOutro()
     {
 
-        
+        AudioManager.GetInstance().StopMusic();
         DialogueManager.GetInstance().Reset();
 
         savings += levelOutro.CalculateEarnings(currentPurchases, savings);

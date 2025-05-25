@@ -16,9 +16,9 @@
         },
         {
             "clientSprite": "c2",
-            "artifactSprite": "a5",
+            "artifactSprite": "a6",
 
-            "magnifierSprite":"a5-hidden",
+            "cameraSprite":"a6-hidden",
             "thermoColor": "#0000FF",
 
             "dialogueA":"dia2a",
