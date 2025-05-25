@@ -13,11 +13,13 @@ public class LevelOutro : MonoBehaviour
     [SerializeField] private GameObject holder;
     [SerializeField] private GameObject backgroundColor;
     [SerializeField] private GameObject cutsceneImage;
-    [SerializeField] private TextMeshProUGUI cutsceneTextDisplay;
+    [SerializeField] private TextMeshProUGUI appreciationTextDisplay;
 
     [Header("Stats graphics")]
-    [SerializeField] private TextMeshProUGUI savingsTextDisplay;
-    [SerializeField] private TextMeshProUGUI timerTextDisplay;
+    [SerializeField] private TextMeshProUGUI processedClientsTextDisplay;
+    [SerializeField] private TextMeshProUGUI itemsBoughtTextDisplay;
+    [SerializeField] private TextMeshProUGUI totalLossTextDisplay;
+    [SerializeField] private TextMeshProUGUI grossEarningTextDisplay;
 
     [Header("Actual main outro text (may remove)")]
     [SerializeField] private TextAsset cutsceneTextContent;
@@ -37,9 +39,11 @@ public class LevelOutro : MonoBehaviour
     // keep track of the state of the scene: mostly to avoid spacebar hijinks
     private bool outroActivated = false;
 
-    // Displayed Statistics: text base without the stat
-    private string savingsTextBase = "Savings: ";
-    private string timerTextBase = "Elapsed Investigation Time: ";
+    // End of level appreciation text:
+    private string okTextBase = "Keep doing what you're doing !";
+    private string badTextBase = "You gotta be more careful, your grandpa is getting a little scared !";
+    private string junkTextBase = "Be careful not to buy too much junk !";
+    private string hauntedTextBase = "That haunted object you bought is gonna cause you some trouble !";
 
     // to exit we store the coroutine in this var to make sure it happens only once
     private Coroutine exitCutsceneCoroutine;
@@ -61,22 +65,23 @@ public class LevelOutro : MonoBehaviour
     }
 
 
-    public void ShowLevelOutroScreen( Queue<ClientData> purchases, float elapsedTime ) {
+    public void ShowLevelOutroScreen( Queue<ClientData> purchases, double initialSavings, int nbProcessedClients ) {
 
         // simplistic cutscene: called from game state manager
         outroActivated = true;
 
-        // retrieve STATISTICS
-        float elapsedMin = Mathf.FloorToInt(elapsedTime / 60);
-        float elapsedSec = Mathf.FloorToInt(elapsedTime % 60);
+        
 
-        double savings = GameStateManager.GetInstance().CheckMoney();
+        // old statistics:
+        //float elapsedMin = Mathf.FloorToInt(elapsedTime / 60);
+        //float elapsedSec = Mathf.FloorToInt(elapsedTime % 60);
+
+        double oldSavings = GameStateManager.GetInstance().CheckMoney();
 
         // CALCULATE EARNINGS
-        earnings = CalculateEarnings(purchases, savings);
+        earnings = CalculateEarnings(purchases, oldSavings);
 
-        savings = GameStateManager.GetInstance().CheckMoney();
-        Debug.Log("EARNINGS: " + earnings + ", jkCount: " + junkCount + ", hntCount: " + hauntedCount + ", nb purchase: " + nbPurchases);
+        double newSavings = GameStateManager.GetInstance().CheckMoney();
 
         // set coroutine var to null again so that we can exit safely
         exitCutsceneCoroutine = null;
@@ -88,14 +93,38 @@ public class LevelOutro : MonoBehaviour
         holder.SetActive(true);
         cutsceneImage.SetActive(true);
 
+        // retrieve STATISTICS
+
+        double totalLoss = initialSavings - oldSavings;
+        double grossEarnings = oldSavings - newSavings;
+
+        // absolute value
+        if (totalLoss < 0) { totalLoss *= -1;  }
+        if (grossEarnings < 0) { grossEarnings *= -1; }
+
         // display STATISTICS on screen
-        savingsTextDisplay.text = savingsTextBase + "$" + savings.ToString("00.00");
-        timerTextDisplay.text = timerTextBase + string.Format("{0:00}:{1:00}", elapsedMin, elapsedSec);
 
-        // Retrieve the cutscene main text and display it directly (MAY BE DELETED)
-        Story story = new Story(cutsceneTextContent.text);
+        // old statistics:
+        //savingsDisplay.text = savingsTextBase + "$" + savings.ToString("00.00");
+        // timeElapsed.text = timerTextBase + string.Format("{0:00}:{1:00}", elapsedMin, elapsedSec);
+        processedClientsTextDisplay.text = nbProcessedClients.ToString();
+        itemsBoughtTextDisplay.text = nbPurchases.ToString();
+        totalLossTextDisplay.text = "$" + totalLoss.ToString("00.00");
+        grossEarningTextDisplay.text = "$" + grossEarnings.ToString("00.00");
 
-        cutsceneTextDisplay.text = story.Continue(); 
+        // end of level appreciation:
+        string appreciation = "";
+
+        if (hauntedCount > 0) { appreciation = hauntedTextBase; }
+        if (junkCount > 1) { appreciation = junkTextBase; }
+        if (hauntedCount == 0 && junkCount <= 1) {
+            if (newSavings >= 80) { appreciation = okTextBase; }
+            else { appreciation = badTextBase; }
+        }
+
+        appreciationTextDisplay.text = appreciation;
+
+        Debug.Log("---- INITIAL SAVINGS: " + initialSavings.ToString("00.0") + ", LOSS: " + totalLoss.ToString("00.0") + ", NET EARNING: " + (newSavings - initialSavings).ToString("00.0"));
     }
 
 
@@ -117,7 +146,7 @@ public class LevelOutro : MonoBehaviour
             double finalPrice = Convert.ToDouble(p.finalPrice);
 
             double prior = earnings;
-            Debug.Log("OBJECT: " + p.artifactSprite + ", GRADE: " + grade + ", FINAL PRICE: " + finalPrice);
+            Debug.Log("--OBJECT BOUGHT: " + p.artifactSprite + ", GRADE: " + grade + ", FINAL PRICE: " + finalPrice.ToString("00.0"));
 
             double range;
             double max = 1.0;
@@ -160,7 +189,7 @@ public class LevelOutro : MonoBehaviour
 
             earnings += range * originalPrice;
 
-            Debug.Log("RANGE: " + range + "EARNED: " + (earnings - prior));
+            Debug.Log("---end of level Calculate Earnings for object: RANGE: " + range.ToString("0.0") + ", EARNED: " + (earnings - prior).ToString("00.0"));
         }
 
         // update earnings
@@ -183,9 +212,10 @@ public class LevelOutro : MonoBehaviour
 
         // hide the cutscene graphics and reset text content
         cutsceneImage.SetActive(false);
-        cutsceneTextDisplay.text = "";
-        savingsTextDisplay.text = "";
-        timerTextDisplay.text = "";
+        appreciationTextDisplay.text = "";
+        processedClientsTextDisplay.text = "";
+        itemsBoughtTextDisplay.text = "";
+        totalLossTextDisplay.text = "";
 
         holder.SetActive(false);
     }

@@ -32,6 +32,9 @@ public class LevelManager : MonoBehaviour
     // savings kept track of by state manager
     private double savings;
 
+    // keep track of number of clients processed
+    private int nbProcessedClients = 0;
+
     // queue for List of levels
     private Queue<LevelData> levelQueue;
     private LevelData currentLevel;
@@ -113,6 +116,7 @@ public class LevelManager : MonoBehaviour
         clientQueue = new Queue<ClientData>(listClients.clients);
 
         processingClients = true;
+        nbProcessedClients = 0;
 
         // 3)
         string grandpaDialogueName = currentLevel.grandpaIntroDialogue;
@@ -137,6 +141,7 @@ public class LevelManager : MonoBehaviour
             //if (destroyClientCoroutine != null) { return; }
             //destroyClientCoroutine = StartCoroutine(DestroyAfterDelay(0.5f));
             DestroyClient(0.5f);
+            nbProcessedClients += 1;
         }
 
 
@@ -325,7 +330,7 @@ public class LevelManager : MonoBehaviour
         if (levelQueue.Count != 0)
         {
             blackScreen.SetActive(false);
-            GameStateManager.GetInstance().LoadLevelOutro();
+            GameStateManager.GetInstance().LoadLevelOutro(nbProcessedClients);
         } 
         else 
         {

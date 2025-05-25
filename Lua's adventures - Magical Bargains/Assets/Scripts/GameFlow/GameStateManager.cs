@@ -32,6 +32,8 @@ public class GameStateManager : MonoBehaviour
 
     private static double savings = 80.0; // static vars cannot show in inspector
 
+    private double initialSavings;
+
     private bool timerEnded = false;
 
     private static GameStateManager instance;
@@ -103,6 +105,9 @@ public class GameStateManager : MonoBehaviour
         state = "level intro";
         DialogueManager.GetInstance().Reset();
 
+        // set initial savings for start of level
+        initialSavings = savings;
+
         // start playing the level music
         AudioManager.GetInstance().StartMusic(levelMusic, volume);
 
@@ -156,7 +161,7 @@ public class GameStateManager : MonoBehaviour
     }
 
 
-    public void LoadLevelOutro() {
+    public void LoadLevelOutro(int nbProcessedClients) {
         state = "level outro";
 
         // stop music
@@ -166,7 +171,7 @@ public class GameStateManager : MonoBehaviour
 
         float elapsedTime = timer.CheckTimer();
 
-        levelOutro.ShowLevelOutroScreen( currentPurchases, elapsedTime );
+        levelOutro.ShowLevelOutroScreen( currentPurchases, initialSavings, nbProcessedClients );
 
         timer.ResetTimer();
         //timer.ResetBackGround();
@@ -179,10 +184,7 @@ public class GameStateManager : MonoBehaviour
         
         DialogueManager.GetInstance().Reset();
 
-        levelOutro.CalculateEarnings(currentPurchases, savings);
-
-
-        Debug.Log("FINISHED WITH THIS AMOUNT IN THE BANK : " + savings);
+        savings += levelOutro.CalculateEarnings(currentPurchases, savings);
 
         gameOutro.ShowGameOutro(savings);
 

@@ -8,6 +8,11 @@
             "listClientsName":"test",
             "grandpaIntroDialogue":"gid2",
             "maxTime":60
+        },
+        {
+            "listClientsName":"test",
+            "grandpaIntroDialogue":"gid2",
+            "maxTime":5
         }
     ]
 }
