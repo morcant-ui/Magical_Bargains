@@ -27,6 +27,7 @@ public class GameStateManager : MonoBehaviour
     [SerializeField] private AudioClip gameIntroMusic;
     [SerializeField] private AudioClip levelOutroMusic;
     [SerializeField] private AudioClip levelMusic;
+    [SerializeField] private AudioClip gameOutroMusic;
     [SerializeField] private float volume = 0.6f;
     [SerializeField] private float introVolume = 0.1f;
 
@@ -228,7 +229,7 @@ public class GameStateManager : MonoBehaviour
     public void LoadGameOutro()
     {
 
-        AudioManager.GetInstance().StopMusic();
+        AudioManager.GetInstance().StartMusic(gameOutroMusic, introVolume);
         DialogueManager.GetInstance().Reset();
 
         savings += levelOutro.CalculateEarnings(currentPurchases, savings);

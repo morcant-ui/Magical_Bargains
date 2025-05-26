@@ -46,9 +46,19 @@ public class CameraUiTest : MonoBehaviour
         //minigame.gameObject.SetActive(true);
 
         // Wait for the minigame to finish
-        yield return StartCoroutine(minigame.PlayFishingGame());
+        //yield return StartCoroutine(minigame.PlayFishingGame());
 
-        //minigame.gameObject.SetActive(false);
+        yield return StartCoroutine(minigame.PlayFishingGame(success =>
+        {
+            if (success)
+            {
+                Debug.Log("Fishing success!");
+            }
+            else
+            {
+                Debug.Log("Fishing failed!");
+            }
+        }));
 
         // Now take the photo
         yield return StartCoroutine(CapturePhoto());

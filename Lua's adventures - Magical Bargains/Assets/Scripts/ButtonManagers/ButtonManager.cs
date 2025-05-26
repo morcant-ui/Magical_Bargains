@@ -192,6 +192,7 @@ public class ButtonManager : MonoBehaviour
         {
             cameraButtonActivated = false;
             fishingGame.SetActive(false);
+            Debug.Log("------------------------");
             cameraScript.Abort();
         }
         else

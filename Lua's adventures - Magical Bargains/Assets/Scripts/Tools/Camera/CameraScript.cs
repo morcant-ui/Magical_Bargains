@@ -27,6 +27,9 @@ public class CameraScript : MonoBehaviour
 
     private bool isActivated = false;
 
+
+    private FishingGame minigame;
+
     private void Start()
     {
         screenCapture = new Texture2D(Screen.width, Screen.height, TextureFormat.RGB24, false);
@@ -44,21 +47,58 @@ public class CameraScript : MonoBehaviour
         }
     }
 
+
+
+
     private IEnumerator HandleFishingSequence()
     {
         if (isActivated)
         {
             viewingPhoto = true; // Prevent retriggering
 
-            FishingGame minigame = GameObject.Find("FishingGame").GetComponent<FishingGame>();
+            minigame = GameObject.Find("FishingGame").GetComponent<FishingGame>();
 
-            //minigame.gameObject.SetActive(true);
+            Debug.Log("---STARTED");
 
-            // Wait for the minigame to finish
-            yield return StartCoroutine(minigame.PlayFishingGame());
+            bool gameWon = false;
 
-            //minigame.gameObject.SetActive(false);
+            while (!gameWon && isActivated)
+            {
+                bool resultReceived = false;
+                bool success = false;
 
+                // Call PlayFishingGame and pass a callback that sets resultReceived and success
+
+                yield return StartCoroutine(minigame.PlayFishingGame((bool s) =>
+                {
+                    success = s;          // update success from callback argument
+                resultReceived = true; // signal result received so outer coroutine can proceed
+
+                if (s)
+                    {
+                        Debug.Log("Hit!");
+                    }
+                    else
+                    {
+                        Debug.Log("Missed!");
+                    }
+                }));
+           
+                // Wait for callback to be called
+                while (!resultReceived) yield return null;
+
+                if (success)
+                {
+                    gameWon = true;
+                }
+                else
+                {
+                    Debug.Log("Missed! Restarting ");
+                    // loop repeats, trying again
+                }
+            }
+            
+            minigame = null;
             // Now take the photo
             yield return StartCoroutine(CapturePhoto());
         }
@@ -139,6 +179,12 @@ public class CameraScript : MonoBehaviour
         viewingPhoto = false;
         photoFrame.SetActive(false);
         // Destroy minigame...
+
+       
+        if (minigame != null) {
+            minigame.gameActivated = false;
+        }
+
 
         //minigame.gameObject.SetActive(false);
 

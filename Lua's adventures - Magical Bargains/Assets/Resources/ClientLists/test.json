@@ -1,9 +1,10 @@
 {
     "clients": [
         {
-            "clientSprite": "c3",
-            "artifactSprite": "a3",
+            "clientSprite": "c1",
+            "artifactSprite": "a9",
 
+            "cameraSprite":"a9-hidden",
             "thermoColor": "#FF0000",
 
             "dialogueA":"dia2a",
@@ -16,9 +17,9 @@
         },
         {
             "clientSprite": "c2",
-            "artifactSprite": "a6",
+            "artifactSprite": "a8",
 
-            "cameraSprite":"a6-hidden",
+            "cameraSprite":"a8-hidden",
             "thermoColor": "#0000FF",
 
             "dialogueA":"dia2a",
@@ -29,7 +30,7 @@
             "grade": "junk"
         },
         {
-            "clientSprite": "c1",
+            "clientSprite": "c4",
             "artifactSprite": "a4",
 
             "thermoColor": "#0000FF",
@@ -43,7 +44,7 @@
         },
         {
             "clientSprite": "c3",
-            "artifactSprite": "a7",
+            "artifactSprite": "a3",
 
             "thermoColor": "#0000FF",
 
