@@ -19,8 +19,9 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private Image spaceBarIcon;
 
     [Header("Typing Speed")]
+    [SerializeField] private bool skipTyping = false;
     [SerializeField] private float normalSpeed = 0.05f;
-    [SerializeField] private float fasterSpeed = 0.05f;
+    [SerializeField] private float fasterSpeed = 0.001f;
 
     [Header("Flutter Effect")]
     [SerializeField] private float flutterSpeed = 0.5f;
@@ -45,7 +46,7 @@ public class DialogueManager : MonoBehaviour
     // coroutines to avoid having them called more than once at a time
     private Coroutine ExitDialogueCoroutine;
     private Coroutine typingCoroutine;
-    
+
     private Coroutine SpaceBarFlutterCoroutine;
     private Coroutine FlickerSavingsCoroutine;
 
@@ -57,7 +58,7 @@ public class DialogueManager : MonoBehaviour
     private void Awake() {
         if (instance != null && instance != this)
         {
-            Destroy(this.gameObject); 
+            Destroy(this.gameObject);
         }
         else
         {
@@ -88,7 +89,7 @@ public class DialogueManager : MonoBehaviour
 
         if (dialogueIsPlaying && !isCutscenePlaying) {
 
-            if (isCurrentlyTyping )
+            if (isCurrentlyTyping)
             {
                 spaceBarIcon.color = Color.white;
 
@@ -101,14 +102,14 @@ public class DialogueManager : MonoBehaviour
 
                 // make space bar icon's color flutter when dialogue is ready to go on
                 if (SpaceBarFlutterCoroutine == null) {
-                    SpaceBarFlutterCoroutine = StartCoroutine(makeSpaceBarFlutter()); 
+                    SpaceBarFlutterCoroutine = StartCoroutine(makeSpaceBarFlutter());
                 }
 
                 if (Input.GetKeyDown(inputKey))
-                {        
+                {
 
                     ContinueStory();
-                    
+
                 }
             }
         }
@@ -120,7 +121,7 @@ public class DialogueManager : MonoBehaviour
             Debug.Log("EnterDialogueMode: NO DIALOGUE TO READ");
             return;
         }
-        
+
         if (secondInkJSON != null)
         {
             secondInk = secondInkJSON;
@@ -160,19 +161,30 @@ public class DialogueManager : MonoBehaviour
 
     private IEnumerator TypeLine(string line) {
 
-        isCurrentlyTyping = true;
+        if (!skipTyping)
+        {
 
-        dialogueText.maxVisibleCharacters = 0;
-        dialogueText.text = line;
+            isCurrentlyTyping = true;
 
-        for (int i = 0; i <= line.Length; i++) {
+            dialogueText.maxVisibleCharacters = 0;
+            dialogueText.text = line;
 
-            dialogueText.maxVisibleCharacters = i;
-            yield return new WaitForSeconds(typingSpeed);
+            for (int i = 0; i <= line.Length; i++)
+            {
+
+                dialogueText.maxVisibleCharacters = i;
+                yield return new WaitForSeconds(typingSpeed);
+            }
+
+            isCurrentlyTyping = false;
+            typingSpeed = normalSpeed;
+        } else
+        {
+            isCurrentlyTyping = false;
+            dialogueText.text = line;
         }
 
-        isCurrentlyTyping = false;
-        typingSpeed = normalSpeed;
+
     }
 
 
