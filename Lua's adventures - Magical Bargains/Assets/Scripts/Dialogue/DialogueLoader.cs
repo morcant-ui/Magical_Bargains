@@ -55,8 +55,14 @@ public class DialogueLoader : MonoBehaviour
 
         if (dialogue != null)
         {
+            // , string speakerName="Jean", string speakerColor="#32a852"
+            // string colorHeader = $"<color={speakerColor}>{speakerName}:</color>";
+            // string modifiedText = colorHeader + dialogue.text;
+            // return new TextAsset(modifiedText);
             return dialogue;
-        } else {
+        }
+        else
+        {
             Debug.Log("Problem !");
             return null;
         }

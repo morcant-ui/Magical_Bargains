@@ -80,7 +80,7 @@ public class LevelManager : MonoBehaviour
     // THIS NEEDS TO RUN ONCE AT THE BEGINNING OF THE GAME
     public void LoadGameData()
     {
-        // simply pull the list of levels înto the queue
+        // simply pull the list of levels ï¿½nto the queue
         ListLevels listLevels = JsonUtility.FromJson<ListLevels>(gameDataJSON.text);
         levelQueue = new Queue<LevelData>(listLevels.levelData);
         
@@ -129,8 +129,7 @@ public class LevelManager : MonoBehaviour
 
         string grandpaDialogueName = currentLevel.grandpaIntroDialogue;
         TextAsset grandpaIntroDialogue = Resources.Load<TextAsset>(Path.Combine(grandpaDialoguesPathName, grandpaDialogueName));
-
-
+        
         if (lastLevelAppreciation != "") {
 
             TextAsset grandpaAppreciationDialogue;
@@ -182,7 +181,7 @@ public class LevelManager : MonoBehaviour
         // N) when queue is empty or timer ran out, we go to level outro
         if (clientQueue.Count == 0 || timerEnded)
         {
-            if (timerEnded) { Debug.Log("Max timer has ended"); } else {  Debug.Log("All clients processed."); }
+            if (timerEnded) { Debug.Log("Max timer has ended"); } else { Debug.Log("All clients processed."); }
 
             processingClients = false;
 
@@ -200,6 +199,9 @@ public class LevelManager : MonoBehaviour
         CreateClient();
 
         // 3)
+       
+        DialogueManager.GetInstance().SetSpeaker(currentClient.clientName, currentClient.clientColor);
+
         string dialogueNameA = currentClient.dialogueA;
 
         TextAsset dialogue = dialogueLoader.LoadDialogue(dialogueNameA, "dialogueA");

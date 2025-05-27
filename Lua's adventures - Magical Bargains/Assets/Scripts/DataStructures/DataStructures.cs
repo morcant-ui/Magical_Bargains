@@ -17,11 +17,14 @@ public class ClientData
     public string dialogueB;
     public string dialogueC;
     public string dialogueD;
-    
+
     public string artifactOffer;
     public string minOfferAccepted;
     public string finalPrice;
     public string grade;
+
+    public string clientName;
+    public string clientColor;
 }
 
 [System.Serializable]

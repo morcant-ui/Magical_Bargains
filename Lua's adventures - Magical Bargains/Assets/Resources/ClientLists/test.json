@@ -13,7 +13,10 @@
             
             "artifactOffer": "90",
             "minOfferAccepted": "70",
-            "grade": "bad"
+            "grade": "bad",
+
+            "clientName": "Gertrude",
+            "clientColor": "#32a852"
         },
         {
             "clientSprite": "c2",
@@ -27,7 +30,10 @@
             
             "artifactOffer": "80",
             "minOfferAccepted": "30",
-            "grade": "junk"
+            "grade": "junk",
+
+            "clientName": "Patrick",
+            "clientColor": "#9a6aba"
         },
         {
             "clientSprite": "c4",
@@ -40,7 +46,10 @@
             
             "artifactOffer": "80",
             "minOfferAccepted": "50",
-            "grade": "ok"
+            "grade": "ok",
+
+            "clientName": "Salomon",
+            "clientColor": "#ba9e6a"
         },
         {
             "clientSprite": "c3",
@@ -54,7 +63,10 @@
             
             "artifactOffer": "80",
             "minOfferAccepted": "50",
-            "grade": "ok"
+            "grade": "ok",
+
+            "clientName": "Alex",
+            "clientColor": "#123ddb"
         }
     ]
 }

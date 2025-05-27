@@ -54,8 +54,22 @@ public class DialogueManager : MonoBehaviour
     private float typingSpeed;
 
     private static DialogueManager instance;
+    // name and name color
+    private string speakerName;
+    private string speakerColor;
+    // dialogs options
+    public Button[] choiceButtons;
+    
 
-    private void Awake() {
+    // to set the speaker name and color
+    public void SetSpeaker(string speakerNameSet, string speakerColorSet)
+    {
+        speakerName = speakerNameSet;
+        speakerColor = speakerColorSet;
+    }
+
+    private void Awake()
+    {
         if (instance != null && instance != this)
         {
             Destroy(this.gameObject);
@@ -139,16 +153,63 @@ public class DialogueManager : MonoBehaviour
 
         ContinueStory();
     }
-
-    public void ContinueStory() {
+    
+    public void ContinueStory()
+    {
+        HideChoices();
         if (currentStory.canContinue)
         {
             string nextLine = currentStory.Continue();
+            string nextLineTrim = nextLine.TrimStart();
+            //check if already has speaker tag (for grandpa)
+            // bool checkTag = nextLineTrim.StartsWith("Grandpa");
+            if (nextLineTrim.StartsWith("Grandpa"))
+            {
+                // Debug.Log("THIS IS GRANDPA");
+                // Find the index of the colon after "Grandpa"
+                int colonIndex = nextLineTrim.IndexOf(':');
+                if (colonIndex >= 0)
+                {
+                    // Extract "Grandpa:" including colon
+                    string speakerTag = nextLineTrim.Substring(0, colonIndex + 1);
+                    string restOfLine = nextLineTrim.Substring(colonIndex + 1);
+
+                    // Color only the speaker tag
+                    nextLine = $"<color=#db1226>{speakerTag}</color>{restOfLine}";
+                }
+                else
+                {
+                    Debug.Log("yo you forgot to put Grandpa in front of line ");
+                }
+            }
+            else if (nextLineTrim.StartsWith("\""))
+            {
+                // Debug.Log("THIS IS LUA");
+                string optionText = nextLineTrim.Trim();
+
+                if (optionText.Length >= 2 && optionText.StartsWith("\"") && optionText.EndsWith("\""))
+                {
+                    optionText = optionText.Substring(1, optionText.Length - 2);
+                }
+                
+                nextLine = $"<color=#db12a5>Lua</color>: {optionText}";
+            }
+            else
+            {
+                // Debug.Log("THIS IS CLIENT");
+                string speakerInfo = $"<color={speakerColor}>{speakerName}:</color> ";
+                nextLine = speakerInfo + nextLine;
+
+            }
 
             // display new line using a typing effect:
             if (typingCoroutine != null) { StopCoroutine(typingCoroutine); }
 
             typingCoroutine = StartCoroutine(TypeLine(nextLine));
+        }
+        else if (currentStory.currentChoices.Count > 0)
+        {
+            DisplayChoices();
         }
         else
         {
@@ -158,16 +219,70 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
+    void DisplayChoices()
+    {
+        int choiceCount = currentStory.currentChoices.Count;
 
-    private IEnumerator TypeLine(string line) {
+        for (int i = 0; i < choiceButtons.Length; i++)
+        {
+            if (i < choiceCount)
+            {
+                choiceButtons[i].gameObject.SetActive(true);
+
+                TMP_Text buttonText = choiceButtons[i].GetComponentInChildren<TMP_Text>();
+                if (buttonText != null)
+                {
+                    buttonText.text = currentStory.currentChoices[i].text;
+                }
+                else
+                {
+                    Debug.LogError($"Button {i} is missing a TMP_Text component!");
+                }
+
+                // Clear previous listeners to avoid stacking
+                choiceButtons[i].onClick.RemoveAllListeners();
+
+                int choiceIndex = i; // capture index for the lambda
+                choiceButtons[i].onClick.AddListener(() => OnChoiceSelected(choiceIndex));
+            }
+            else
+            {
+                choiceButtons[i].gameObject.SetActive(false);
+            }
+        }
+    }
+ 
+    public void OnChoiceSelected(int choiceIndex)
+    {
+        currentStory.ChooseChoiceIndex(choiceIndex);
+        HideChoices();
+        ContinueStory();
+    }
+
+    void HideChoices()
+    {
+        foreach (var button in choiceButtons)
+        {
+            button.gameObject.SetActive(false);
+        }
+    }
+
+
+    private IEnumerator TypeLine(string line)
+    {
 
         if (!skipTyping)
         {
 
             isCurrentlyTyping = true;
 
+<<<<<<< HEAD
             dialogueText.maxVisibleCharacters = 0;
             dialogueText.text = line;
+=======
+        for (int i = 0; i <= line.Length; i++)
+        {
+>>>>>>> 8ee5c39a (dialogs options and names)
 
             for (int i = 0; i <= line.Length; i++)
             {
