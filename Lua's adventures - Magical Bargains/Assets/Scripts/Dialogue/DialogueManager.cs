@@ -221,6 +221,8 @@ public class DialogueManager : MonoBehaviour
 
     void DisplayChoices()
     {
+        Debug.Log("HALLO");
+
         int choiceCount = currentStory.currentChoices.Count;
 
         for (int i = 0; i < choiceButtons.Length; i++)
@@ -276,13 +278,8 @@ public class DialogueManager : MonoBehaviour
 
             isCurrentlyTyping = true;
 
-<<<<<<< HEAD
             dialogueText.maxVisibleCharacters = 0;
             dialogueText.text = line;
-=======
-        for (int i = 0; i <= line.Length; i++)
-        {
->>>>>>> 8ee5c39a (dialogs options and names)
 
             for (int i = 0; i <= line.Length; i++)
             {
@@ -304,6 +301,8 @@ public class DialogueManager : MonoBehaviour
 
 
     private IEnumerator ExitDialogueMode() {
+        Debug.Log("HELLO");
+
         yield return new WaitForSeconds(0.2f);
 
         if (secondInk != null)
