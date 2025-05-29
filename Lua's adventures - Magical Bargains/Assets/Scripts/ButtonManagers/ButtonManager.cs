@@ -16,6 +16,7 @@ public class ButtonManager : MonoBehaviour
 
     [Header("Bargain Buttons")]
     [SerializeField] private Button acceptButton;
+    [SerializeField] private Button refuseButton;
     [SerializeField] private Button addButton;
     [SerializeField] private Button minusButton;
 
@@ -60,6 +61,9 @@ public class ButtonManager : MonoBehaviour
         acceptButton.gameObject.SetActive(false);
         acceptButton.interactable = false;
 
+        refuseButton.gameObject.SetActive(false);
+        refuseButton.interactable = false;
+
         addButton.gameObject.SetActive(false);
         addButton.interactable = false;
 
@@ -81,6 +85,7 @@ public class ButtonManager : MonoBehaviour
         thermometer.SetActive(false);
 
         acceptButton.onClick.AddListener(OnAcceptOfferButtonClick);
+        refuseButton.onClick.AddListener(OnRefuseOfferButtonClick);
         addButton.onClick.AddListener(OnAddOfferButtonClick);
         minusButton.onClick.AddListener(OnReduceOfferButtonClick);
 
@@ -142,7 +147,24 @@ public class ButtonManager : MonoBehaviour
 
         offerManager.AcceptOffer();
 
-        GameStateManager.GetInstance().LoadBargainDoneState();
+        GameStateManager.GetInstance().LoadBargainDoneState(false);
+        
+
+        magnifier.gameObject.SetActive(false);
+        cameraScript.Abort();
+        cameraButtonActivated = false;
+        magnifierButtonActivated = false;
+        thermometer.gameObject.SetActive(false);
+        thermometerButtonActivated = false;
+    }
+    
+    public void OnRefuseOfferButtonClick(){
+        
+        offerAccepted = true;
+
+        offerManager.RefuseOffer();
+
+        GameStateManager.GetInstance().LoadBargainDoneState(true);
         
 
         magnifier.gameObject.SetActive(false);
@@ -153,8 +175,9 @@ public class ButtonManager : MonoBehaviour
         thermometerButtonActivated = false;
     }
 
-    public void OnIntroButtonClick() {
-        if (DialogueManager.GetInstance().dialogueIsFinished) 
+    public void OnIntroButtonClick()
+    {
+        if (DialogueManager.GetInstance().dialogueIsFinished)
         {
             // load intro state
             GameStateManager.GetInstance().LoadClientIntro();
@@ -287,9 +310,11 @@ public class ButtonManager : MonoBehaviour
         introButton.interactable = isIntroActive && additionalCheck;
 
         acceptButton.gameObject.SetActive(bargainInProgress);
+        refuseButton.gameObject.SetActive(bargainInProgress);
         addButton.gameObject.SetActive(bargainInProgress);
         minusButton.gameObject.SetActive(bargainInProgress);
         acceptButton.interactable = bargainInProgress;
+        refuseButton.interactable = bargainInProgress;
         addButton.interactable = bargainInProgress;
         minusButton.interactable = bargainInProgress;
 

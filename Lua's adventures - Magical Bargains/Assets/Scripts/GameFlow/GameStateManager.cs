@@ -191,10 +191,11 @@ public class GameStateManager : MonoBehaviour
 
     }
 
-    public void LoadBargainDoneState()
+    public void LoadBargainDoneState(bool refused)
     {
         state = "client outro";
-        levelManager.FinishBargainState();
+        levelManager.FinishBargainState(refused);
+        refused = false;
 
         if (tutoActivated)
         {

@@ -10,6 +10,7 @@ public class DialogueLoader : MonoBehaviour
     [SerializeField] private int dialogueBRandNB = 1;
     [SerializeField] private int dialogueCRandNB = 1;
     [SerializeField] private int dialogueDRandNB = 3;
+    [SerializeField] private int dialogueERandNB = 1;
 
     private string srcToDialoguePath = Path.Combine("Assets", "Resources");
 
@@ -74,6 +75,7 @@ public class DialogueLoader : MonoBehaviour
         if (folderName == "dialogueB") { nbOfFiles = dialogueBRandNB; }
         if (folderName == "dialogueC") { nbOfFiles = dialogueCRandNB; }
         if (folderName == "dialogueD") { nbOfFiles = dialogueDRandNB; }
+        if (folderName == "dialogueE") { nbOfFiles = dialogueERandNB; }
 
 
         int fileNumber = Random.Range(1, nbOfFiles + 1);

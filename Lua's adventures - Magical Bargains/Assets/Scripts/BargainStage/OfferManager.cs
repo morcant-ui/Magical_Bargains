@@ -44,6 +44,12 @@ public class OfferManager : MonoBehaviour
         isBargainOn = false;
     }
 
+    public void RefuseOffer()
+    {
+        isBargainOn = false;
+        yourOffer = 0;
+    }
+
     void UpdateOfferDisplay()
     {
         offerText.text = "The client offer is " + originalOffer.ToString() + " coins! \n Your offer is now " + yourOffer.ToString() + " coins :)";

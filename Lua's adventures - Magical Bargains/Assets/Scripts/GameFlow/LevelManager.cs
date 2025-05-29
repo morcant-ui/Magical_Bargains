@@ -302,16 +302,30 @@ public class LevelManager : MonoBehaviour
     //          2. determine the outcome of the offer
     //          3. for any outcome, call offer dialogue manager to obtain a working dialogue
     //          4. feed the dialogue to dialogue Manager
-    public void FinishBargainState()
+    public void FinishBargainState(bool refused)
     {   
         // 1)
         int finalOffer = offerManager.FinalOffer;
+        
+        if (refused)
+        {
+            finalOffer = 0;
+            // Debug.Log("Offer refused!!!");
+        }
         int minOfferAccepted = int.Parse(currentClient.minOfferAccepted);
         TextAsset dialogue;
 
         // 2)
+        // Outcome E: Lua did not accept the offer
+        if (refused)
+        {
+            // Debug.Log("offer refused dialogues");
+            string dialogueNameE = currentClient.dialogueE;
+            dialogue = dialogueLoader.LoadDialogue(dialogueNameE, "dialogueE");
+            refused = false;
+        }
         // Outcome B: offer accepted
-        if (finalOffer >= minOfferAccepted && savings >= finalOffer)
+        else if (finalOffer >= minOfferAccepted && savings >= finalOffer)
         {
             Debug.Log("Finish Bargain State: Outcome B");
 
@@ -327,8 +341,10 @@ public class LevelManager : MonoBehaviour
             string dialogueNameB = currentClient.dialogueB;
             dialogue = dialogueLoader.LoadDialogue(dialogueNameB, "dialogueB");
 
-        // Outcome D: not enough money
-        } else if (finalOffer >= minOfferAccepted && savings < finalOffer) {
+            // Outcome D: not enough money
+        }
+        else if (finalOffer >= minOfferAccepted && savings < finalOffer)
+        {
 
             Debug.Log("Finish Bargain State: Outcome D");
 
@@ -339,8 +355,10 @@ public class LevelManager : MonoBehaviour
             string dialogueNameD = currentClient.dialogueD;
             dialogue = dialogueLoader.LoadDialogue(dialogueNameD, "dialogueD");
 
-        // Outcome C: client refuses
-        } else {
+            // Outcome C: client refuses
+        }
+        else
+        {
 
             Debug.Log("Finish Bargain State: Outcome C");
 
