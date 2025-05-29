@@ -1,0 +1,1 @@
+Oh dear, no money ? That's quite ok, I will come back another day when you have some more ok ?

@@ -76,7 +76,9 @@ public class ShakingThermo : MonoBehaviour
             ThermoColor colorComponent = GameObject.FindWithTag("currentArtifact").GetComponent<ThermoColor>();
             if (colorComponent != null)
             {
-                flashColor = colorComponent.thermoColor;
+                string hex = colorComponent.thermoColor;
+                float alpha = colorComponent.intensity;
+                flashColor = ParseColor(hex, alpha);
             }
             
             
@@ -168,5 +170,45 @@ public class ShakingThermo : MonoBehaviour
         
         screenOverlay.color = Color.clear;
         holder.SetActive(false);
+    }
+
+
+    // helper function to get color from game data
+    Color ParseColor(string hex, float alpha)
+    {
+
+        Debug.Log("-----PARSE COLOR: HEX: " + hex + ", ALPHA: " + alpha);
+
+        if (alpha == 0.0)
+        {
+            Color outColor = ColorUtility.TryParseHtmlString(hex, out var color)
+                ? color
+                : Color.black;
+
+            if (outColor == Color.black) { Debug.Log("PB1"); }
+            return outColor;
+        }
+        else
+        {
+
+            // manual conversion from hex to rgb, then add alpha channel at the end
+            hex = hex.Replace("#", "");
+
+            if (hex.Length != 6) { Debug.Log("PB2");  return Color.black; }
+
+            int red = int.Parse(hex.Substring(0, 2), System.Globalization.NumberStyles.HexNumber);
+            int green = int.Parse(hex.Substring(2, 2), System.Globalization.NumberStyles.HexNumber);
+            int blue = int.Parse(hex.Substring(4, 2), System.Globalization.NumberStyles.HexNumber);
+
+            float r = (float)red / 255f;
+            float g = (float)green / 255f;
+            float b = (float)blue / 255f;
+
+            Color c = new Color(r, g, b, alpha);
+
+            Debug.Log("------C: " + c);
+
+            return c;
+        }
     }
 }

@@ -1,4 +1,3 @@
-Grandpa: [First Grandpa dialogue]
 Grandpa: So here we are young miss
 Grandpa: Your job will be to tend to this pawn shop for magical artifacts
 Grandpa: Clients will come in and present items that they want to part with

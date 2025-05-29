@@ -19,7 +19,8 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private Image spaceBarIcon;
 
     [Header("Typing Speed")]
-    [SerializeField] private bool skipTyping = false;
+    [SerializeField] private bool skipTypingAsAWhole = false;
+    [SerializeField] private bool typingActivatedButSkippable = false;
     [SerializeField] private float normalSpeed = 0.05f;
     [SerializeField] private float fasterSpeed = 0.001f;
 
@@ -52,6 +53,7 @@ public class DialogueManager : MonoBehaviour
 
     // typing speed variable
     private float typingSpeed;
+    private bool stopTyping = false;
 
     private static DialogueManager instance;
     // name and name color
@@ -108,7 +110,16 @@ public class DialogueManager : MonoBehaviour
                 spaceBarIcon.color = Color.white;
 
                 if (Input.GetKeyDown(inputKey)) {
-                    typingSpeed = fasterSpeed;
+
+                    if (typingActivatedButSkippable)
+                    {
+                        stopTyping = true;
+                    }
+                    else {
+                        typingSpeed = fasterSpeed;
+                    }
+                    
+                    
                 }
             }
 
@@ -221,7 +232,6 @@ public class DialogueManager : MonoBehaviour
 
     void DisplayChoices()
     {
-        Debug.Log("HALLO");
 
         int choiceCount = currentStory.currentChoices.Count;
 
@@ -273,7 +283,7 @@ public class DialogueManager : MonoBehaviour
     private IEnumerator TypeLine(string line)
     {
 
-        if (!skipTyping)
+        if (!skipTypingAsAWhole )
         {
 
             isCurrentlyTyping = true;
@@ -283,6 +293,10 @@ public class DialogueManager : MonoBehaviour
 
             for (int i = 0; i <= line.Length; i++)
             {
+                if (stopTyping) {
+                    dialogueText.maxVisibleCharacters = line.Length;
+                    break;
+                }
 
                 dialogueText.maxVisibleCharacters = i;
                 yield return new WaitForSeconds(typingSpeed);
@@ -295,13 +309,12 @@ public class DialogueManager : MonoBehaviour
             isCurrentlyTyping = false;
             dialogueText.text = line;
         }
-
+        stopTyping = false;
 
     }
 
 
     private IEnumerator ExitDialogueMode() {
-        Debug.Log("HELLO");
 
         yield return new WaitForSeconds(0.2f);
 

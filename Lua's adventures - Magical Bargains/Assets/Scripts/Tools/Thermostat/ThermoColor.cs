@@ -2,6 +2,6 @@ using UnityEngine;
 
 public class ThermoColor : MonoBehaviour
 {
-   public Color thermoColor;
+   public string thermoColor;
    public float intensity;
 }

@@ -307,8 +307,11 @@ public class LevelManager : MonoBehaviour
         string magnifierSpriteName = currentClient.magnifierSprite;
         string cameraSpriteName = currentClient.cameraSprite;
         string thermoColor = currentClient.thermoColor;
+        float thermoIntensity = currentClient.thermoIntensity;
 
-        artifactSpawner.SpawnObject(artifactSpriteName, magnifierSpriteName, cameraSpriteName, thermoColor);
+        //Color finalThermoColor = ParseColor(thermoColor, thermoIntensity);
+
+        artifactSpawner.SpawnObject(artifactSpriteName, magnifierSpriteName, cameraSpriteName, thermoColor, thermoIntensity);
     }
 
     private void CreateClient()
@@ -381,12 +384,7 @@ public class LevelManager : MonoBehaviour
     //////////////////////////////////// Next Step to Take ////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    // helper function to get color from game data
-    Color ParseColor(string hex)
-    {
-        ColorUtility.TryParseHtmlString(hex, out var color);
-        return color;
-    }
+
 
 
     public void SetTutoStatus(bool isTutoActivated)

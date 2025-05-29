@@ -11,7 +11,7 @@ public class ClientData
     public string magnifierSprite;
     public string cameraSprite;
     public string thermoColor;
-    public string thermoIntensity;
+    public float thermoIntensity;
 
     public string dialogueA;
     public string dialogueB;

@@ -1371,7 +1371,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72735be5ebc20b44c9407138e4487ffe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playIntroCutscene: 0
+  playIntroCutscene: 1
   tutoActivated: 1
   grandpa: {fileID: 777833723}
   levelManager: {fileID: 547474431}
@@ -1383,8 +1383,8 @@ MonoBehaviour:
   levelOutroMusic: {fileID: 8300000, guid: e2d185c6ce6986949bc2e7cea70f2a94, type: 3}
   levelMusic: {fileID: 8300000, guid: 543d841fb19cf2142b434eaa5ecbeffb, type: 3}
   gameOutroMusic: {fileID: 8300000, guid: 67c9585021808be41bcf531c7c55fb52, type: 3}
-  volume: 0.01
-  introVolume: 0.01
+  volume: 0.02
+  introVolume: 0.02
 --- !u!1 &209753676
 GameObject:
   m_ObjectHideFlags: 0
@@ -2712,7 +2712,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1a32c12f0f494343889728e2618bd36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameDataJSON: {fileID: 4900000, guid: cb593fcfe26a5c94da475af8e335089b, type: 3}
+  gameDataJSON: {fileID: 4900000, guid: e49acfcd8c134e9408018f8cad37ed95, type: 3}
   clientSpawner: {fileID: 651312100}
   artifactSpawner: {fileID: 1781389174}
   offerManager: {fileID: 105721552}
@@ -3783,9 +3783,10 @@ MonoBehaviour:
   savingsImage: {fileID: 1196262779}
   savingsText: {fileID: 1674551690}
   spaceBarIcon: {fileID: 1403057124}
-  skipTyping: 1
-  normalSpeed: 0.05
-  fasterSpeed: 0.001
+  skipTypingAsAWhole: 0
+  typingActivatedButSkippable: 1
+  normalSpeed: 0.01
+  fasterSpeed: 0
   flutterSpeed: 0.5
   choiceButtons:
   - {fileID: 109875484}
@@ -4970,11 +4971,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1091855698351711957, guid: ef0d7ab8ec4bd654da6466df60c49b3b, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 89.38
+      value: 88.49
       objectReference: {fileID: 0}
     - target: {fileID: 1091855698351711957, guid: ef0d7ab8ec4bd654da6466df60c49b3b, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 85.51
+      value: 84.2
       objectReference: {fileID: 0}
     - target: {fileID: 1091855698351711957, guid: ef0d7ab8ec4bd654da6466df60c49b3b, type: 3}
       propertyPath: m_LocalScale.x
@@ -4994,11 +4995,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1091855698351711957, guid: ef0d7ab8ec4bd654da6466df60c49b3b, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -5.23
+      value: -5.4
       objectReference: {fileID: 0}
     - target: {fileID: 1091855698351711957, guid: ef0d7ab8ec4bd654da6466df60c49b3b, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 6.48
+      value: 6.55
       objectReference: {fileID: 0}
     - target: {fileID: 1091855698732013638, guid: ef0d7ab8ec4bd654da6466df60c49b3b, type: 3}
       propertyPath: m_Name
@@ -5090,7 +5091,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1091855698732013753, guid: ef0d7ab8ec4bd654da6466df60c49b3b, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -238.9
+      value: -238.64
       objectReference: {fileID: 0}
     - target: {fileID: 1091855698732013753, guid: ef0d7ab8ec4bd654da6466df60c49b3b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -5134,15 +5135,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1091855699713283970, guid: ef0d7ab8ec4bd654da6466df60c49b3b, type: 3}
       propertyPath: m_Color.b
-      value: 0.8679245
+      value: 0.8396226
       objectReference: {fileID: 0}
     - target: {fileID: 1091855699713283970, guid: ef0d7ab8ec4bd654da6466df60c49b3b, type: 3}
       propertyPath: m_Color.g
-      value: 0.8679245
+      value: 0.8396226
       objectReference: {fileID: 0}
     - target: {fileID: 1091855699713283970, guid: ef0d7ab8ec4bd654da6466df60c49b3b, type: 3}
       propertyPath: m_Color.r
-      value: 0.8679245
+      value: 0.8396226
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ef0d7ab8ec4bd654da6466df60c49b3b, type: 3}
@@ -9760,5 +9761,5 @@ MonoBehaviour:
   activateBounds: 1
   leftBoundX: -5
   rightBoundX: 4
-  downBoundY: -3.9
+  downBoundY: -3
   upperBoundY: -0.4

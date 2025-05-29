@@ -20,9 +20,9 @@
         },
         {
             "clientSprite": "c7",
-            "artifactSprite": "a8",
+            "artifactSprite": "a9",
 
-            "cameraSprite":"a8-hidden",
+            "cameraSprite":"a9-hidden",
             "thermoColor": "#0000FF",
 
             "dialogueA":"dia2a",
@@ -37,7 +37,7 @@
         },
         {
             "clientSprite": "c8",
-            "artifactSprite": "a4",
+            "artifactSprite": "a12",
 
             "thermoColor": "#0000FF",
 

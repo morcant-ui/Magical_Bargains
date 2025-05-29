@@ -1,0 +1,1 @@
+Yesss thank you for your business, you're gonna become rich selling this bad boy !

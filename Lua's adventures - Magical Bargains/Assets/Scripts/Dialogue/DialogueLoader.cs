@@ -29,22 +29,8 @@ public class DialogueLoader : MonoBehaviour
         // if dialogue name could not be found - pull a random dialogue
         if (dialogueName == null)
         {
-            
 
-            string PathRand = Path.Combine(PathName, "Rand");
-
-            int nbOfFiles = 1; //Directory.GetFiles(Path.Combine(srcToDialoguePath, PathRand), "*.ink").Length;
-            if (folderName == "dialogueA") { nbOfFiles = dialogueARandNB; }
-            if (folderName == "dialogueB") { nbOfFiles = dialogueBRandNB; }
-            if (folderName == "dialogueC") { nbOfFiles = dialogueCRandNB; }
-            if (folderName == "dialogueD") { nbOfFiles = dialogueDRandNB; }
-
-
-            int fileNumber = Random.Range(1, nbOfFiles + 1);
-            string fileName = folderName + "Rand" + fileNumber;
-
-            finalPath = Path.Combine(PathRand, fileName);
-
+            finalPath = getPathAtRandom(folderName, PathName);
             
         } else {
 
@@ -63,8 +49,37 @@ public class DialogueLoader : MonoBehaviour
         }
         else
         {
-            Debug.Log("Problem !");
-            return null;
+
+            finalPath = getPathAtRandom(folderName, PathName);
+
+            dialogue =  Resources.Load<TextAsset>(finalPath);
+
+            if (dialogue == null) {
+                Debug.Log("Reall problem");
+                return null;
+            }
+
+            return dialogue;
         }
+    }
+
+
+    private string getPathAtRandom(string folderName, string pathName) {
+
+
+        string PathRand = Path.Combine(pathName, "Rand");
+
+        int nbOfFiles = 1; //Directory.GetFiles(Path.Combine(srcToDialoguePath, PathRand), "*.ink").Length;
+        if (folderName == "dialogueA") { nbOfFiles = dialogueARandNB; }
+        if (folderName == "dialogueB") { nbOfFiles = dialogueBRandNB; }
+        if (folderName == "dialogueC") { nbOfFiles = dialogueCRandNB; }
+        if (folderName == "dialogueD") { nbOfFiles = dialogueDRandNB; }
+
+
+        int fileNumber = Random.Range(1, nbOfFiles + 1);
+        string fileName = folderName + "Rand" + fileNumber;
+
+        return Path.Combine(PathRand, fileName);
+
     }
 }

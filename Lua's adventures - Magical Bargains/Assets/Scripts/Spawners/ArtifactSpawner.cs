@@ -23,7 +23,7 @@ public class ArtifactSpawner : MonoBehaviour
         objectPrefab.SetActive(false);
     }
 
-    public GameObject SpawnObject(string artifactSpriteName, string magnifierSpriteName, string cameraSpriteName, string thermoColor) {
+    public GameObject SpawnObject(string artifactSpriteName, string magnifierSpriteName, string cameraSpriteName, string thermoColor, float thermoIntensity) {
 
         Vector3 position = new Vector3(spawnPointX, spawnPointY, 0);
         Sprite sprite = Resources.Load<Sprite>(Path.Combine(spritePathName, artifactSpriteName));
@@ -39,15 +39,20 @@ public class ArtifactSpawner : MonoBehaviour
 
         obj.AddComponent<PolygonCollider2D>();
 
+        // I TRY TO STORE COLOR AS HEX TO FACILITATE USE OF COLOR INTENSITY
         // adapt color and intensity for thermo
-        Color thermometerColor = ColorUtility.TryParseHtmlString(thermoColor, out var colorInfo)
-            ? colorInfo //colorInfo * intensity -> if I want to add intensity, something like this
-            : Color.black; //if not found
+        //Color thermometerColor = ColorUtility.TryParseHtmlString(thermoColor, out var colorInfo)
+        //    ? colorInfo //colorInfo * intensity -> if I want to add intensity, something like this
+        //    : Color.black; //if not found
             
         // add ArtifactColor Component
         ThermoColor colorComponent = obj.AddComponent<ThermoColor>();
-        colorComponent.thermoColor = thermometerColor;
-        //colorComponent.intensity = intensity
+        colorComponent.thermoColor = thermoColor != null ? thermoColor : "#000000";
+        
+        colorComponent.intensity = thermoIntensity;
+
+
+
 
         obj.tag = "currentArtifact";
         obj.transform.SetParent(spawnContainer.transform);

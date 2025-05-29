@@ -1,0 +1,81 @@
+{
+    "clients": [
+        {
+            "clientSprite": "c2",
+            "artifactSprite": "a8",
+
+            "cameraSprite":"a8-hidden",
+            "thermoColor": "#00e8e8",
+            "thermoIntensity":0.680,
+
+            "dialogueA":"diaSa1",
+            "dialogueC":"diaSc1",
+            "dialogueD":"diaSd1",
+            
+            "artifactOffer": "120",
+            "minOfferAccepted": "100",
+            "grade": "excellent",
+
+            "clientName": "Angry wiz",
+            "clientColor": "#32a852"
+        },
+        {
+            "clientSprite": "c6",
+            "artifactSprite": "artifact1",
+
+            "magnifierSprite":"hidden-artifact1",
+            "thermoColor": "#3647ca",
+            "thermoIntensity":0.735,
+
+            "dialogueA":"diaSa2",
+            "dialogueB":"diaSb2",
+            "dialogueD":"diaSd2",
+            
+            "artifactOffer": "60",
+            "minOfferAccepted": "10",
+            "grade": "junk",
+
+            "clientName": "Kali",
+            "clientColor": "#3647ca"
+        },
+        {
+            "clientSprite": "c4",
+            "artifactSprite": "a3",
+
+            "thermoColor": "#f299e0",
+            "thermoIntensity":0.28,
+
+            "dialogueA":"diaSa3",
+            "dialogueB":"diaSb3",
+            "dialogueC":"diaSc3",
+            "dialogueD":"diaSd3",
+            
+            "artifactOffer": "80",
+            "minOfferAccepted": "50",
+            "grade": "ok",
+
+            "clientName": "mimi fun",
+            "clientColor": "#40c65c"
+        },
+        {
+            "clientSprite": "c3",
+            "artifactSprite": "a7",
+
+            "cameraSprite":"a7-hidden",
+            "thermoColor": "#1FE51B",
+            "thermoIntensity":0.837,
+
+            "dialogueA":"diaSa4",
+            "dialogueB":"diaSb4",
+            "dialogueC":"diaSc4",
+            "dialogueD":"diaSd4",
+            
+            "artifactOffer": "80",
+            "minOfferAccepted": "40",
+            "grade": "ok",
+
+            "clientName": "green lady",
+            "clientColor": "#1DEA0F"
+        }
+    ]
+}

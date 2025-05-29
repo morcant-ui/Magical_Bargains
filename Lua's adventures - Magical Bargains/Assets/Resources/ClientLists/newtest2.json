@@ -1,0 +1,83 @@
+{
+    "clients": [
+        {
+            "clientSprite": "c1",
+            "artifactSprite": "a4",
+
+            "thermoColor": "#000000",
+            "thermoIntensity":0.14,
+
+            "dialogueA":"diaSa8",
+            "dialogueB":"diaSb8",
+            "dialogueC":"diaSc8",
+            "dialogueD":"diaSd8",
+
+            "artifactOffer": "90",
+            "minOfferAccepted": "40",
+            "grade": "good",
+
+            "clientName": "francis la menace",
+            "clientColor": "#132FE5"
+        },
+        {
+            "clientSprite": "c5",
+            "artifactSprite": "a11",
+
+            "magnifierSprite": "a11-hidden",
+            "thermoColor": "#000000",
+            "thermoIntensity":0.1,
+
+            "artifactOffer": "80",
+            "minOfferAccepted": "30",
+            "grade": "junk",
+
+            "dialogueA":"diaSa5",
+            "dialogueB":"diaSb5",
+            "dialogueC":"diaSc5",
+            "dialogueD":"diaSd5",
+
+            "clientName": "pepine",
+            "clientColor": "#D4AA0B"
+        }, 
+        {
+            "clientSprite": "c8",
+            "artifactSprite": "a6",
+
+            "cameraSprite":"a6-hidden",
+            "thermoColor": "#9F573A",
+            "thermoIntensity":0.85,
+
+            "dialogueA":"diaSa6",
+            "dialogueB":"diaSb6",
+            "dialogueC":"diaSc6",
+            "dialogueD":"diaSd6",
+            
+            "artifactOffer": "60",
+            "minOfferAccepted": "40",
+            "grade": "good",
+
+            "clientName": "skinny john",
+            "clientColor": "#7915B0"
+        },
+        {
+            "clientSprite": "c7",
+            "artifactSprite": "a9",
+
+            "cameraSprite":"a9-hidden",
+            "thermoColor": "#b240c6",
+            "thermoIntensity":0.937,
+
+            "dialogueA":"diaSa7",
+            "dialogueB":"diaSb7",
+            "dialogueC":"diaSc7",
+            "dialogueD":"diaSd7",
+            
+            "artifactOffer": "50",
+            "minOfferAccepted": "20",
+            "grade": "haunted",
+
+            "clientName": "good ol' pepe",
+            "clientColor": "#b240c6"
+        }
+    ]
+}

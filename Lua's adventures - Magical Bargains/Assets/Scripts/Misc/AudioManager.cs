@@ -10,6 +10,7 @@ public class AudioManager : MonoBehaviour
 
     [SerializeField] private AudioSource musicSource;
 
+
     private static AudioManager instance;
 
     // Start is called before the first frame update
@@ -26,6 +27,7 @@ public class AudioManager : MonoBehaviour
     }
 
     public static AudioManager GetInstance() { return instance; }
+
 
     public void PlayClip(AudioClip audioClip, Transform spawnTransform, float volume) {
         //spawn a new gameobject
@@ -52,13 +54,17 @@ public class AudioManager : MonoBehaviour
 
         musicSource.clip = audio;
 
+        musicSource.loop = true;
+
         musicSource.volume = volume;
 
         musicSource.Play();
+
 
     }
 
     public void StopMusic() {
         musicSource.Stop();
+
     }
 }

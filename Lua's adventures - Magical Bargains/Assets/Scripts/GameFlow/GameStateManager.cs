@@ -35,7 +35,7 @@ public class GameStateManager : MonoBehaviour
 
     private Queue<ClientData> currentPurchases = new Queue<ClientData>();
 
-    private static double savings = 80.0; // static vars cannot show in inspector
+    private static double savings = 99.0; // static vars cannot show in inspector
 
     private double initialSavings;
 

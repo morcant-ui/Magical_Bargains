@@ -1,3 +1,3 @@
-Long ago, two races ruled over earth. HUMANS and MONSTERS.
-One day, war broke out between the two.
-After a long battle, the humans were victorious.
+this is an intro story
+your grandpa pawns illegal magical artifacts
+you're gonna have to help, sorry
