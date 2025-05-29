@@ -58,6 +58,7 @@ public class LevelManager : MonoBehaviour
     private string spritePathName = "Sprites";
     private string dialogueAPathName = Path.Combine("Dialogues", "dialogueA");
     private string grandpaDialoguesPathName = Path.Combine("Dialogues", "grandpa");
+    private string tutoPathName = Path.Combine("Dialogues", "grandpa", "Tuto");
 
     // to be deleted
     private Coroutine destroyClientCoroutine;
@@ -108,7 +109,8 @@ public class LevelManager : MonoBehaviour
         // 1)
         currentLevel = levelQueue.Dequeue();
         string currentLevelName = currentLevel.listClientsName;
-        int currentMaxTime = currentLevel.maxTime;
+        int currentMaxTime = tutoActivated ? 0 : currentLevel.maxTime;
+
 
         GameStateManager.GetInstance().UpdateMaxTime(currentMaxTime);
 
@@ -206,6 +208,13 @@ public class LevelManager : MonoBehaviour
 
         TextAsset dialogue = dialogueLoader.LoadDialogue(dialogueNameA, "dialogueA");
 
+        if (tutoActivated) {
+
+            TextAsset tutoDialogue = Resources.Load<TextAsset>(Path.Combine(tutoPathName, "tuto2"));
+
+            DialogueManager.GetInstance().EnterDialogueMode(dialogue, tutoDialogue);
+            return;
+        } 
         DialogueManager.GetInstance().EnterDialogueMode(dialogue); 
     }
 
@@ -292,6 +301,15 @@ public class LevelManager : MonoBehaviour
         }
 
         // 4)
+        if (tutoActivated)
+        {
+
+            TextAsset tutoDialogue = Resources.Load<TextAsset>(Path.Combine(tutoPathName, "tuto4"));
+
+            DialogueManager.GetInstance().EnterDialogueMode(dialogue, tutoDialogue);
+            return;
+        }
+
         DialogueManager.GetInstance().EnterDialogueMode(dialogue);
     }
 

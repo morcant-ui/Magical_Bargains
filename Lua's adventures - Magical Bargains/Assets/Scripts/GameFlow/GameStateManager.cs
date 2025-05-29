@@ -128,7 +128,7 @@ public class GameStateManager : MonoBehaviour
 
         grandpa.SetActive(true);
 
-        if (tutoActivated) { Debug.Log("yoo this is it please ?"); ReadTutoDialogue("tuto1"); }
+        if (tutoActivated) { ReadTutoDialogue("tuto1"); }
         levelManager.LoadNextLevel(lastAppreciation); // we send last level's evaluation to influence grandpa dialogue
     }
 
@@ -145,11 +145,7 @@ public class GameStateManager : MonoBehaviour
         DialogueManager.GetInstance().Reset();
         levelManager.LoadNextClient( timerEnded );
 
-        if (tutoActivated) { 
-            if (tutoWaitsForClient != null) { StopCoroutine(tutoWaitsForClient); }
 
-            tutoWaitsForClient = StartCoroutine(WaitForClientToFinish());
-        }
 
     }
 
@@ -202,9 +198,9 @@ public class GameStateManager : MonoBehaviour
 
         if (tutoActivated)
         {
-            if (tutoWaitForBargain != null) { StopCoroutine(tutoWaitForBargain); }
 
-            tutoWaitForBargain = StartCoroutine(WaitForBargainToFinish());
+            tutoActivated = false;
+            levelManager.SetTutoStatus(tutoActivated);
         }
     }
 
@@ -306,37 +302,6 @@ public class GameStateManager : MonoBehaviour
 
     }
 
-    private IEnumerator WaitForClientToFinish()
-    {
-
-        while (!DialogueManager.GetInstance().dialogueIsFinished)
-        {
-
-            yield return null;
-        }
-
-        DialogueManager.GetInstance().Reset();
-
-        ReadTutoDialogue("tuto2");
-
-    }
-
-    private IEnumerator WaitForBargainToFinish()
-    {
-
-        while (!DialogueManager.GetInstance().dialogueIsFinished)
-        {
-
-            yield return null;
-        }
-
-        DialogueManager.GetInstance().Reset();
-
-        ReadTutoDialogue("tuto4");
-        tutoActivated = false;
-        levelManager.SetTutoStatus(tutoActivated);
-
-    }
 
     private IEnumerator WaitForGrandpaToFinish() {
 

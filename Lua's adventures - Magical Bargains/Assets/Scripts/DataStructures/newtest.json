@@ -2,12 +2,13 @@
     "levelData": [
         {
             "listClientsName":"newtest",
-            "grandpaIntroDialogue":"gid1"
+            "grandpaIntroDialogue":"gid1",
+            "maxTime":60
         },
         {
             "listClientsName": "newtest2",
             "grandpaIntroDialogue": "gidS",
-            "maxTime":120
+            "maxTime":60
         }
     ]
 }

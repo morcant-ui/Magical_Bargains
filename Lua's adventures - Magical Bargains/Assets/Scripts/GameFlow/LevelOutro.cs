@@ -117,8 +117,8 @@ public class LevelOutro : MonoBehaviour
         string appreciation = ""; // appreciation is the string we return from this function to let game state manager know
 
         if (hauntedCount > 0) { textToDisplay = hauntedTextBase; appreciation = "haunted"; }
-        if (junkCount > 1) { textToDisplay = junkTextBase; appreciation = "junk"; }
-        if (hauntedCount == 0 && junkCount <= 1) {
+        if (junkCount >= 1) { textToDisplay = junkTextBase; appreciation = "junk"; }
+        if (hauntedCount == 0 && junkCount == 0) {
             if (newSavings >= 80) { textToDisplay = okTextBase; appreciation = "ok";  }
             else { textToDisplay = badTextBase; appreciation = "bad"; }
         }
@@ -175,8 +175,8 @@ public class LevelOutro : MonoBehaviour
                     break;
                 case "haunted":
                     hauntedCount += 1;
-                    min = -3.0;
-                    max = -1.8;
+                    min = -2.0;
+                    max = -1.0;
                     break;
                 case "junk":
                     junkCount += 1;

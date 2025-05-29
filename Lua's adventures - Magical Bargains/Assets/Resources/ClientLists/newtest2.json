@@ -5,7 +5,7 @@
             "artifactSprite": "a4",
 
             "thermoColor": "#000000",
-            "thermoIntensity":0.14,
+            "thermoIntensity":0.44,
 
             "dialogueA":"diaSa8",
             "dialogueB":"diaSb8",
@@ -43,6 +43,7 @@
             "clientSprite": "c8",
             "artifactSprite": "a6",
 
+            "magnifierSprite":"a6-hidden",
             "cameraSprite":"a6-hidden",
             "thermoColor": "#9F573A",
             "thermoIntensity":0.85,
