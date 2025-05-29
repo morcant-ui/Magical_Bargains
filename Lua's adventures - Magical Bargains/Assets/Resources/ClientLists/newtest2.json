@@ -43,8 +43,9 @@
             "clientSprite": "c8",
             "artifactSprite": "a6",
 
-            "magnifierSprite":"a6-hidden",
             "cameraSprite":"a6-hidden",
+            "magnifierSprite":"a6-hidden",
+            
             "thermoColor": "#9F573A",
             "thermoIntensity":0.85,
 

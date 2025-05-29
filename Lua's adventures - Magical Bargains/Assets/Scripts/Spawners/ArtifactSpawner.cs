@@ -62,36 +62,46 @@ public class ArtifactSpawner : MonoBehaviour
         bool hasMagnifierSprite = !string.IsNullOrWhiteSpace(magnifierSpriteName);
         bool hasCameraSprite = !string.IsNullOrWhiteSpace(cameraSpriteName);
 
-        Sprite hiddenSprite;
-        int layer;
 
         if (hasMagnifierSprite) {
             Debug.Log("Artifact spawner: hidden sprite detected for magnifier");
-            hiddenSprite = Resources.Load<Sprite>(Path.Combine(spritePathName, magnifierSpriteName));
-            layer = magnifierLayer;
-        } else if (hasCameraSprite) {
+
+            CreateHiddenObject(magnifierSpriteName, magnifierLayer, sr.sortingOrder + 1, position);
+
+        }
+        
+        if (hasCameraSprite) {
             Debug.Log("Artifact spawner: hidden sprite detected for camera");
-            hiddenSprite = Resources.Load<Sprite>(Path.Combine(spritePathName, cameraSpriteName));
-            layer = cameraLayer;
-        } else {
+
+            CreateHiddenObject(cameraSpriteName, cameraLayer, sr.sortingOrder + 1, position);
+
+        } 
+        
+        if (!hasCameraSprite && !hasMagnifierSprite) {
             Debug.Log("Artifact spawner: no hidden sprite detected");
             return obj;
         }
-      
-        var hiddenObj = Instantiate(objectPrefab, position, Quaternion.identity);
+
+        return obj;
+    }
+
+
+    private void CreateHiddenObject(string SpriteName, int layer, int sortingOrder, Vector3 position) { 
+    
+        Sprite hiddenSprite = Resources.Load<Sprite>(Path.Combine(spritePathName, SpriteName));
+        
+        var hiddenObj = Instantiate(objectPrefab, position, Quaternion.identity); ;
 
         hiddenObj.GetComponent<SpriteRenderer>().sprite = hiddenSprite;
 
-            
+
         hiddenObj.tag = "currentArtifact";
-        hiddenObj.transform.SetParent(obj.transform);
+        hiddenObj.transform.SetParent(spawnContainer.transform);
 
         hiddenObj.layer = layer;
-        hiddenObj.GetComponent<SpriteRenderer>().sortingOrder = sr.sortingOrder + 1;
+        hiddenObj.GetComponent<SpriteRenderer>().sortingOrder = sortingOrder;
 
         hiddenObj.SetActive(true);
-
-        return obj;
     }
 
 }

@@ -10009,6 +10009,54 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93f58ce84fb009a4ebdbe3aa4765ceed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!60 &3371433159990147330
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3371433159990147321}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1.74, y: 2.7}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0.7012908, y: 0.42430007}
+      - {x: 0.87, y: 0.57}
+      - {x: 0.87, y: 1}
+      - {x: 0.6429038, y: 1.1364553}
+      - {x: 0.62, y: 1.35}
+      - {x: 0.31, y: 1.35}
+      - {x: 0.26612753, y: 1.2050545}
+      - {x: -0.3281651, y: 1.2045181}
+      - {x: -0.37494573, y: 1.3562366}
+      - {x: -0.6450542, y: 1.3531181}
+      - {x: -0.64788723, y: 1.1465116}
+      - {x: -0.85999995, y: 1.0799999}
+      - {x: -0.87, y: 1.02}
+      - {x: -0.8637637, y: 0.61548215}
+      - {x: -0.77752733, y: 0.519891}
+      - {x: -0.64720035, y: 0.44236386}
+      - {x: -0.41376343, y: 0.4162363}
+      - {x: -0.42, y: -1.1899999}
+      - {x: -0.41, y: -1.27}
+      - {x: -0.2975269, y: -1.3687092}
+      - {x: 0.35193622, y: -1.3687092}
+      - {x: 0.48, y: -1.1899999}
+      - {x: 0.45999998, y: 0.41}
 --- !u!4 &3633892144064910481 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7466373279392462638, guid: 19752d3fa6a18bb4ca8174b79926acd8, type: 3}
@@ -10043,7 +10091,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7984928347777563905, guid: 8b585118c571dee4193eec2a4a0d09f4, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7984928347777563908, guid: 8b585118c571dee4193eec2a4a0d09f4, type: 3}
       propertyPath: m_Sprite
@@ -10165,7 +10213,8 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: -0.0444
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7984928347777563907, guid: 8b585118c571dee4193eec2a4a0d09f4, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 8b585118c571dee4193eec2a4a0d09f4, type: 3}
 --- !u!212 &6051537671555686821
 SpriteRenderer:
