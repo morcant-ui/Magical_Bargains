@@ -88,7 +88,7 @@ public class GameStateManager : MonoBehaviour
 
     private void Start() {
 
-        savings = 80.0;
+        savings = 300.0;
         currentPurchases = new Queue<ClientData>();
 
         LoadGameIntro();

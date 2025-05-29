@@ -20,6 +20,8 @@ public class ClientData
 
     public string artifactOffer;
     public string minOfferAccepted;
+    //if you should not be able to buy this one
+    public string offerIsImpossible;
     public string finalPrice;
     public string grade;
 

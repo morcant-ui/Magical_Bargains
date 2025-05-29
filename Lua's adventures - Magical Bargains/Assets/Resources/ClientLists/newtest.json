@@ -12,8 +12,9 @@
             "dialogueC":"diaSc1",
             "dialogueD":"diaSd1",
             
-            "artifactOffer": "120",
-            "minOfferAccepted": "100",
+            "artifactOffer": "800",
+            "minOfferAccepted": "800",
+            "offerIsImpossible": "true",
             "grade": "excellent",
 
             "clientName": "Angry wiz",

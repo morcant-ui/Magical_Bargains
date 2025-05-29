@@ -17,12 +17,12 @@ public class OfferManager : MonoBehaviour
 
 
 
-    public void StartBargain(string currentOffer)
+    public void StartBargain(string currentOffer, string maxSavings)
     {
 
         isBargainOn = true;
         originalOffer = int.Parse(currentOffer);
-        yourOffer = originalOffer;
+        yourOffer = int.Parse(maxSavings);
         UpdateOfferDisplay();   
     }
 

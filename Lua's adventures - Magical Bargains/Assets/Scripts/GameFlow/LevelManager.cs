@@ -26,13 +26,23 @@ public class LevelManager : MonoBehaviour
     [Header("Transitional blackscreen")]
     [SerializeField] private GameObject blackScreen;
 
+    [Header("WarningNoMoney Graphics")]
+    [SerializeField] private GameObject holder;
+    [SerializeField] private GameObject backgroundColor;
+     // message if skipped last client
+    public GameObject warningNoMoreMoneyMessage;
+
+
     // BOOLEANS
     private bool processingClients = false;
     private bool tutoActivated = false;
 
     // savings kept track of by state manager
     private double savings;
-
+    // bool to check if it was last client before skip
+    private bool lastClientGotSkipped = false;
+   
+   
     // keep track of number of clients processed
     private int nbProcessedClients = 0;
 
@@ -71,6 +81,7 @@ public class LevelManager : MonoBehaviour
     void Start()
     {
         blackScreen.SetActive(false);
+        
     }
 
     void Update(){ }
@@ -98,7 +109,8 @@ public class LevelManager : MonoBehaviour
     {
 
         // N) when level queue is empty we enter game outro
-        if (levelQueue.Count == 0) {
+        if (levelQueue.Count == 0)
+        {
 
             if (endGameCoroutine != null) { return; }
 
@@ -179,7 +191,6 @@ public class LevelManager : MonoBehaviour
             nbProcessedClients += 1;
         }
 
-
         // N) when queue is empty or timer ran out, we go to level outro
         if (clientQueue.Count == 0 || timerEnded)
         {
@@ -196,6 +207,11 @@ public class LevelManager : MonoBehaviour
 
         // 1)
         currentClient = clientQueue.Dequeue();
+
+        // skip client if too poor, otherwise keep going as normal
+        if (SkipClientWhenPoor(currentClient, timerEnded)){
+            return;
+        }
 
         // 2)
         CreateClient();
@@ -218,6 +234,38 @@ public class LevelManager : MonoBehaviour
         DialogueManager.GetInstance().EnterDialogueMode(dialogue); 
     }
 
+    // check if I can still afford the goods of the client that will be loaded
+    private bool SkipClientWhenPoor(ClientData currClient, bool timerEnded)
+    {
+        
+        int minOfferAccepted = int.Parse(currClient.minOfferAccepted);
+        savings = GameStateManager.GetInstance().CheckMoney();
+        if (savings < minOfferAccepted)
+        {
+            // case where you should not have been able to buy the artifact
+            if (currClient.offerIsImpossible == "true")
+            {
+                // continue normally
+                return false;
+            }
+            // case where you don't have enough money
+            //skip to next client
+            if (clientQueue.Count == 0)  // This was the last client
+            {
+                Debug.Log($"savings are {savings}");
+                lastClientGotSkipped = true;
+            }
+            LoadNextClient(timerEnded);
+            return true;
+        }
+        else
+        {
+            // case where you have enough to buy
+            return false;
+        }
+        
+    }
+
     //////////////////////////////////// Handling lists ///////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -238,9 +286,16 @@ public class LevelManager : MonoBehaviour
         savingsText.color = Color.white;
         savingsImage.SetActive(true);
 
+        
         // 3)
         string currentOffer = currentClient.artifactOffer;
-        offerManager.StartBargain(currentOffer);
+        string maxSavings = currentOffer;
+        if (double.Parse(currentOffer) > savings)
+        {
+            // Debug.Log("offer can't be bigger");
+            maxSavings = $"{savings}";
+        }
+        offerManager.StartBargain(currentOffer, maxSavings);
     }
 
     // Steps:   1. retrieve final offer from offer manager and min offer from the current client
@@ -382,16 +437,29 @@ public class LevelManager : MonoBehaviour
 
     IEnumerator NextLevelAfterDelay(float delay)
     {
+        yield return new WaitForSeconds(delay);
+
+        if (lastClientGotSkipped)
+        {
+            // Show the warning message before continuing
+            holder.SetActive(true); 
+            while (!Input.GetKeyDown(KeyCode.Space))
+                {
+                    yield return null;
+                }
+            // yield return new WaitForSeconds(4f); // Let the player read it
+            holder.SetActive(false);
+            lastClientGotSkipped = false;
+        }
         blackScreen.SetActive(true);
 
-        yield return new WaitForSeconds(delay);
 
         if (levelQueue.Count != 0)
         {
             blackScreen.SetActive(false);
             GameStateManager.GetInstance().LoadLevelOutro(nbProcessedClients);
-        } 
-        else 
+        }
+        else
         {
             blackScreen.SetActive(true);
             GameStateManager.GetInstance().LoadLevelIntro();
