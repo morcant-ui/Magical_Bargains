@@ -174,14 +174,14 @@ public class DialogueManager : MonoBehaviour
             string nextLineTrim = nextLine.TrimStart();
             //check if already has speaker tag (for grandpa)
             // bool checkTag = nextLineTrim.StartsWith("Grandpa");
-            if (nextLineTrim.StartsWith("Grandpa"))
+            if (nextLineTrim.StartsWith("avô"))
             {
                 // Debug.Log("THIS IS GRANDPA");
-                // Find the index of the colon after "Grandpa"
+                // Find the index of the colon after "avô Pedro"
                 int colonIndex = nextLineTrim.IndexOf(':');
                 if (colonIndex >= 0)
                 {
-                    // Extract "Grandpa:" including colon
+                    // Extract "avô Pedro:" including colon
                     string speakerTag = nextLineTrim.Substring(0, colonIndex + 1);
                     string restOfLine = nextLineTrim.Substring(colonIndex + 1);
 
@@ -190,7 +190,7 @@ public class DialogueManager : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log("yo you forgot to put Grandpa in front of line ");
+                    Debug.Log("yo you forgot to put avô Pedro in front of line ");
                 }
             }
             else if (nextLineTrim.StartsWith("\""))

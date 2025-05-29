@@ -1,2 +1,2 @@
-Grandpa: Ok now it's time to inspect their artifact,
-Grandpa: here, click on the "start inspection" button to your right !
+avô Pedro: Ok now it's time to inspect their artifact,
+avô Pedro: here, click on the "start inspection" button to your right !

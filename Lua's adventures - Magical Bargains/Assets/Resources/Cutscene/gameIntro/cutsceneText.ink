@@ -1,3 +1,4 @@
-this is an intro story
-your grandpa pawns illegal magical artifacts in his free time
-you're gonna have to help, sorry
+Once upon a time, there was a world where everything, creatures, items and nature, was infused with magic. Birds were singing AND speaking, simple wooden sticks were brimming with enchanted energy. Magic, nature, and people lived in harmony.
+One day, however, the world leaders decided that magic was highly dangerous for humans and that animals and trees were of lesser importance. Using grand words and deception, they reached their goal. 
+Today, magic remains only in the minds and prayers of the elderly. Their children believe it to be a highly illegal activity in spite of their parents' stories full of wonders .  But perhaps all is not lost! Perhaps magic survived… in the hearts of their grandchildren.
+And now, the time has come for the spark to rise again!
