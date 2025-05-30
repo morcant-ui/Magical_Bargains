@@ -69,7 +69,7 @@ public class FishingGame : MonoBehaviour
     private void SetRandomTargetPosition()
     {
         float radius = (targetArrow.position - center.position).magnitude;
-        float randomAngle = UnityEngine.Random.Range(0f, 360f);
+        float randomAngle = UnityEngine.Random.Range(45f, 340f);
         float radians = randomAngle * Mathf.Deg2Rad;
 
         Vector3 offset = new Vector3(Mathf.Cos(radians), Mathf.Sin(radians), 0f) * radius;

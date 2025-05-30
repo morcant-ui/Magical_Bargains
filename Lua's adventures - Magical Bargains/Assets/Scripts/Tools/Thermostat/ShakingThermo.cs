@@ -8,6 +8,7 @@ public class ShakingThermo : MonoBehaviour
     public GameObject holder;
 
     private float holdTime = 0f;
+    private float minHoldTime = 0.5f;
     private bool isMouseOver = false;
     private bool isShaking = false;
     private bool triedShaking = false;
@@ -21,7 +22,7 @@ public class ShakingThermo : MonoBehaviour
 
     public Image screenOverlay;
 
-    public float fadeDuration = 1.5f;
+    public float fadeDuration = 1f;
     
     public void StartProcess()
     {
@@ -37,12 +38,12 @@ public class ShakingThermo : MonoBehaviour
         {
             holdTime += Time.deltaTime;
             // if you forgot to reset
-            if (holdTime < 1f && !isShaking)
+            if (holdTime < minHoldTime && !isShaking)
             {
                 triedShaking = true;
             }
             // if you hold mouse down for holdTime it will shake == reset
-            if (holdTime >= 1f && !isShaking)
+            if (holdTime >= minHoldTime && !isShaking)
             {
                 //StartCoroutine(Shake());
                 shakeCoroutine = StartCoroutine(Shake());
