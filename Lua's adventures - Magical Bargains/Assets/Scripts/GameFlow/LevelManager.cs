@@ -125,6 +125,8 @@ public class LevelManager : MonoBehaviour
         string currentLevelName = currentLevel.listClientsName;
         int currentMaxTime = tutoActivated ? 0 : currentLevel.maxTime;
 
+        Debug.Log("----------TEST: " + currentLevel.dailyExpenses);
+
 
         GameStateManager.GetInstance().UpdateMaxTime(currentMaxTime);
 
@@ -148,12 +150,15 @@ public class LevelManager : MonoBehaviour
         
         if (lastLevelAppreciation != "") {
 
+            Debug.Log("APPRECIATION:" + lastLevelAppreciation);
+
             TextAsset grandpaAppreciationDialogue;
             string dialogueName = "";
 
+            if (lastLevelAppreciation == "bankrupt") { dialogueName = "appreciationBankrupt"; }
             if (lastLevelAppreciation == "haunted") { dialogueName = "appreciationHaunted"; }
             if (lastLevelAppreciation == "junk") { dialogueName = "appreciationJunk"; }
-            if (lastLevelAppreciation == "bad") { dialogueName = "appreciationbad"; }
+            if (lastLevelAppreciation == "bad") { dialogueName = "appreciationBad"; }
             if (lastLevelAppreciation == "ok") { dialogueName = "appreciationOk"; }
 
             if (dialogueName != "")
@@ -198,12 +203,15 @@ public class LevelManager : MonoBehaviour
         {
             if (timerEnded) { Debug.Log("Max timer has ended"); } else { Debug.Log("All clients processed."); }
 
+            double baseDailyExpenses = currentLevel.dailyExpenses;
+
+
             processingClients = false;
 
             currentClient = null;
             currentLevel = null;
 
-            StartCoroutine(NextLevelAfterDelay(0.5f));
+            StartCoroutine(NextLevelAfterDelay(0.5f, baseDailyExpenses));
             return;
         }
 
@@ -294,8 +302,10 @@ public class LevelManager : MonoBehaviour
         string maxSavings = currentOffer;
         if (double.Parse(currentOffer) > savings)
         {
+
             // Debug.Log("offer can't be bigger");
             maxSavings = $"{savings}";
+
         }
 
         if (tutoActivated)
@@ -472,7 +482,7 @@ public class LevelManager : MonoBehaviour
         blackScreen.SetActive(false);
     }
 
-    IEnumerator NextLevelAfterDelay(float delay)
+    IEnumerator NextLevelAfterDelay(float delay, double baseDailyExpenses)
     {
         yield return new WaitForSeconds(delay);
 
@@ -493,8 +503,10 @@ public class LevelManager : MonoBehaviour
 
         if (levelQueue.Count != 0)
         {
+           
+
             blackScreen.SetActive(false);
-            GameStateManager.GetInstance().LoadLevelOutro(nbProcessedClients);
+            GameStateManager.GetInstance().LoadLevelOutro(nbProcessedClients, baseDailyExpenses);
         }
         else
         {

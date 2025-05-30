@@ -209,7 +209,7 @@ public class GameStateManager : MonoBehaviour
     }
 
 
-    public void LoadLevelOutro(int nbProcessedClients) {
+    public void LoadLevelOutro(int nbProcessedClients, double baseDailyExpenses) {
         state = "level outro";
 
         // stop music
@@ -219,7 +219,7 @@ public class GameStateManager : MonoBehaviour
 
         float elapsedTime = timer.CheckTimer();
 
-        lastAppreciation = levelOutro.ShowLevelOutroScreen( currentPurchases, initialSavings, nbProcessedClients );
+        lastAppreciation = levelOutro.ShowLevelOutroScreen( currentPurchases, initialSavings, nbProcessedClients, baseDailyExpenses );
 
         timer.ResetTimer();
         //timer.ResetBackGround();

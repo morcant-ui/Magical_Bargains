@@ -4412,9 +4412,9 @@ MonoBehaviour:
   appreciationTextDisplay: {fileID: 1955984216}
   processedClientsTextDisplay: {fileID: 1789660772}
   itemsBoughtTextDisplay: {fileID: 456606337}
-  dailyExpensesTextDisplay: {fileID: 1717540109}
+  dailyExpensesTextDisplay: {fileID: 1348525194}
   totalLossTextDisplay: {fileID: 595867527}
-  grossEarningTextDisplay: {fileID: 569245962}
+  netEarningsDisplay: {fileID: 569245962}
   cutsceneTextContent: {fileID: 4900000, guid: fa4ac9bd160ad964d9b57ce5c087c14a, type: 3}
 --- !u!1 &901583406
 GameObject:
@@ -5751,7 +5751,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Gross earning:'
+  m_text: 'Net earning:'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
   m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
@@ -6580,7 +6580,7 @@ GameObject:
   - component: {fileID: 1348525195}
   - component: {fileID: 1348525194}
   m_Layer: 5
-  m_Name: totalLoss double
+  m_Name: expenses double
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10622,11 +10622,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7984928347777563909, guid: 8b585118c571dee4193eec2a4a0d09f4, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -536.81
+      value: -541.6
       objectReference: {fileID: 0}
     - target: {fileID: 7984928347777563909, guid: 8b585118c571dee4193eec2a4a0d09f4, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -277.0102
+      value: -277.5
       objectReference: {fileID: 0}
     - target: {fileID: 7984928347777563909, guid: 8b585118c571dee4193eec2a4a0d09f4, type: 3}
       propertyPath: m_LocalPosition.z

@@ -3,17 +3,20 @@
         {
             "listClientsName":"newtest",
             "grandpaIntroDialogue":"gid1",
-            "maxTime":60
+            "maxTime":60,
+            "dailyExpenses":30.0
         },
         {
             "listClientsName": "newtest2",
             "grandpaIntroDialogue": "gidS",
-            "maxTime":60
+            "maxTime":60 ,
+            "dailyExpenses":50.0
         },
         {
             "listClientsName": "newtest3",
             "grandpaIntroDialogue": "gidS2",
-            "maxTime":60
+            "maxTime":60 ,
+            "dailyExpenses":40.0
         }
     ]
 }

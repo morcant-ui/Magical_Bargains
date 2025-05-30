@@ -20,7 +20,7 @@ public class LevelOutro : MonoBehaviour
     [SerializeField] private TextMeshProUGUI itemsBoughtTextDisplay;
     [SerializeField] private TextMeshProUGUI dailyExpensesTextDisplay;
     [SerializeField] private TextMeshProUGUI totalLossTextDisplay;
-    [SerializeField] private TextMeshProUGUI grossEarningTextDisplay;
+    [SerializeField] private TextMeshProUGUI netEarningsDisplay;
 
     [Header("Actual main outro text (may remove)")]
     [SerializeField] private TextAsset cutsceneTextContent;
@@ -51,6 +51,7 @@ public class LevelOutro : MonoBehaviour
     private Coroutine exitCutsceneCoroutine;
 
 
+
     void Update() {
         if (outroActivated && Input.GetKeyDown(inputKey)) {
 
@@ -67,7 +68,7 @@ public class LevelOutro : MonoBehaviour
     }
 
 
-    public string ShowLevelOutroScreen( Queue<ClientData> purchases, double initialSavings, int nbProcessedClients ) {
+    public string ShowLevelOutroScreen( Queue<ClientData> purchases, double initialSavings, int nbProcessedClients, double baseDailyExpenses ) {
 
         // simplistic cutscene: called from game state manager
         outroActivated = true;
@@ -86,7 +87,7 @@ public class LevelOutro : MonoBehaviour
         GameStateManager.GetInstance().EarnMoney(earnings);
 
         // calculate daily expenses and remove them from savings:
-        double dailyExpenses = CalculateDailyExpenses();
+        double dailyExpenses = CalculateDailyExpenses(baseDailyExpenses);
         GameStateManager.GetInstance().RetrieveMoney(dailyExpenses);
 
         double newSavings = GameStateManager.GetInstance().CheckMoney();
@@ -106,13 +107,13 @@ public class LevelOutro : MonoBehaviour
 
         // retrieve STATISTICS
 
-        double totalLoss = initialSavings - oldSavings;
+        double totalLoss = (initialSavings - oldSavings ) + dailyExpenses;
         double grossEarnings = oldSavings - newSavings;
         double netEarnings = newSavings - initialSavings;
 
         // absolute value
         if (totalLoss < 0) { totalLoss *= -1;  }
-        if (grossEarnings < 0) { grossEarnings *= -1; }
+        //if (grossEarnings < 0) { grossEarnings *= -1; }
 
         // display STATISTICS on screen
 
@@ -123,7 +124,9 @@ public class LevelOutro : MonoBehaviour
         itemsBoughtTextDisplay.text = nbPurchases.ToString();
         dailyExpensesTextDisplay.text = "$" + dailyExpenses.ToString("00.00");
         totalLossTextDisplay.text = "$" + totalLoss.ToString("00.00");
-        grossEarningTextDisplay.text = "$" + grossEarnings.ToString("00.00");
+        Debug.Log("GROSS: " + grossEarnings);
+        netEarningsDisplay.text = "$" + netEarnings.ToString("0.00"); 
+        
         
 
         // end of level appreciation:
@@ -232,12 +235,18 @@ public class LevelOutro : MonoBehaviour
         return earnings;
     }
 
-    private double CalculateDailyExpenses() {
-        double min = 30.0;
-        double max = 100.0;
+    private double CalculateDailyExpenses(double baseDailyExpenses = 20.0) {
 
-        return rand.NextDouble() * (max - min) + min;
+        if (baseDailyExpenses == 20.0) { Debug.Log("----------default daily expense value"); }
 
+        double min = 0.1;
+        double max = 1.5;
+
+        double range = rand.NextDouble() * (max - min) + min;
+
+        Debug.Log("DAILY EXPENSES :" + baseDailyExpenses + ", RANGE: " + range);
+
+        return range * baseDailyExpenses;
     }
 
     IEnumerator NewLevelAfterDelay(float delay)

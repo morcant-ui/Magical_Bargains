@@ -26,7 +26,7 @@ public class GameOutro : MonoBehaviour
 
     private Coroutine exitCutsceneCoroutine;
 
-    private string menuScene = "SimpleMenu";
+    //private string menuScene = "SimpleMenu";
 
 
     // Start is called before the first frame update
@@ -104,6 +104,7 @@ public class GameOutro : MonoBehaviour
         cutsceneTextDisplay.text = "";
         //holder.SetActive(false);
 
-        SceneManager.LoadScene(menuScene);
+        //SceneManager.LoadScene(menuScene);
+        Application.Quit();
     }
 }

@@ -22,10 +22,12 @@ public class OfferManager : MonoBehaviour
 
         isBargainOn = true;
 
-        Debug.Log("-------------: your Offer:" + yourOffer);
+
 
         originalOffer = int.Parse(currentOffer);
-        yourOffer = int.Parse(maxSavings);
+        yourOffer = (int) Mathf.Round((float)double.Parse(maxSavings));
+
+
         UpdateOfferDisplay();   
     }
 
