@@ -382,7 +382,7 @@ public class ButtonManager : MonoBehaviour
            
             bargainInProgress = true;
 
-            if (isTutoActivated && dialoguePlaying) { Debug.Log("------------------Yo ?"); additionalCheck = false; }
+            if (isTutoActivated && dialoguePlaying) { additionalCheck = false; }
         }
 
         if (currentState == "client outro" && !dialoguePlaying)

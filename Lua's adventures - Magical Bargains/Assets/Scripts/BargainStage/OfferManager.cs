@@ -21,6 +21,9 @@ public class OfferManager : MonoBehaviour
     {
 
         isBargainOn = true;
+
+        Debug.Log("-------------: your Offer:" + yourOffer);
+
         originalOffer = int.Parse(currentOffer);
         yourOffer = int.Parse(maxSavings);
         UpdateOfferDisplay();   

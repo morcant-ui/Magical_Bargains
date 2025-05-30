@@ -40,26 +40,21 @@
             "clientColor": "#D4AA0B"
         }, 
         {
-            "clientSprite": "c8",
-            "artifactSprite": "a6",
+            "clientSprite": "c10",
+            "artifactSprite": "a5",
 
-            "cameraSprite":"a6-hidden",
-            "magnifierSprite":"a6-hidden",
-            
-            "thermoColor": "#9F573A",
-            "thermoIntensity":0.85,
+            "magnifierSprite":"a5-hidden",
+            "thermoColor": "#5BD1DE",
+            "thermoIntensity":0.75,
 
-            "dialogueA":"diaSa6",
-            "dialogueB":"diaSb6",
-            "dialogueC":"diaSc6",
-            "dialogueD":"diaSd6",
-            
-            "artifactOffer": "60",
-            "minOfferAccepted": "40",
-            "grade": "good",
+            "dialogueA":"diaSa9",
 
-            "clientName": "skinny john",
-            "clientColor": "#7915B0"
+            "artifactOffer": "80",
+            "minOfferAccepted": "50",
+            "grade": "bad",
+
+            "clientName": "sus-ie",
+            "clientColor": "#3EC362"
         },
         {
             "clientSprite": "c7",

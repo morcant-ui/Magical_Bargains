@@ -39,7 +39,7 @@ public class Timer : MonoBehaviour
         {
             float oldSeconds = Mathf.FloorToInt(elapsedTime % 60);
 
-            elapsedTime += Time.deltaTime;
+            elapsedTime -= Time.deltaTime;
 
             int minutes = Mathf.FloorToInt(elapsedTime / 60);
             int seconds = Mathf.FloorToInt(elapsedTime % 60);
@@ -51,10 +51,10 @@ public class Timer : MonoBehaviour
             }
             
 
-            if (elapsedTime >= maxTime)
+            if (elapsedTime < 1f)
             {
                 //timerText.text = "Timer Over";
-
+                elapsedTime = 0f;
                 timerText.color = Color.red;
                 isTimerOn = false;
                 NotifyManager();
@@ -72,6 +72,7 @@ public class Timer : MonoBehaviour
             else {
 
                 maxTime = maximumTime;
+                elapsedTime = maximumTime;
 
                 StartBackgroundChanges();
             }

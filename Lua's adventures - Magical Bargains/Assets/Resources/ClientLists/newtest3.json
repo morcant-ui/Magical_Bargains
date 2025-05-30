@@ -1,0 +1,77 @@
+{
+    "clients": [
+        {
+            "clientSprite": "c9",
+            "artifactSprite": "a12",
+
+            "cameraSprite":"a12-hidden",
+            "thermoColor": "#FF0008",
+            "thermoIntensity":0.9,
+
+            "dialogueA":"diaSa12",
+
+            "artifactOffer": "50",
+            "minOfferAccepted": "20",
+            "grade": "haunted",
+
+            "clientName": "miette",
+            "clientColor": "#FF0008"
+        },
+                {
+            "clientSprite": "c8",
+            "artifactSprite": "a6",
+
+            "cameraSprite":"a6-hidden",
+            "magnifierSprite":"a6-hidden",
+            
+            "thermoColor": "#9F573A",
+            "thermoIntensity":0.85,
+
+            "dialogueA":"diaSa6",
+            "dialogueB":"diaSb6",
+            "dialogueC":"diaSc6",
+            "dialogueD":"diaSd6",
+            
+            "artifactOffer": "60",
+            "minOfferAccepted": "40",
+            "grade": "good",
+
+            "clientName": "skinny john",
+            "clientColor": "#7915B0"
+        },
+        {
+            "clientSprite": "c11",
+            "artifactSprite": "artifact3",
+
+            "thermoColor": "#FFBD00",
+            "thermoIntensity":0.86,
+
+            "dialogueA":"diaSa10",
+
+            "artifactOffer": "90",
+            "minOfferAccepted": "60",
+            "grade": "junk",
+
+            "clientName": "kit & kat",
+            "clientColor": "#9270C3"
+        },
+
+        {
+            "clientSprite": "c12",
+            "artifactSprite": "a2",
+
+            "cameraSprite":"a2-hidden",
+            "thermoColor": "#1C1FC8",
+            "thermoIntensity":0.5,
+
+            "dialogueA":"diaSa11",
+
+            "artifactOffer": "120",
+            "minOfferAccepted": "90",
+            "grade": "junk",
+
+            "clientName": "pablo di san paolo",
+            "clientColor": "#4B0991"
+        }
+    ]
+}

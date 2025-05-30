@@ -18,6 +18,7 @@ public class LevelOutro : MonoBehaviour
     [Header("Stats graphics")]
     [SerializeField] private TextMeshProUGUI processedClientsTextDisplay;
     [SerializeField] private TextMeshProUGUI itemsBoughtTextDisplay;
+    [SerializeField] private TextMeshProUGUI dailyExpensesTextDisplay;
     [SerializeField] private TextMeshProUGUI totalLossTextDisplay;
     [SerializeField] private TextMeshProUGUI grossEarningTextDisplay;
 
@@ -41,6 +42,7 @@ public class LevelOutro : MonoBehaviour
 
     // End of level appreciation text:
     private string okTextBase = "Keep doing what you're doing !";
+    private string midTextBase = "Are you sure you bought any object today ?";
     private string badTextBase = "You gotta be more careful, your grandpa is getting a little scared !";
     private string junkTextBase = "Be careful not to buy too much junk !";
     private string hauntedTextBase = "That haunted object you bought is gonna cause you some trouble !";
@@ -79,7 +81,13 @@ public class LevelOutro : MonoBehaviour
         double oldSavings = GameStateManager.GetInstance().CheckMoney();
 
         // CALCULATE EARNINGS
-        earnings = CalculateEarnings(purchases, oldSavings);
+        double earnings = CalculateEarnings(purchases, oldSavings);
+        // update earnings
+        GameStateManager.GetInstance().EarnMoney(earnings);
+
+        // calculate daily expenses and remove them from savings:
+        double dailyExpenses = CalculateDailyExpenses();
+        GameStateManager.GetInstance().RetrieveMoney(dailyExpenses);
 
         double newSavings = GameStateManager.GetInstance().CheckMoney();
 
@@ -93,10 +101,14 @@ public class LevelOutro : MonoBehaviour
         holder.SetActive(true);
         cutsceneImage.SetActive(true);
 
+ 
+
+
         // retrieve STATISTICS
 
         double totalLoss = initialSavings - oldSavings;
         double grossEarnings = oldSavings - newSavings;
+        double netEarnings = newSavings - initialSavings;
 
         // absolute value
         if (totalLoss < 0) { totalLoss *= -1;  }
@@ -109,18 +121,26 @@ public class LevelOutro : MonoBehaviour
         // timeElapsed.text = timerTextBase + string.Format("{0:00}:{1:00}", elapsedMin, elapsedSec);
         processedClientsTextDisplay.text = nbProcessedClients.ToString();
         itemsBoughtTextDisplay.text = nbPurchases.ToString();
+        dailyExpensesTextDisplay.text = "$" + dailyExpenses.ToString("00.00");
         totalLossTextDisplay.text = "$" + totalLoss.ToString("00.00");
         grossEarningTextDisplay.text = "$" + grossEarnings.ToString("00.00");
+        
 
         // end of level appreciation:
         string textToDisplay = ""; // text to display is the little message at bottom of level outro cutscene
         string appreciation = ""; // appreciation is the string we return from this function to let game state manager know
 
         if (hauntedCount > 0) { textToDisplay = hauntedTextBase; appreciation = "haunted"; }
-        if (junkCount >= 1) { textToDisplay = junkTextBase; appreciation = "junk"; }
-        if (hauntedCount == 0 && junkCount == 0) {
-            if (newSavings >= 80) { textToDisplay = okTextBase; appreciation = "ok";  }
+        if (junkCount > 1) { textToDisplay = junkTextBase; appreciation = "junk"; }
+        if (hauntedCount == 0 && junkCount <= 1) {
+
+            if (netEarnings >= 60.0) { textToDisplay = okTextBase; appreciation = "ok"; }
+
+            else if (netEarnings < 60.0 && netEarnings >= 0.0) { textToDisplay = midTextBase;  appreciation = "bad"; } // ADD MID APPRECIATION ?
+
             else { textToDisplay = badTextBase; appreciation = "bad"; }
+
+
         }
 
         appreciationTextDisplay.text = textToDisplay;
@@ -152,8 +172,8 @@ public class LevelOutro : MonoBehaviour
             Debug.Log("--OBJECT BOUGHT: " + p.artifactSprite + ", GRADE: " + grade + ", FINAL PRICE: " + finalPrice.ToString("00.0"));
 
             double range;
-            double max = 1.0;
-            double min = 1.0;
+            double max = 0.5;
+            double min = 0.5;
 
             switch (grade)
             {
@@ -162,12 +182,12 @@ public class LevelOutro : MonoBehaviour
                     max = 3;
                     break;
                 case "good":
-                    min = 1.1;
-                    max = 2.0;
+                    min = 0.9;
+                    max = 1.8;
                     break;
                 case "ok":
-                    min = 0.6;
-                    max = 1.2;
+                    min = 0.4;
+                    max = 1.3;
                     break;
                 case "bad":
                     min = 0.5;
@@ -175,7 +195,7 @@ public class LevelOutro : MonoBehaviour
                     break;
                 case "haunted":
                     hauntedCount += 1;
-                    min = -2.0;
+                    min = -3.0;
                     max = -1.0;
                     break;
                 case "junk":
@@ -184,13 +204,13 @@ public class LevelOutro : MonoBehaviour
                     if (flipCoin < 0.5)
                     {
                         Debug.Log("-----HEADS");
-                        min = -0.9;
+                        min = -1.5;
                         max = -0.1;
                     }
                     else {
                         Debug.Log("------TAILS");
                         min = 0.05;
-                        max = 0.4;
+                        max = 0.7;
                     }
                     
                     break;
@@ -199,6 +219,8 @@ public class LevelOutro : MonoBehaviour
                     break;
             };
 
+            Debug.Log("MINMAX:" + min + " , " + max);
+
             range = rand.NextDouble() * (max - min) + min;
 
             earnings += range * originalPrice;
@@ -206,9 +228,16 @@ public class LevelOutro : MonoBehaviour
             Debug.Log("---end of level Calculate Earnings for object: RANGE: " + range.ToString("0.0") + ", EARNED: " + (earnings - prior).ToString("00.0"));
         }
 
-        // update earnings
-        GameStateManager.GetInstance().EarnMoney(earnings);
+        
         return earnings;
+    }
+
+    private double CalculateDailyExpenses() {
+        double min = 30.0;
+        double max = 100.0;
+
+        return rand.NextDouble() * (max - min) + min;
+
     }
 
     IEnumerator NewLevelAfterDelay(float delay)

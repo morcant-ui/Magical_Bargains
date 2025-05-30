@@ -9,6 +9,11 @@
             "listClientsName": "newtest2",
             "grandpaIntroDialogue": "gidS",
             "maxTime":60
+        },
+        {
+            "listClientsName": "newtest3",
+            "grandpaIntroDialogue": "gidS2",
+            "maxTime":60
         }
     ]
 }

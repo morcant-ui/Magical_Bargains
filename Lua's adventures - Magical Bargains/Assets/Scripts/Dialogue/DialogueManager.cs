@@ -330,11 +330,18 @@ public class DialogueManager : MonoBehaviour
         else
         {
 
+            if (GameStateManager.GetInstance().tutoActivated && GameStateManager.GetInstance().GetState() == "bargain") {
+
+                savingsImage.SetActive(true);
+            } else {
+                savingsImage.SetActive(false);
+            }
+
             dialogueIsPlaying = false;
             dialogueIsFinished = true;
 
             dialoguePanel.SetActive(false);
-            savingsImage.SetActive(false);
+            
             dialogueText.text = "";
 
             StopFluttering();
