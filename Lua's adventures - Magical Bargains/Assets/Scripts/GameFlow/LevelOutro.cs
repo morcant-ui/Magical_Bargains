@@ -162,12 +162,12 @@ public class LevelOutro : MonoBehaviour
                     max = 3;
                     break;
                 case "good":
-                    min = 1.5;
+                    min = 1.1;
                     max = 2.0;
                     break;
                 case "ok":
-                    min = 1.0;
-                    max = 1.4;
+                    min = 0.6;
+                    max = 1.2;
                     break;
                 case "bad":
                     min = 0.5;
@@ -180,8 +180,19 @@ public class LevelOutro : MonoBehaviour
                     break;
                 case "junk":
                     junkCount += 1;
-                    min = 0.05;
-                    max = 0.4;
+                    double flipCoin = rand.NextDouble();
+                    if (flipCoin < 0.5)
+                    {
+                        Debug.Log("-----HEADS");
+                        min = -0.9;
+                        max = -0.1;
+                    }
+                    else {
+                        Debug.Log("------TAILS");
+                        min = 0.05;
+                        max = 0.4;
+                    }
+                    
                     break;
                 default:
                     Debug.Log("Level outro: what why ?");

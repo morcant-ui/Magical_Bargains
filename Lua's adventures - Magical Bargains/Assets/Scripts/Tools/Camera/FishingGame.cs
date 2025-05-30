@@ -76,7 +76,7 @@ public class FishingGame : MonoBehaviour
         targetArrow.position = center.position + offset;
 
         // Rotate the arrow so it faces outward
-        targetArrow.rotation = Quaternion.Euler(0f, 0f, randomAngle);
+        targetArrow.rotation = Quaternion.Euler(0f, 0f, randomAngle - 90f);
     }
 
     bool CheckHit()
