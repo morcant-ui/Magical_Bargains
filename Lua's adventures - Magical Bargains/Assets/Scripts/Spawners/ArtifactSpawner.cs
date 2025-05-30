@@ -66,14 +66,14 @@ public class ArtifactSpawner : MonoBehaviour
         if (hasMagnifierSprite) {
             Debug.Log("Artifact spawner: hidden sprite detected for magnifier");
 
-            CreateHiddenObject(magnifierSpriteName, magnifierLayer, sr.sortingOrder + 1, position);
+            CreateHiddenObject(magnifierSpriteName, magnifierLayer, sr.sortingOrder + 1, position, obj);
 
         }
         
         if (hasCameraSprite) {
             Debug.Log("Artifact spawner: hidden sprite detected for camera");
 
-            CreateHiddenObject(cameraSpriteName, cameraLayer, sr.sortingOrder + 1, position);
+            CreateHiddenObject(cameraSpriteName, cameraLayer, sr.sortingOrder + 1, position, obj);
 
         } 
         
@@ -86,7 +86,7 @@ public class ArtifactSpawner : MonoBehaviour
     }
 
 
-    private void CreateHiddenObject(string SpriteName, int layer, int sortingOrder, Vector3 position) { 
+    private void CreateHiddenObject(string SpriteName, int layer, int sortingOrder, Vector3 position , GameObject obj) { 
     
         Sprite hiddenSprite = Resources.Load<Sprite>(Path.Combine(spritePathName, SpriteName));
         
@@ -96,7 +96,7 @@ public class ArtifactSpawner : MonoBehaviour
 
 
         hiddenObj.tag = "currentArtifact";
-        hiddenObj.transform.SetParent(spawnContainer.transform);
+        hiddenObj.transform.SetParent(obj.transform);
 
         hiddenObj.layer = layer;
         hiddenObj.GetComponent<SpriteRenderer>().sortingOrder = sortingOrder;

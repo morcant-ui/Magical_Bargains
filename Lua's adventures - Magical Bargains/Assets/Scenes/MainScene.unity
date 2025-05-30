@@ -1461,10 +1461,12 @@ MonoBehaviour:
   cameraButton: {fileID: 1874788280}
   thermometerButton: {fileID: 1029792572}
   magnifier: {fileID: 2122805173}
+  magnifierHandle: {fileID: 562484521}
   cameraScript: {fileID: 13461029}
   fishingGame: {fileID: 147056567620519723}
   thermometer: {fileID: 3371433159990147321}
   thermometerScript: {fileID: 3371433159990147326}
+  endDialogueName: tuto4
 --- !u!1 &180541990
 GameObject:
   m_ObjectHideFlags: 0
@@ -1513,6 +1515,7 @@ MonoBehaviour:
   tutoActivated: 0
   grandpa: {fileID: 777833723}
   levelManager: {fileID: 547474431}
+  buttonManager: {fileID: 176006325}
   gameIntro: {fileID: 209753678}
   levelOutro: {fileID: 897553712}
   gameOutro: {fileID: 1400412152}
@@ -2996,6 +2999,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 547876738}
   m_CullTransparentMesh: 1
+--- !u!1 &562484521 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1091855698746559163, guid: ef0d7ab8ec4bd654da6466df60c49b3b, type: 3}
+  m_PrefabInstance: {fileID: 985823110}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &568334499
 GameObject:
   m_ObjectHideFlags: 0
@@ -3824,7 +3832,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -90, y: 0}
+  m_AnchoredPosition: {x: -90, y: 150}
   m_SizeDelta: {x: 160, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &810705737
@@ -7514,7 +7522,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -100, y: -180}
+  m_AnchoredPosition: {x: -100, y: -20}
   m_SizeDelta: {x: 160, y: 220}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1594457352
@@ -8605,7 +8613,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectPrefab: {fileID: 6854584167941130083}
   spawnPointX: 0
-  spawnPointY: -2.5
+  spawnPointY: -2.3
   spawnContainer: {fileID: 1773044414}
 --- !u!1 &1789660770
 GameObject:
@@ -9177,11 +9185,11 @@ RectTransform:
   m_Father: {fileID: 169555604}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0.5}
-  m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -180, y: 40}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -200}
   m_SizeDelta: {x: 220, y: 150}
-  m_Pivot: {x: 1, y: 0.5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &2062726783
 PrefabInstance:
   m_ObjectHideFlags: 0

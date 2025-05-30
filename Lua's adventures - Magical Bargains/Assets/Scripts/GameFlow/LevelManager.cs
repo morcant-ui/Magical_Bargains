@@ -74,6 +74,8 @@ public class LevelManager : MonoBehaviour
     private Coroutine destroyClientCoroutine;
     private Coroutine endGameCoroutine;
 
+    private Coroutine startBargainTutoCoroutine;
+
 
     private string menuScene = "SimpleMenu";
 
@@ -295,7 +297,24 @@ public class LevelManager : MonoBehaviour
             // Debug.Log("offer can't be bigger");
             maxSavings = $"{savings}";
         }
-        offerManager.StartBargain(currentOffer, maxSavings);
+
+        if (tutoActivated)
+        {
+
+            TextAsset tutoDialogue = Resources.Load<TextAsset>(Path.Combine(tutoPathName, "tuto5"));
+
+            DialogueManager.GetInstance().EnterDialogueMode(tutoDialogue);
+
+            if (startBargainTutoCoroutine != null) { StopCoroutine(startBargainTutoCoroutine); }
+
+            startBargainTutoCoroutine = StartCoroutine(WaitForGrandpaToFinish(currentOffer, maxSavings));
+
+        }
+        else {
+            offerManager.StartBargain(currentOffer, maxSavings);
+        } 
+
+        
     }
 
     // Steps:   1. retrieve final offer from offer manager and min offer from the current client
@@ -377,7 +396,7 @@ public class LevelManager : MonoBehaviour
         if (tutoActivated)
         {
 
-            TextAsset tutoDialogue = Resources.Load<TextAsset>(Path.Combine(tutoPathName, "tuto4"));
+            TextAsset tutoDialogue = Resources.Load<TextAsset>(Path.Combine(tutoPathName, "tuto6"));
 
             DialogueManager.GetInstance().EnterDialogueMode(dialogue, tutoDialogue);
             return;
@@ -488,7 +507,15 @@ public class LevelManager : MonoBehaviour
     //////////////////////////////////// Next Step to Take ////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    IEnumerator WaitForGrandpaToFinish(string currentOffer, string maxSavings) {
+        while (DialogueManager.GetInstance().dialogueIsPlaying)
+        {
 
+            yield return null;
+        }
+
+        offerManager.StartBargain(currentOffer, maxSavings);
+    }
 
 
     public void SetTutoStatus(bool isTutoActivated)

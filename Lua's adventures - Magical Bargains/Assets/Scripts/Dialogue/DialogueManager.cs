@@ -150,6 +150,9 @@ public class DialogueManager : MonoBehaviour
         if (secondInkJSON != null)
         {
             secondInk = secondInkJSON;
+        } else
+        {
+            dialogueIsFinished = false;
         }
 
         if (isCutscenePlaying) {

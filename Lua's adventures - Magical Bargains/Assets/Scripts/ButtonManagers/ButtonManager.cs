@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using System.IO;
 
 public class ButtonManager : MonoBehaviour
 {
@@ -29,10 +30,17 @@ public class ButtonManager : MonoBehaviour
 
     [Header("Tools Themselves")]
     [SerializeField] private GameObject magnifier;
+    [SerializeField] private GameObject magnifierHandle;
     [SerializeField] private CameraScript cameraScript;
     [SerializeField] private GameObject fishingGame;
     [SerializeField] private GameObject thermometer;
     [SerializeField] private ShakingThermo thermometerScript;
+
+    [Header("TUTO")]
+    [SerializeField] private string endDialogueName = "tuto4";
+
+
+    private Vector3 magnifierPosition = new Vector3(5.0f, -2.4f, -3.96f);
 
     private bool magnifierButtonActivated = false;
     private bool cameraButtonActivated = false;
@@ -41,11 +49,27 @@ public class ButtonManager : MonoBehaviour
     private bool offerAccepted = false;
 
 
+    private bool isTutoActivated = false;
+    private bool magnifierTutoSeen = false;
+    private bool cameraTutoSeen = false;
+    private bool thermoTutoSeen = false;
+
+    private bool endDialogueReady = false;
+    private bool isTutoToolsFinished = false;
+
+    private Coroutine endOfToolsTutoCoroutine;
+    private Coroutine endOfLastToolTutoCoroutine;
+
+    
+    private string tutoPathName = Path.Combine("Dialogues", "grandpa", "Tuto");
+
+
 
 
     // Start is called before the first frame update
     void Start()
     {
+
         openShopButton.gameObject.SetActive(true);
         openShopButton.interactable = true;
 
@@ -200,12 +224,38 @@ public class ButtonManager : MonoBehaviour
 
             magnifier.SetActive(false);
             magnifierButtonActivated = false;
+
+            if (endDialogueReady && !isTutoToolsFinished)
+            {
+                LoadEndDialogue();
+            }
         }
         else
         {
+            Debug.Log("Magnifier position: " + magnifierHandle.transform.position);
 
+            magnifierHandle.transform.position = magnifierPosition;
             magnifier.SetActive(true);
             magnifierButtonActivated = true;
+
+            if (isTutoActivated && !magnifierTutoSeen && !isTutoToolsFinished) {
+
+                // tuto: grandpa explains first you wait for it to finish and then it activates
+                TextAsset tutoDialogue = Resources.Load<TextAsset>(Path.Combine(tutoPathName, "tutoMagnifier"));
+
+                DialogueManager.GetInstance().EnterDialogueMode(tutoDialogue);
+
+                if (cameraTutoSeen && thermoTutoSeen)
+                {
+                    //LoadEndDialogue(tutoDialogue);
+                    endDialogueReady = true;
+                }
+
+
+                magnifierTutoSeen = true;
+            }
+            
+            
         }
         EventSystem.current.SetSelectedGameObject(null);
     }
@@ -215,14 +265,36 @@ public class ButtonManager : MonoBehaviour
         {
             cameraButtonActivated = false;
             fishingGame.SetActive(false);
-            Debug.Log("------------------------");
             cameraScript.Abort();
+
+            if (endDialogueReady && !isTutoToolsFinished)
+            {
+                LoadEndDialogue();
+            }
         }
         else
         {
             cameraButtonActivated = true;
             fishingGame.SetActive(true);
             cameraScript.StartProcess();
+
+            if (isTutoActivated && !cameraTutoSeen && !isTutoToolsFinished)
+            {
+
+                // tuto: grandpa explains first you wait for it to finish and then it activates
+                TextAsset tutoDialogue = Resources.Load<TextAsset>(Path.Combine(tutoPathName, "tutoCamera"));
+
+
+                DialogueManager.GetInstance().EnterDialogueMode(tutoDialogue);
+
+                if (magnifierTutoSeen && thermoTutoSeen)
+                {
+                    //LoadEndDialogue(tutoDialogue);
+                    endDialogueReady = true;
+                }
+
+                cameraTutoSeen = true;
+            }
         }
         EventSystem.current.SetSelectedGameObject(null);
     }
@@ -234,6 +306,10 @@ public class ButtonManager : MonoBehaviour
 
             thermometer.SetActive(false);
             thermometerButtonActivated = false;
+
+            if (endDialogueReady && !isTutoToolsFinished) {
+                LoadEndDialogue();
+            }
         }
         else
         {
@@ -241,6 +317,24 @@ public class ButtonManager : MonoBehaviour
             thermometer.SetActive(true);
             thermometerButtonActivated = true;
             thermometerScript.StartProcess();
+
+            if (isTutoActivated && !thermoTutoSeen && !isTutoToolsFinished)
+            {
+
+                // tuto: grandpa explains first you wait for it to finish and then it activates
+                TextAsset tutoDialogue = Resources.Load<TextAsset>(Path.Combine(tutoPathName, "tutoThermo"));
+
+                DialogueManager.GetInstance().EnterDialogueMode(tutoDialogue);
+
+                if (cameraTutoSeen && magnifierTutoSeen)
+                {
+
+                    //LoadEndDialogue(tutoDialogue);
+                    endDialogueReady = true;
+                }
+
+                thermoTutoSeen = true;
+            }
         }
         EventSystem.current.SetSelectedGameObject(null);
     }
@@ -249,9 +343,9 @@ public class ButtonManager : MonoBehaviour
 
         string currentState = GameStateManager.GetInstance().GetState();
 
-        bool dialogueFinished = DialogueManager.GetInstance().dialogueIsFinished;
-        bool tutoActive = GameStateManager.GetInstance().tutoActivated;
+        bool dialoguePlaying = DialogueManager.GetInstance().dialogueIsPlaying;
         bool additionalCheck = true;
+        bool bargainDoubleCheck = true;
         
 
         bool isOpenShopActive = false;
@@ -263,16 +357,16 @@ public class ButtonManager : MonoBehaviour
 
         bool bargainInProgress = false;
 
-        if (currentState == "level intro" && dialogueFinished) {
+        if (currentState == "level intro" && !dialoguePlaying) {
             isOpenShopActive = true;
         }
 
         // if state is intro and dialogue is finished -> show inspect button
-        if (currentState == "client intro" && dialogueFinished)
+        if (currentState == "client intro" && !dialoguePlaying)
         {
             isInspectActive = true;
 
-            if (tutoActive && !dialogueFinished) { additionalCheck = false; }
+            if (isTutoActivated && dialoguePlaying) { additionalCheck = false; }
         }
 
         if (currentState == "inspect" ) 
@@ -280,17 +374,18 @@ public class ButtonManager : MonoBehaviour
             isBargainActive = true;
             isToolsActive = true;
 
-            if ( tutoActive && !dialogueFinished ) { additionalCheck = false; }
+            if ( isTutoActivated && dialoguePlaying ) { additionalCheck = false; }
+            if (isTutoActivated && !isTutoToolsFinished) { bargainDoubleCheck = false; }
         }
 
         if (currentState == "bargain" && !offerAccepted){
            
             bargainInProgress = true;
 
-            if (tutoActive && !dialogueFinished) { additionalCheck = false; }
+            if (isTutoActivated && dialoguePlaying) { additionalCheck = false; }
         }
 
-        if (currentState == "client outro" && dialogueFinished)
+        if (currentState == "client outro" && !dialoguePlaying)
         {
             offerAccepted = false;
             bargainInProgress = false;
@@ -304,7 +399,7 @@ public class ButtonManager : MonoBehaviour
         inspectButton.interactable = isInspectActive && additionalCheck;
 
         bargainButton.gameObject.SetActive(isBargainActive);
-        bargainButton.interactable = isBargainActive && additionalCheck;
+        bargainButton.interactable = isBargainActive && additionalCheck && bargainDoubleCheck;
 
         introButton.gameObject.SetActive(isIntroActive && additionalCheck);
         introButton.interactable = isIntroActive && additionalCheck;
@@ -313,10 +408,10 @@ public class ButtonManager : MonoBehaviour
         refuseButton.gameObject.SetActive(bargainInProgress);
         addButton.gameObject.SetActive(bargainInProgress);
         minusButton.gameObject.SetActive(bargainInProgress);
-        acceptButton.interactable = bargainInProgress;
-        refuseButton.interactable = bargainInProgress;
-        addButton.interactable = bargainInProgress;
-        minusButton.interactable = bargainInProgress;
+        acceptButton.interactable = bargainInProgress && additionalCheck;
+        refuseButton.interactable = bargainInProgress && additionalCheck;
+        addButton.interactable = bargainInProgress && additionalCheck;
+        minusButton.interactable = bargainInProgress && additionalCheck;
 
 
         thermometerButton.gameObject.SetActive(isToolsActive);
@@ -341,5 +436,67 @@ public class ButtonManager : MonoBehaviour
         {
             thermometer.gameObject.SetActive(false);
         }
+    }
+
+
+
+    public void SetTutoStatus(bool tutoActivated)
+    {
+        isTutoActivated = tutoActivated;
+    }
+
+    private void LoadEndDialogue() {
+
+        
+
+
+        if (endOfLastToolTutoCoroutine != null) { Debug.Log("button manager: test"); StopCoroutine(endOfLastToolTutoCoroutine); }
+
+        endOfLastToolTutoCoroutine = StartCoroutine(WaitForEndOfDialogueToFinish());
+    }
+
+    private IEnumerator WaitForEndOfDialogueToFinish() {
+        yield return new WaitForSeconds(0.1f);
+
+        while (DialogueManager.GetInstance().dialogueIsPlaying)
+        {
+
+            yield return null;
+        }
+
+
+        TextAsset EndTutoDialogue = Resources.Load<TextAsset>(Path.Combine(tutoPathName, endDialogueName));
+
+        if (magnifierButtonActivated)
+        {
+            OnMagnifierButtonClick();
+        }
+        else if (cameraButtonActivated)
+        {
+            OnCameraButtonClick();
+        }
+        else if (thermometerButtonActivated) {
+            OnThermometerButtonClick();
+        }
+
+        DialogueManager.GetInstance().EnterDialogueMode(EndTutoDialogue);
+
+        if (endOfToolsTutoCoroutine != null) { Debug.Log("button manager: test"); StopCoroutine(endOfToolsTutoCoroutine); }
+
+        endOfToolsTutoCoroutine = StartCoroutine(WaitToActivateBargainButton());
+
+    }
+
+    private IEnumerator WaitToActivateBargainButton() {
+
+        yield return new WaitForSeconds(1f);
+
+        while (DialogueManager.GetInstance().dialogueIsPlaying)
+        {
+
+            yield return null;
+        }
+
+        isTutoToolsFinished = true;
     }
 }

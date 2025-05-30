@@ -18,6 +18,7 @@ public class GameStateManager : MonoBehaviour
 
     [Header("Managers")]
     [SerializeField] private LevelManager levelManager;
+    [SerializeField] private ButtonManager buttonManager;
     [SerializeField] private GameIntro gameIntro;
     [SerializeField] private LevelOutro levelOutro;
     [SerializeField] private GameOutro gameOutro;
@@ -105,6 +106,7 @@ public class GameStateManager : MonoBehaviour
 
         levelManager.LoadGameData();
         levelManager.SetTutoStatus(tutoActivated);
+        buttonManager.SetTutoStatus(tutoActivated);
 
         if (playIntroCutscene)
         {
@@ -202,6 +204,7 @@ public class GameStateManager : MonoBehaviour
 
             tutoActivated = false;
             levelManager.SetTutoStatus(tutoActivated);
+            buttonManager.SetTutoStatus(tutoActivated);
         }
     }
 
