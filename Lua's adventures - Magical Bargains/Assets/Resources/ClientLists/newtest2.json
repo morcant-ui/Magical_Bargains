@@ -62,7 +62,7 @@
 
             "cameraSprite":"a9-hidden",
             "thermoColor": "#b240c6",
-            "thermoIntensity":0.937,
+            "thermoIntensity":0.87,
 
             "dialogueA":"diaSa7",
             "dialogueB":"diaSb7",
@@ -75,6 +75,23 @@
 
             "clientName": "good ol' pepe",
             "clientColor": "#b240c6"
+        },
+        {
+
+            "clientSprite": "c14",
+            "artifactSprite": "a13",
+
+            "thermoColor": "#FFF500",
+            "thermoIntensity":0.99,
+
+            "dialogueA":"diaSa13",
+            
+            "artifactOffer": "120",
+            "minOfferAccepted": "50",
+            "grade": "excellent",
+
+            "clientName": "la ballerina creatura",
+            "clientColor": "#AB00FF"
         }
     ]
 }

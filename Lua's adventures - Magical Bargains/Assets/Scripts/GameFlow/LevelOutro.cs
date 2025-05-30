@@ -13,7 +13,10 @@ public class LevelOutro : MonoBehaviour
     [SerializeField] private GameObject holder;
     [SerializeField] private GameObject backgroundColor;
     [SerializeField] private GameObject cutsceneImage;
-    [SerializeField] private TextMeshProUGUI appreciationTextDisplay;
+
+    [SerializeField] private GameObject generalStatsHolder;
+    [SerializeField] private GameObject perItemStatsHolder;
+
 
     [Header("Stats graphics")]
     [SerializeField] private TextMeshProUGUI processedClientsTextDisplay;
@@ -21,10 +24,20 @@ public class LevelOutro : MonoBehaviour
     [SerializeField] private TextMeshProUGUI dailyExpensesTextDisplay;
     [SerializeField] private TextMeshProUGUI totalLossTextDisplay;
     [SerializeField] private TextMeshProUGUI netEarningsDisplay;
+    [SerializeField] private TextMeshProUGUI appreciationTextDisplay;
+
+    [Header("Stats of each items Section")]
+
+    [SerializeField] private TextMeshProUGUI ItemExampleDisplay;
+    [SerializeField] private TextMeshProUGUI perItemBaseDisplay;
 
     [Header("Actual main outro text (may remove)")]
     [SerializeField] private TextAsset cutsceneTextContent;
 
+    private bool hasPerItemsStatsBeenShown = false;
+
+    private Vector3 itemStatBasePosition;
+    private float lastHeightUsed;
 
     double earnings;
 
@@ -55,15 +68,30 @@ public class LevelOutro : MonoBehaviour
     void Update() {
         if (outroActivated && Input.GetKeyDown(inputKey)) {
 
-            // when we press input it marks the end of the cutscene
 
-            // make sure the coroutine runs only once per end of level
-            // ( for that to happen multiple times, make sure to set var to null once you start the next coroutine )
-            if (exitCutsceneCoroutine != null) {
-                return;
+            if (!hasPerItemsStatsBeenShown) {
+                hasPerItemsStatsBeenShown = true;
+
+                DestroyPerItemStats();
+
+                perItemStatsHolder.SetActive(false);
+                generalStatsHolder.SetActive(true);
+
+                
+
+            } else {
+
+
+
+                // make sure the coroutine runs only once per end of level
+                // ( for that to happen multiple times, make sure to set var to null once you start the next coroutine )
+                if (exitCutsceneCoroutine != null)
+                {
+                    return;
+                }
+
+                exitCutsceneCoroutine = StartCoroutine(NewLevelAfterDelay(0.5f));
             }
-
-            exitCutsceneCoroutine = StartCoroutine(NewLevelAfterDelay(0.5f));
         }
     }
 
@@ -73,7 +101,14 @@ public class LevelOutro : MonoBehaviour
         // simplistic cutscene: called from game state manager
         outroActivated = true;
 
-        
+
+        // destroy last texts
+
+        // set base item stat pos
+        Vector3 pos = perItemBaseDisplay.gameObject.transform.position;
+
+        itemStatBasePosition = new Vector3(pos.x + 35f, pos.y - 2f, pos.z);
+        lastHeightUsed = itemStatBasePosition.y;
 
         // old statistics:
         //float elapsedMin = Mathf.FloorToInt(elapsedTime / 60);
@@ -98,9 +133,7 @@ public class LevelOutro : MonoBehaviour
         // notify dialogue manager that a cutscene is running & not to listen for input
         DialogueManager.GetInstance().CutsceneStarted();
 
-        // display outro graphics
-        holder.SetActive(true);
-        cutsceneImage.SetActive(true);
+
 
  
 
@@ -108,7 +141,7 @@ public class LevelOutro : MonoBehaviour
         // retrieve STATISTICS
 
         double totalLoss = (initialSavings - oldSavings ) + dailyExpenses;
-        double grossEarnings = oldSavings - newSavings;
+        double grossEarnings = oldSavings - newSavings; //////////// I think there's a problem with this
         double netEarnings = newSavings - initialSavings;
 
         // absolute value
@@ -122,12 +155,11 @@ public class LevelOutro : MonoBehaviour
         // timeElapsed.text = timerTextBase + string.Format("{0:00}:{1:00}", elapsedMin, elapsedSec);
         processedClientsTextDisplay.text = nbProcessedClients.ToString();
         itemsBoughtTextDisplay.text = nbPurchases.ToString();
-        dailyExpensesTextDisplay.text = "$" + dailyExpenses.ToString("00.00");
-        totalLossTextDisplay.text = "$" + totalLoss.ToString("00.00");
-        Debug.Log("GROSS: " + grossEarnings);
-        netEarningsDisplay.text = "$" + netEarnings.ToString("0.00"); 
-        
-        
+        dailyExpensesTextDisplay.text =  dailyExpenses.ToString("00.00") + "$";
+        totalLossTextDisplay.text =  totalLoss.ToString("00.00") + "$";
+        netEarningsDisplay.text = netEarnings.ToString("0.00") + "$";
+
+
 
         // end of level appreciation:
         string textToDisplay = ""; // text to display is the little message at bottom of level outro cutscene
@@ -150,11 +182,29 @@ public class LevelOutro : MonoBehaviour
 
         Debug.Log("---- INITIAL SAVINGS: " + initialSavings.ToString("00.0") + ", LOSS: " + totalLoss.ToString("00.0") + ", NET EARNING: " + (newSavings - initialSavings).ToString("00.0"));
 
+
+
+
+
+
+
+        // AT FIRST: show stats per item
+        // THEN: upon first input show the general stats, and upon another input change levels
+        perItemStatsHolder.SetActive(true);
+        generalStatsHolder.SetActive(false);
+
+        // display outro graphics
+        holder.SetActive(true);
+        cutsceneImage.SetActive(true);
+
+
         return appreciation;
     }
 
 
     public double CalculateEarnings(Queue<ClientData> purchases, double savings) {
+
+        int index = 1;
 
         earnings = 0.0;
 
@@ -181,8 +231,8 @@ public class LevelOutro : MonoBehaviour
             switch (grade)
             {
                 case "excellent":
-                    min = 2;
-                    max = 3;
+                    min = 2.0;
+                    max = 4.0;
                     break;
                 case "good":
                     min = 0.9;
@@ -226,13 +276,50 @@ public class LevelOutro : MonoBehaviour
 
             range = rand.NextDouble() * (max - min) + min;
 
-            earnings += range * originalPrice;
+            double earned = range * originalPrice;
 
-            Debug.Log("---end of level Calculate Earnings for object: RANGE: " + range.ToString("0.0") + ", EARNED: " + (earnings - prior).ToString("00.0"));
+            earnings += earned;
+
+            Debug.Log("---FOR EACH NEW ITEM: RANGE: " + range.ToString("0.0") );
+
+            CreateAndDisplayItemStat(index, finalPrice, earned);
+
+            index += 1;
         }
 
         
         return earnings;
+    }
+
+    private void CreateAndDisplayItemStat(int currentIndex, double finalPrice, double earnedAmount) {
+
+        lastHeightUsed = lastHeightUsed - 22f;
+
+        Vector3 pos = itemStatBasePosition;
+        pos.y = lastHeightUsed;
+
+        TextMeshProUGUI objBought = Instantiate(ItemExampleDisplay, pos, Quaternion.identity);
+
+        objBought.text = "- Item " + currentIndex + ": Bought at " + finalPrice.ToString("0.00") + "$";
+        objBought.color = Color.red;
+        objBought.tag = "endLevelItemStat";
+        objBought.transform.SetParent(perItemStatsHolder.transform);
+        objBought.fontSize = 16;
+
+        lastHeightUsed = lastHeightUsed - 22f;
+        pos.y = lastHeightUsed;
+
+        TextMeshProUGUI objSold = Instantiate(ItemExampleDisplay, pos, Quaternion.identity);
+
+        objSold.text = "- Item " + currentIndex + ": Sold at " + earnedAmount.ToString("0.00") + "$";
+        objSold.color = Color.green;
+        objSold.tag = "endLevelItemStat";
+        objSold.transform.SetParent(perItemStatsHolder.transform);
+        objSold.fontSize = 16;
+
+
+        objBought.gameObject.SetActive(true);
+        objSold.gameObject.SetActive(true);
     }
 
     private double CalculateDailyExpenses(double baseDailyExpenses = 20.0) {
@@ -249,12 +336,23 @@ public class LevelOutro : MonoBehaviour
         return range * baseDailyExpenses;
     }
 
+
+    private void DestroyPerItemStats()
+    {
+        GameObject[] oldObjects = GameObject.FindGameObjectsWithTag("endLevelItemStat");
+
+        foreach (GameObject obj in oldObjects) { Destroy(obj); }
+    }
+
+
     IEnumerator NewLevelAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
 
         // update the boolean
         outroActivated = false;
+
+        hasPerItemsStatsBeenShown = false;
 
         // notify dialogue manager that we're done
         DialogueManager.GetInstance().CutsceneStopped();
