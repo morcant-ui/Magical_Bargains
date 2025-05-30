@@ -50,11 +50,11 @@ public class AudioManager : MonoBehaviour
     }
 
 
-    public void StartMusic(AudioClip audio, float volume) {
+    public void StartMusic(AudioClip audio, float volume, bool playOnLoop = false) {
 
         musicSource.clip = audio;
 
-        musicSource.loop = true;
+        musicSource.loop = playOnLoop;
 
         musicSource.volume = volume;
 

@@ -40,7 +40,7 @@ public class ButtonManager : MonoBehaviour
     [SerializeField] private string endDialogueName = "tuto4";
 
 
-    private Vector3 magnifierPosition = new Vector3(5.0f, -2.4f, -3.96f);
+    private Vector3 magnifierPosition = new Vector3(5.0f, -2.6f, -3.96f);
 
     private bool magnifierButtonActivated = false;
     private bool cameraButtonActivated = false;
@@ -382,7 +382,7 @@ public class ButtonManager : MonoBehaviour
            
             bargainInProgress = true;
 
-            if (isTutoActivated && dialoguePlaying) { additionalCheck = false; }
+            if (isTutoActivated && dialoguePlaying) { Debug.Log("------------------Yo ?"); additionalCheck = false; }
         }
 
         if (currentState == "client outro" && !dialoguePlaying)

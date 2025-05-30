@@ -102,7 +102,7 @@ public class GameStateManager : MonoBehaviour
         state = "game intro";
 
         // start playing the game intro music
-        AudioManager.GetInstance().StartMusic(gameIntroMusic, introVolume);
+        AudioManager.GetInstance().StartMusic(gameIntroMusic, introVolume, true);
 
         levelManager.LoadGameData();
         levelManager.SetTutoStatus(tutoActivated);
@@ -126,7 +126,7 @@ public class GameStateManager : MonoBehaviour
         initialSavings = savings;
 
         // start playing the level music
-        AudioManager.GetInstance().StartMusic(levelMusic, volume);
+        AudioManager.GetInstance().StartMusic(levelMusic, volume, true);
 
         grandpa.SetActive(true);
 
@@ -229,7 +229,7 @@ public class GameStateManager : MonoBehaviour
     public void LoadGameOutro()
     {
 
-        AudioManager.GetInstance().StartMusic(gameOutroMusic, introVolume);
+        AudioManager.GetInstance().StartMusic(gameOutroMusic, introVolume, true);
         DialogueManager.GetInstance().Reset();
 
         savings += levelOutro.CalculateEarnings(currentPurchases, savings);
