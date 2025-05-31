@@ -230,18 +230,20 @@ public class LevelManager : MonoBehaviour
        
         DialogueManager.GetInstance().SetSpeaker(currentClient.clientName, currentClient.clientColor);
 
-        string dialogueNameA = currentClient.dialogueA;
+        string dialogueName = currentClient.fullDialogue;
 
-        TextAsset dialogue = dialogueLoader.LoadDialogue(dialogueNameA, "dialogueA");
+        TextAsset dialogue = dialogueLoader.LoadDialogue(dialogueName, "dialogueA");
+
+        string knotName = "a";
 
         if (tutoActivated) {
 
             TextAsset tutoDialogue = Resources.Load<TextAsset>(Path.Combine(tutoPathName, "tuto2"));
 
-            DialogueManager.GetInstance().EnterDialogueMode(dialogue, tutoDialogue);
+            DialogueManager.GetInstance().EnterDialogueMode(dialogue, tutoDialogue, knotName);
             return;
         } 
-        DialogueManager.GetInstance().EnterDialogueMode(dialogue); 
+        DialogueManager.GetInstance().EnterDialogueMode(dialogue, null, knotName); 
     }
 
     // check if I can still afford the goods of the client that will be loaded
@@ -335,6 +337,8 @@ public class LevelManager : MonoBehaviour
     {   
         // 1)
         int finalOffer = offerManager.FinalOffer;
+        string knotName = "";
+        string dialogueName = currentClient.fullDialogue;
         
         if (refused)
         {
@@ -345,17 +349,19 @@ public class LevelManager : MonoBehaviour
         TextAsset dialogue;
 
         // 2)
-        // Outcome E: Lua did not accept the offer
         if (refused)
         {
-            // Debug.Log("offer refused dialogues");
-            string dialogueNameE = currentClient.dialogueE;
-            dialogue = dialogueLoader.LoadDialogue(dialogueNameE, "dialogueE");
+            // Outcome E: Lua did not accept the offer
+            Debug.Log("Finish Bargain State: Outcome E");
+
+            dialogue = dialogueLoader.LoadDialogue(dialogueName, "dialogueE");
+            knotName = "e";
             refused = false;
         }
-        // Outcome B: offer accepted
+        
         else if (finalOffer >= minOfferAccepted && savings >= finalOffer)
         {
+            // Outcome B: offer accepted
             Debug.Log("Finish Bargain State: Outcome B");
 
             // update savings
@@ -367,22 +373,21 @@ public class LevelManager : MonoBehaviour
             GameStateManager.GetInstance().AddToListPurchases(currentClient);
 
             // 3)
-            string dialogueNameB = currentClient.dialogueB;
-            dialogue = dialogueLoader.LoadDialogue(dialogueNameB, "dialogueB");
-
-            // Outcome D: not enough money
+            dialogue = dialogueLoader.LoadDialogue(dialogueName, "dialogueB");
+            knotName = "b";        
         }
+
         else if (finalOffer >= minOfferAccepted && savings < finalOffer)
         {
-
+            // Outcome D: not enough money
             Debug.Log("Finish Bargain State: Outcome D");
 
             // make savings flicker for some visual cue
             DialogueManager.GetInstance().TriggerSavingsFlickering();
 
             // 3)
-            string dialogueNameD = currentClient.dialogueD;
-            dialogue = dialogueLoader.LoadDialogue(dialogueNameD, "dialogueD");
+            dialogue = dialogueLoader.LoadDialogue(dialogueName, "dialogueD");
+            knotName = "d";
 
             // Outcome C: client refuses
         }
@@ -392,8 +397,8 @@ public class LevelManager : MonoBehaviour
             Debug.Log("Finish Bargain State: Outcome C");
 
             // 3)
-            string dialogueNameC = currentClient.dialogueC;
-            dialogue = dialogueLoader.LoadDialogue(dialogueNameC, "dialogueC");
+            dialogue = dialogueLoader.LoadDialogue(dialogueName, "dialogueC");
+            knotName = "c";
         }
 
         if (dialogue == null) {
@@ -408,11 +413,11 @@ public class LevelManager : MonoBehaviour
 
             TextAsset tutoDialogue = Resources.Load<TextAsset>(Path.Combine(tutoPathName, "tuto6"));
 
-            DialogueManager.GetInstance().EnterDialogueMode(dialogue, tutoDialogue);
+            DialogueManager.GetInstance().EnterDialogueMode(dialogue, tutoDialogue, knotName);
             return;
         }
 
-        DialogueManager.GetInstance().EnterDialogueMode(dialogue);
+        DialogueManager.GetInstance().EnterDialogueMode(dialogue, null, knotName);
     }
 
     //////////////////////////////////// Handle Bargain State /////////////////////////////////////////////

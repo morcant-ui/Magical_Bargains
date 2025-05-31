@@ -13,6 +13,7 @@ public class ClientData
     public string thermoColor;
     public float thermoIntensity;
 
+    public string fullDialogue;
     public string dialogueA;
     public string dialogueB;
     public string dialogueC;

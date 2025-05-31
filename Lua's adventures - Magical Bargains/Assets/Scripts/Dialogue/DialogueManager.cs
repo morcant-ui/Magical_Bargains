@@ -140,7 +140,7 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    public void EnterDialogueMode(TextAsset inkJSON, TextAsset secondInkJSON = null) {
+    public void EnterDialogueMode(TextAsset inkJSON, TextAsset secondInkJSON = null, string knot = "") {
 
         if (inkJSON == null) {
             Debug.Log("EnterDialogueMode: NO DIALOGUE TO READ");
@@ -160,6 +160,17 @@ public class DialogueManager : MonoBehaviour
         }
 
         currentStory = new Story(inkJSON.text);
+
+        if (knot != "" ) {
+
+            //currentStory = BranchOutToKnot(currentStory, tag);
+            Debug.Log("...... Ink knot detected");
+
+            currentStory.ChoosePathString(knot);
+
+        
+        }
+
         dialogueIsPlaying = true;
 
         dialoguePanel.SetActive(true);
@@ -280,6 +291,41 @@ public class DialogueManager : MonoBehaviour
         {
             button.gameObject.SetActive(false);
         }
+    }
+
+
+    private Story BranchOutToKnot(Story story, string tag) {
+
+        Debug.Log("...... Ink tag detected");
+        List<string> tags = story.currentTags;
+
+        Debug.Log("tag count: " + tags.Count + ", tags: " + tags);
+
+        switch (tag) {
+
+            case "diab":
+                story.ChoosePathString(tag);
+                break;
+
+            case "diac":
+                story.ChoosePathString(tag);
+                break;
+
+            case "diad":
+                story.ChoosePathString(tag);
+                break;
+
+            case "diae":
+                story.ChoosePathString(tag);
+                break;
+            default:
+                Debug.Log("---------..................--------------------");
+                break;
+        
+        }
+
+        return story;
+    
     }
 
 

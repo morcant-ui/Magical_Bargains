@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using Ink.Runtime;
+
 
 
 public class DialogueLoader : MonoBehaviour
@@ -12,7 +14,7 @@ public class DialogueLoader : MonoBehaviour
     [SerializeField] private int dialogueDRandNB = 3;
     [SerializeField] private int dialogueERandNB = 1;
 
-    private string srcToDialoguePath = Path.Combine("Assets", "Resources");
+    private string srcToDialoguePath = System.IO.Path.Combine("Assets", "Resources");
 
 
     public void tryRand() {
@@ -20,32 +22,40 @@ public class DialogueLoader : MonoBehaviour
         Debug.Log("RAND: " + Random.Range(1,4));
     }
 
-    public TextAsset LoadDialogue(string dialogueName, string folderName) {
+    public TextAsset LoadDialogue(string dialogueName, string folderName, bool isClientIntro = false) {
 
+        string PathName = System.IO.Path.Combine("Dialogues", "Clients");
 
-        string PathName = Path.Combine("Dialogues", folderName);
+        //if (isClientIntro)
+        //{
+        //    PathName = Path.Combine(PathName, "ClientIntro");
+        //} else 
+        //{
+        //    PathName = Path.Combine(PathName, "ClientOutro");
+        //}
+
         TextAsset dialogue;
         string finalPath;
 
         // if dialogue name could not be found - pull a random dialogue
         if (dialogueName == null)
         {
-
             finalPath = getPathAtRandom(folderName, PathName);
             
         } else {
 
-            finalPath = Path.Combine(PathName, dialogueName);
+            finalPath = System.IO.Path.Combine(PathName, dialogueName);
         }
 
         dialogue = Resources.Load<TextAsset>(finalPath);
 
-        if (dialogue != null)
+        if (dialogue != null && DoesKnotExists(dialogue, folderName))
         {
             // , string speakerName="Jean", string speakerColor="#32a852"
             // string colorHeader = $"<color={speakerColor}>{speakerName}:</color>";
             // string modifiedText = colorHeader + dialogue.text;
             // return new TextAsset(modifiedText);
+
             return dialogue;
         }
         else
@@ -67,8 +77,9 @@ public class DialogueLoader : MonoBehaviour
 
     private string getPathAtRandom(string folderName, string pathName) {
 
+        Debug.Log("PULLING DIALOGUE AT RANDOM");
 
-        string PathRand = Path.Combine(pathName, "Rand");
+        string PathRand = System.IO.Path.Combine(pathName, "Rand", folderName);
 
         int nbOfFiles = 1; //Directory.GetFiles(Path.Combine(srcToDialoguePath, PathRand), "*.ink").Length;
         if (folderName == "dialogueA") { nbOfFiles = dialogueARandNB; }
@@ -81,7 +92,34 @@ public class DialogueLoader : MonoBehaviour
         int fileNumber = Random.Range(1, nbOfFiles + 1);
         string fileName = folderName + "Rand" + fileNumber;
 
-        return Path.Combine(PathRand, fileName);
+        return System.IO.Path.Combine(PathRand, fileName);
 
+    }
+
+
+    private bool DoesKnotExists(TextAsset dialogue, string folderName) {
+        Story story = new Story(dialogue.text);
+
+        string knotName = "";
+
+        if (folderName == "dialogueA") { knotName = "a"; }
+        if (folderName == "dialogueB") { knotName = "b"; }
+        if (folderName == "dialogueC") { knotName = "c"; }
+        if (folderName == "dialogueD") { knotName = "d"; }
+        if (folderName == "dialogueE") { knotName = "e"; }
+
+        Debug.Log("------------------here");
+
+        try
+        {
+            Debug.Log("KNOT FOUND");
+            story.ChoosePathString(knotName);
+            return true;
+        }
+        catch (StoryException)
+        {
+            Debug.Log("NO KNOT FOUND");
+            return false;
+        }
     }
 }
