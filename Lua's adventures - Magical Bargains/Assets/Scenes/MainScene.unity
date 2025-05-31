@@ -1516,7 +1516,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72735be5ebc20b44c9407138e4487ffe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playIntroCutscene: 0
+  playIntroCutscene: 1
   tutoActivated: 1
   grandpa: {fileID: 777833723}
   levelManager: {fileID: 547474431}
