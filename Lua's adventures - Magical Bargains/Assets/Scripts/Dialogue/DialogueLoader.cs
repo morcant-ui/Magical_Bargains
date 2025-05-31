@@ -13,6 +13,10 @@ public class DialogueLoader : MonoBehaviour
     [SerializeField] private int dialogueCRandNB = 1;
     [SerializeField] private int dialogueDRandNB = 3;
     [SerializeField] private int dialogueERandNB = 1;
+    [SerializeField] private int dialogueFRandNB = 1;
+    [SerializeField] private int dialogueGRandNB = 1;
+    [SerializeField] private int dialogueHRandNB = 1;
+
 
     private string srcToDialoguePath = System.IO.Path.Combine("Assets", "Resources");
 
@@ -87,6 +91,9 @@ public class DialogueLoader : MonoBehaviour
         if (folderName == "dialogueC") { nbOfFiles = dialogueCRandNB; }
         if (folderName == "dialogueD") { nbOfFiles = dialogueDRandNB; }
         if (folderName == "dialogueE") { nbOfFiles = dialogueERandNB; }
+        if (folderName == "dialogueF") { nbOfFiles = dialogueFRandNB; }
+        if (folderName == "dialogueG") { nbOfFiles = dialogueGRandNB; }
+        if (folderName == "dialogueH") { nbOfFiles = dialogueHRandNB; }
 
 
         int fileNumber = Random.Range(1, nbOfFiles + 1);
@@ -107,6 +114,9 @@ public class DialogueLoader : MonoBehaviour
         if (folderName == "dialogueC") { knotName = "c"; }
         if (folderName == "dialogueD") { knotName = "d"; }
         if (folderName == "dialogueE") { knotName = "e"; }
+        if (folderName == "dialogueF") { knotName = "f"; }
+        if (folderName == "dialogueG") { knotName = "g"; }
+        if (folderName == "dialogueH") { knotName = "h"; }
 
         Debug.Log("------------------here");
 

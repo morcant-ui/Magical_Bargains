@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
+using System.Linq;
 
 
 public class LevelManager : MonoBehaviour
@@ -78,6 +79,8 @@ public class LevelManager : MonoBehaviour
 
 
     private string menuScene = "SimpleMenu";
+
+    private bool triedBargaining = false;
 
 
     void Start()
@@ -298,7 +301,7 @@ public class LevelManager : MonoBehaviour
         savingsText.color = Color.white;
         savingsImage.SetActive(true);
 
-        
+
         // 3)
         string currentOffer = currentClient.artifactOffer;
         string maxSavings = currentOffer;
@@ -322,11 +325,36 @@ public class LevelManager : MonoBehaviour
             startBargainTutoCoroutine = StartCoroutine(WaitForGrandpaToFinish(currentOffer, maxSavings));
 
         }
-        else {
+        else
+        {
             offerManager.StartBargain(currentOffer, maxSavings);
         } 
+                
+    }
 
-        
+    // Steps:   1. show the savings
+    //          2. retrieve the current offer and give it to offer Manager
+    public void BargainAgain()
+    {
+        // 1)
+        savings = GameStateManager.GetInstance().CheckMoney();
+        savingsText.text = "$" + savings.ToString("00.00");
+
+        savingsText.color = Color.white;
+        savingsImage.SetActive(true);
+
+
+        // 2)
+        string currentOffer = currentClient.artifactOffer;
+        string maxSavings = currentOffer;
+        if (double.Parse(currentOffer) > savings)
+        {
+
+            // Debug.Log("offer can't be bigger");
+            maxSavings = $"{savings}";
+
+        }
+        offerManager.ChooseAction(currentOffer, maxSavings);
     }
 
     // Steps:   1. retrieve final offer from offer manager and min offer from the current client
@@ -334,12 +362,12 @@ public class LevelManager : MonoBehaviour
     //          3. for any outcome, call offer dialogue manager to obtain a working dialogue
     //          4. feed the dialogue to dialogue Manager
     public void FinishBargainState(bool refused)
-    {   
+    {
         // 1)
         int finalOffer = offerManager.FinalOffer;
         string knotName = "";
         string dialogueName = currentClient.fullDialogue;
-        
+
         if (refused)
         {
             finalOffer = 0;
@@ -357,8 +385,10 @@ public class LevelManager : MonoBehaviour
             dialogue = dialogueLoader.LoadDialogue(dialogueName, "dialogueE");
             knotName = "e";
             refused = false;
+            // just to be sure
+            triedBargaining = false;
         }
-        
+
         else if (finalOffer >= minOfferAccepted && savings >= finalOffer)
         {
             // Outcome B: offer accepted
@@ -374,7 +404,9 @@ public class LevelManager : MonoBehaviour
 
             // 3)
             dialogue = dialogueLoader.LoadDialogue(dialogueName, "dialogueB");
-            knotName = "b";        
+            knotName = "b";
+            // just to be sure
+            triedBargaining = false;
         }
 
         else if (finalOffer >= minOfferAccepted && savings < finalOffer)
@@ -388,20 +420,41 @@ public class LevelManager : MonoBehaviour
             // 3)
             dialogue = dialogueLoader.LoadDialogue(dialogueName, "dialogueD");
             knotName = "d";
+            // just to be sure
+            triedBargaining = false;
 
             // Outcome C: client refuses
         }
         else
         {
 
+            //this is situation of offer not good for client - can still try to bargain
             Debug.Log("Finish Bargain State: Outcome C");
+            // all is not lost, try to bargain ! (except for impossibleOffer ok)
+            if (currentClient.canBargain != null && triedBargaining == false)
+            {
+                // Debug.Log("Way to bargain");
+                
+                dialogue = dialogueLoader.LoadDialogue(dialogueName, "dialogueF");
+                knotName = "f";
+                triedBargaining = true;
 
-            // 3)
-            dialogue = dialogueLoader.LoadDialogue(dialogueName, "dialogueC");
-            knotName = "c";
+            }
+            else
+            {
+                // Debug.Log("No way you can bargain bro");
+                // 3)
+                dialogue = dialogueLoader.LoadDialogue(dialogueName, "dialogueC");
+                knotName = "c";
+                // false again for next client
+                triedBargaining = false;
+            }
+
+
         }
 
-        if (dialogue == null) {
+        if (dialogue == null)
+        {
             Debug.Log("finishBargainState: dialogue is null");
             SceneManager.LoadScene(menuScene);
             return;
@@ -420,11 +473,65 @@ public class LevelManager : MonoBehaviour
         DialogueManager.GetInstance().EnterDialogueMode(dialogue, null, knotName);
     }
 
+    public void FinishBargainStateAgain(string action)
+    {
+        triedBargaining = false;
+
+        int finalOffer = offerManager.FinalOffer;
+        string knotName = "";
+        string dialogueName = currentClient.fullDialogue;
+
+        TextAsset dialogue;
+
+        if (currentClient.canBargain.Split(',').Select(s => s.Trim()).Contains(action)) //accepts "thermometer", "thermometer, magnifier" type of strings
+        {
+            // congrats you found the sus element!
+            
+            // update savings
+            savings = GameStateManager.GetInstance().RetrieveMoney(finalOffer);
+            savingsText.text = "$" + savings.ToString("00.00");
+
+            // add new purchase info to list in state manager
+            currentClient.finalPrice = finalOffer.ToString();
+            GameStateManager.GetInstance().AddToListPurchases(currentClient);
+
+            // 3)
+            dialogue = dialogueLoader.LoadDialogue(dialogueName, "dialogueB");
+            knotName = "b";
+        }
+        else if (currentClient.canBargain != "false" && currentClient.canBargain != action)
+        {
+            // there was a way to bargain but you missed (oups)
+            dialogue = dialogueLoader.LoadDialogue(dialogueName, "dialogueG");
+            knotName = "g";
+
+        }
+        else if (currentClient.canBargain == "false")
+        {
+            // there was no way to bargain for a decreased offer (but could maybe offer more money)
+            dialogue = dialogueLoader.LoadDialogue(dialogueName, "dialogueH");
+            knotName = "h";
+        }
+        else
+        {
+            dialogue = null;
+            //problemm
+        }
+        
+        if (dialogue == null)
+        {
+            Debug.Log("finishBargainStateAGAIN: dialogue is null");
+            SceneManager.LoadScene(menuScene);
+            return;
+        }
+        DialogueManager.GetInstance().EnterDialogueMode(dialogue, null, knotName);
+    }
+
     //////////////////////////////////// Handle Bargain State /////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////// Use the Spawners /////////////////////////////////////////////////
-    
+
     public void CreateArtifact()
     {
 

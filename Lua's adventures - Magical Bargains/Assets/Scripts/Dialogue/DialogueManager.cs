@@ -188,7 +188,11 @@ public class DialogueManager : MonoBehaviour
             string nextLineTrim = nextLine.TrimStart();
             //check if already has speaker tag (for grandpa)
             // bool checkTag = nextLineTrim.StartsWith("Grandpa");
-            if (nextLineTrim.StartsWith("avô"))
+            if (nextLine.Trim() == "Do you wish to bargain again?")
+            {
+                DisplayChoices();
+            }
+            else if (nextLineTrim.StartsWith("avô"))
             {
                 // Debug.Log("THIS IS GRANDPA");
                 // Find the index of the colon after "avô Pedro"
@@ -216,7 +220,7 @@ public class DialogueManager : MonoBehaviour
                 {
                     optionText = optionText.Substring(1, optionText.Length - 2);
                 }
-                
+
                 nextLine = $"<color=#db12a5>Lua</color>: {optionText}";
             }
             else
@@ -280,10 +284,20 @@ public class DialogueManager : MonoBehaviour
  
     public void OnChoiceSelected(int choiceIndex)
     {
-        currentStory.ChooseChoiceIndex(choiceIndex);
-        HideChoices();
-        ContinueStory();
-    }
+        string choiceText = currentStory.currentChoices[choiceIndex].text;
+        // Debug.Log($"Selected choice text: [{choiceText}]");
+
+        if (choiceText.Trim().ToLower().Contains("let's bargain again"))
+        {
+            // Debug.Log("Player chose to bargain again — switching state.");
+            GameStateManager.GetInstance().LoadBargainAGAINState();
+            HideChoices();
+            return;
+        }
+            currentStory.ChooseChoiceIndex(choiceIndex);
+            HideChoices();
+            ContinueStory();
+        }
 
     void HideChoices()
     {

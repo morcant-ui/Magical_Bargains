@@ -21,6 +21,12 @@ public class ButtonManager : MonoBehaviour
     [SerializeField] private Button addButton;
     [SerializeField] private Button minusButton;
 
+    [Header("Bargain AGAIN Buttons")]
+    [SerializeField] private Button problemThermoButton;
+    [SerializeField] private Button problemCameraButton;
+    [SerializeField] private Button problemMagniButton;
+    [SerializeField] private Button moreMoneyButton;
+
     
 
     [Header("Tools Buttons")]
@@ -94,6 +100,18 @@ public class ButtonManager : MonoBehaviour
         minusButton.gameObject.SetActive(false);
         minusButton.interactable = false;
 
+        problemCameraButton.gameObject.SetActive(false);
+        problemCameraButton.interactable = false;
+
+        problemMagniButton.gameObject.SetActive(false);
+        problemMagniButton.interactable = false;
+
+        problemThermoButton.gameObject.SetActive(false);
+        problemThermoButton.interactable = false;
+
+        moreMoneyButton.gameObject.SetActive(false);
+        moreMoneyButton.interactable = false;
+
         openShopButton.onClick.AddListener(OnOpenShopClick);
         inspectButton.onClick.AddListener(OnInspectButtonClick);
         bargainButton.onClick.AddListener(OnBargainButtonClick);
@@ -112,6 +130,11 @@ public class ButtonManager : MonoBehaviour
         refuseButton.onClick.AddListener(OnRefuseOfferButtonClick);
         addButton.onClick.AddListener(OnAddOfferButtonClick);
         minusButton.onClick.AddListener(OnReduceOfferButtonClick);
+
+        problemCameraButton.onClick.AddListener(OnProblemCameraButtonClick);
+        problemMagniButton.onClick.AddListener(OnProblemMagniButtonClick);
+        problemThermoButton.onClick.AddListener(OnProblemThermoButtonClick);
+        moreMoneyButton.onClick.AddListener(OnMoreMoneyButtonClick);
 
     }
 
@@ -165,14 +188,72 @@ public class ButtonManager : MonoBehaviour
         thermometer.gameObject.SetActive(false);
         thermometerButtonActivated = false;
     }
-    public void OnAcceptOfferButtonClick(){
-        
+    public void OnAcceptOfferButtonClick()
+    {
+
         offerAccepted = true;
 
         offerManager.AcceptOffer();
 
         GameStateManager.GetInstance().LoadBargainDoneState(false);
-        
+
+
+        magnifier.gameObject.SetActive(false);
+        cameraScript.Abort();
+        cameraButtonActivated = false;
+        magnifierButtonActivated = false;
+        thermometer.gameObject.SetActive(false);
+        thermometerButtonActivated = false;
+    }
+
+    public void OnProblemCameraButtonClick()
+    {
+        // Debug.Log("trying to bargain CAMERA");
+
+        offerManager.ChoiceActionDone();
+        GameStateManager.GetInstance().LoadSecondBargainDoneState("camera");
+
+        magnifier.gameObject.SetActive(false);
+        cameraScript.Abort();
+        cameraButtonActivated = false;
+        magnifierButtonActivated = false;
+        thermometer.gameObject.SetActive(false);
+        thermometerButtonActivated = false;
+    }
+
+    public void OnProblemMagniButtonClick()
+    {
+        // Debug.Log("trying to bargain MAGNI");
+
+        offerManager.ChoiceActionDone();
+        GameStateManager.GetInstance().LoadSecondBargainDoneState("magnifier");
+
+        magnifier.gameObject.SetActive(false);
+        cameraScript.Abort();
+        cameraButtonActivated = false;
+        magnifierButtonActivated = false;
+        thermometer.gameObject.SetActive(false);
+        thermometerButtonActivated = false;
+    }
+
+    public void OnProblemThermoButtonClick()
+    {
+        // Debug.Log("trying to bargain THERMO");
+
+        offerManager.ChoiceActionDone();
+        GameStateManager.GetInstance().LoadSecondBargainDoneState("thermometer");
+
+        magnifier.gameObject.SetActive(false);
+        cameraScript.Abort();
+        cameraButtonActivated = false;
+        magnifierButtonActivated = false;
+        thermometer.gameObject.SetActive(false);
+        thermometerButtonActivated = false;
+    }
+
+    public void OnMoreMoneyButtonClick()
+    {
+        GameStateManager.GetInstance().LoadBargainState();
 
         magnifier.gameObject.SetActive(false);
         cameraScript.Abort();
@@ -182,14 +263,15 @@ public class ButtonManager : MonoBehaviour
         thermometerButtonActivated = false;
     }
     
-    public void OnRefuseOfferButtonClick(){
-        
+    public void OnRefuseOfferButtonClick()
+    {
+
         offerAccepted = true;
 
         offerManager.RefuseOffer();
 
         GameStateManager.GetInstance().LoadBargainDoneState(true);
-        
+
 
         magnifier.gameObject.SetActive(false);
         cameraScript.Abort();
@@ -357,7 +439,10 @@ public class ButtonManager : MonoBehaviour
 
         bool bargainInProgress = false;
 
-        if (currentState == "level intro" && !dialoguePlaying) {
+        bool choosingNewAction = false;
+
+        if (currentState == "level intro" && !dialoguePlaying)
+        {
             isOpenShopActive = true;
         }
 
@@ -381,14 +466,22 @@ public class ButtonManager : MonoBehaviour
         if (currentState == "bargain" && !offerAccepted){
            
             bargainInProgress = true;
+            choosingNewAction = false;
 
             if (isTutoActivated && dialoguePlaying) { additionalCheck = false; }
+        }
+
+        if (currentState == "bargainAGAIN")
+        {
+            choosingNewAction = true;
+            offerAccepted = false;
         }
 
         if (currentState == "client outro" && !dialoguePlaying)
         {
             offerAccepted = false;
             bargainInProgress = false;
+            choosingNewAction = false;
             isIntroActive = true;
         }
 
@@ -412,6 +505,15 @@ public class ButtonManager : MonoBehaviour
         refuseButton.interactable = bargainInProgress && additionalCheck;
         addButton.interactable = bargainInProgress && additionalCheck;
         minusButton.interactable = bargainInProgress && additionalCheck;
+
+        problemCameraButton.gameObject.SetActive(choosingNewAction);
+        problemMagniButton.gameObject.SetActive(choosingNewAction);
+        problemThermoButton.gameObject.SetActive(choosingNewAction);
+        moreMoneyButton.gameObject.SetActive(choosingNewAction);
+        problemCameraButton.interactable = choosingNewAction;
+        problemMagniButton.interactable = choosingNewAction;
+        problemThermoButton.interactable = choosingNewAction;
+        moreMoneyButton.interactable = choosingNewAction;
 
 
         thermometerButton.gameObject.SetActive(isToolsActive);

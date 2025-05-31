@@ -35,7 +35,8 @@
             "dialogueD":"diaSd2",
             
             "artifactOffer": "60",
-            "minOfferAccepted": "10",
+            "minOfferAccepted": "30",
+            "canBargain":"magnifier",
             "grade": "junk",
 
             "clientName": "Kali",
@@ -56,6 +57,7 @@
             
             "artifactOffer": "80",
             "minOfferAccepted": "50",
+            "canBargain":"thermometer",
             "grade": "ok",
 
             "clientName": "mimi fun",
@@ -77,6 +79,7 @@
             
             "artifactOffer": "80",
             "minOfferAccepted": "40",
+            "canBargain":"camera",
             "grade": "good",
 
             "clientName": "green lady",

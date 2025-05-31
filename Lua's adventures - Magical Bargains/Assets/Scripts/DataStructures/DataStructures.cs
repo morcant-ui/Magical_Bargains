@@ -19,11 +19,16 @@ public class ClientData
     public string dialogueC;
     public string dialogueD;
     public string dialogueE;
+    public string dialogueF;
+    public string dialogueG;
+    public string dialogueH;
 
     public string artifactOffer;
     public string minOfferAccepted;
     //if you should not be able to buy this one
     public string offerIsImpossible;
+    // if marge for bargains
+    public string canBargain; //can be "thermometer", "magnifier", "camera", "false" or put two-three tools : "camera, thermometer"
     public string finalPrice;
     public string grade;
 

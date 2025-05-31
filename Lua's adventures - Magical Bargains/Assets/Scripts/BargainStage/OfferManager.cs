@@ -14,6 +14,7 @@ public class OfferManager : MonoBehaviour
     private int yourOffer;
 
     private bool isBargainOn = false;
+    private bool choosingAction = false;
 
 
 
@@ -25,16 +26,24 @@ public class OfferManager : MonoBehaviour
 
 
         originalOffer = int.Parse(currentOffer);
-        yourOffer = (int) Mathf.Round((float)double.Parse(maxSavings));
+        yourOffer = (int)Mathf.Round((float)double.Parse(maxSavings));
 
 
-        UpdateOfferDisplay();   
+        UpdateOfferDisplay();
+    }
+
+    public void ChooseAction(string currentOffer, string maxSavings)
+    {
+        choosingAction = true;
+
+        UpdateOfferDisplay();
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        offerPanel.SetActive(isBargainOn);
+        offerPanel.SetActive(isBargainOn || choosingAction);
     }
 
     public void ChangeOffer(int delta)
@@ -44,20 +53,35 @@ public class OfferManager : MonoBehaviour
         
     }
 
+    public void ChoiceActionDone()
+    {
+        choosingAction = false;
+    }
     public void AcceptOffer()
     {
         isBargainOn = false;
+        choosingAction = false;
     }
 
     public void RefuseOffer()
     {
         isBargainOn = false;
+        choosingAction = false;
         yourOffer = 0;
     }
 
     void UpdateOfferDisplay()
     {
-        offerText.text = "The client offer is " + originalOffer.ToString() + " coins! \n Your offer is now " + yourOffer.ToString() + " coins :)";
+        if (isBargainOn)
+        {
+            offerText.text = "The client offer is " + originalOffer.ToString() + " coins! \n Your offer is now " + yourOffer.ToString() + " coins :)";
+
+        }
+        else if (choosingAction)
+        {
+            offerText.text = "What do you want to try?";
+        }
+        
     }
 
     //Getter to get final Offer

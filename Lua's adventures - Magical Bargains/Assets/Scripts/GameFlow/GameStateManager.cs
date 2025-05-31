@@ -63,6 +63,7 @@ public class GameStateManager : MonoBehaviour
                 // "client intro"
                 // "inspect"
                 // "bargain"
+                // "bargainAGAIN"
             // "client outro"
         // "level outro"
     // "game outro"
@@ -191,6 +192,25 @@ public class GameStateManager : MonoBehaviour
 
         levelManager.PrepareBargainState();
 
+    }
+
+    public void LoadBargainAGAINState()
+    {
+        state = "bargainAGAIN";
+
+        //stop timer
+        timer.PauseTimer();
+
+        //move Desk and stuff for layout change 
+        // hide tools + show bargaining buttons
+        DialogueManager.GetInstance().Reset();
+        levelManager.BargainAgain();
+    }
+
+    public void LoadSecondBargainDoneState(string action)
+    {
+        state = "client outro";
+        levelManager.FinishBargainStateAgain(action);
     }
 
     public void LoadBargainDoneState(bool refused)
