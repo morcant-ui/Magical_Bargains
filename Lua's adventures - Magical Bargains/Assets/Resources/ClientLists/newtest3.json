@@ -8,6 +8,7 @@
             "thermoColor": "#FF0008",
             "thermoIntensity":0.9,
 
+            "fullDialogue":"c12-dia",
             "dialogueA":"diaSa12",
 
             "artifactOffer": "50",
@@ -27,6 +28,7 @@
             "thermoColor": "#9F573A",
             "thermoIntensity":0.85,
 
+            "fullDialogue":"c6-dia",
             "dialogueA":"diaSa6",
             "dialogueB":"diaSb6",
             "dialogueC":"diaSc6",
@@ -46,6 +48,7 @@
             "thermoColor": "#FFBD00",
             "thermoIntensity":0.86,
 
+            "fullDialogue":"c10-dia",
             "dialogueA":"diaSa10",
 
             "artifactOffer": "90",
@@ -64,6 +67,7 @@
             "thermoColor": "#1C1FC8",
             "thermoIntensity":0.5,
 
+            "fullDialogue":"c11-dia",
             "dialogueA":"diaSa11",
 
             "artifactOffer": "120",

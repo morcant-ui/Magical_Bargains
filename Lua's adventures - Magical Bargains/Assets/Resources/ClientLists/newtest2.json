@@ -7,6 +7,7 @@
             "thermoColor": "#000000",
             "thermoIntensity":0.44,
 
+            "fullDialogue":"c8-dia",
             "dialogueA":"diaSa8",
             "dialogueB":"diaSb8",
             "dialogueC":"diaSc8",
@@ -31,6 +32,7 @@
             "minOfferAccepted": "30",
             "grade": "junk",
 
+            "fullDialogue":"c5-dia",
             "dialogueA":"diaSa5",
             "dialogueB":"diaSb5",
             "dialogueC":"diaSc5",
@@ -47,6 +49,7 @@
             "thermoColor": "#5BD1DE",
             "thermoIntensity":0.75,
 
+            "fullDialogue":"c9-dia",
             "dialogueA":"diaSa9",
 
             "artifactOffer": "80",
@@ -64,6 +67,7 @@
             "thermoColor": "#b240c6",
             "thermoIntensity":0.87,
 
+            "fullDialogue":"c7-dia",
             "dialogueA":"diaSa7",
             "dialogueB":"diaSb7",
             "dialogueC":"diaSc7",
@@ -84,6 +88,7 @@
             "thermoColor": "#FFF500",
             "thermoIntensity":0.99,
 
+            "fullDialogue":"c13-dia",
             "dialogueA":"diaSa13",
             
             "artifactOffer": "120",
