@@ -1,3 +1,4 @@
-avô Pedro: This is like a magical thermometer to gauge the concentration of magic inside the object. The STRONGER the color, the more POWERFUL the magic is !
-avô Pedro: Remember you have to shake the tool EVERYTIME you use it, like the regular mercury thermometers ! 
-avô Pedro: Position your mouse on the thermometer and keep your LEFT CLICK PRESSED in order to shake it, release to see what kind of magic resides in this artifact !
+avô Pedro: This is a magical thermometer that measures the concentration of magic inside an object. The STRONGER the color, the more POWERFUL the magic!
+avô Pedro: You must SHAKE it every time, like old mercury thermometers, you still know these?
+avô Pedro: To shake, hold LEFT CLICK on the thermometer until it starts shaking. Then RELEASE to see the magic level.
+avô Pedro: It takes some practice to understand what intensity mean good magic. Don’t worry though, you’ll get the hang of it with time!

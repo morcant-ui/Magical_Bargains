@@ -1,5 +1,4 @@
-avô Pedro: Good ! now that you have seen all three of the tools at your disposition, you can examine crucial aspects of the object that you wouldn't be able to see with the naked eye !
-avô Pedro: This is pretty important, ok ? Everytime a client comes in, be sure to check what you feel that is needed to check.
-avô Pedro: THEN when you think you are finished, feel free to press on the STOP INSPECTION button to your right.
-avô Pedro: You ought to be thorough ! 
-avô Pedro: Make sure the object is in good condition before buying, ok ?
+avô Pedro: Good! Now that you’ve seen all three tools at your disposal, you can examine important details you wouldn’t notice with the naked eye.
+avô Pedro: This is really important, alright? Every time a client comes in, check everything you think you need to.
+avô Pedro: Then, when you’re done, press the STOP INSPECTION button to your right.
+avô Pedro: Be thorough! Make sure the object is in good condition before buying, okay?

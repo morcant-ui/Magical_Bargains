@@ -1,6 +1,7 @@
-avô Pedro: Now that you have inspected their artifact, let's see the client's price.
-avô Pedro: If you feel like their object is not worth the amount that the client ask for, feel free to adjust your offer using the white buttons on your desk !
-avô Pedro: Be careful however, because the client might refuse your counter offer, don't be too sad if that happens !
-avô Pedro: You also need to make sure that you have enough money to buy the artifact: you'll find a BLUE bubble to your top right and it will display how much cash you have left.
-avô Pedro: Otherwise, if it seems that their trying to sell you junk, feel free to refuse to buy from them !
-avô Pedro: Ok, now. Let's hear how much the client ask for :-)
+avô Pedro: Done inspecting? Let’s see what the client wants for it.
+avô Pedro: If it’s too much, adjust your offer using the white buttons on your desk. But they might refuse!
+avô Pedro: But be careful, the client might refuse your counteroffer. Don’t be too sad if that happens!
+avô Pedro: Also, make sure you have enough money to buy the artifact. You’ll find a BLUE bubble at the top right showing how much coins you have left.
+avô Pedro: Spend wisely, or you might have to close early.
+avô Pedro: And if it looks like junk or it is too expensive? Just refuse the deal!
+avô Pedro: Alright, let’s hear their price.

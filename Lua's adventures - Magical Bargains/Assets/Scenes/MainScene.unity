@@ -1517,7 +1517,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playIntroCutscene: 0
-  tutoActivated: 0
+  tutoActivated: 1
   grandpa: {fileID: 777833723}
   levelManager: {fileID: 547474431}
   buttonManager: {fileID: 176006325}
