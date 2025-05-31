@@ -1,2 +1,0 @@
-Good day to you, I brought you quite the rare artifact today, please take a look
-I believe stroking this object with a cloth will grant you wishes.. It has the potential to be quite popular at auctions, I believe !

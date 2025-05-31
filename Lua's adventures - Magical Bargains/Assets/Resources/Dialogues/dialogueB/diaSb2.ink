@@ -1,1 +1,0 @@
-Yesssss thank you :-) Sorry I might have chewed on it a little but it is a very good wand yes !! just a little chewed on no problem !! :-)

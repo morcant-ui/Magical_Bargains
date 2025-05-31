@@ -1,1 +1,0 @@
-Thank you for this offer.. I hope this will bring about good fortune to your shop..

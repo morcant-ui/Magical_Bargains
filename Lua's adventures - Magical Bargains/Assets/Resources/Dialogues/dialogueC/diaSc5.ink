@@ -1,1 +1,0 @@
-Come on, that was such a good offer ! You sure you don't want to buy it for a little more ?

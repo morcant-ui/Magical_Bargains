@@ -1,1 +1,0 @@
-I'm sorry, I would rather sell it at a higher price..

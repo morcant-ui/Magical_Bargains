@@ -1,1 +1,0 @@
-What !! Are you trying to buy this beautiful sword at such a measly price !! I take great offense.. Let us never see each other again..

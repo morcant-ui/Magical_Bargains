@@ -1,1 +1,0 @@
-You gotta be kidding me.. I am NOT gonna settle for this little money ! Sorry not sorry you bucko !
