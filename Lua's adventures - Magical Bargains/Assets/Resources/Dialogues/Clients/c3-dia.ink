@@ -13,9 +13,10 @@ This is the default knot, we should not be reading this in game
 -> DONE
 
 === a ===
-Good afternoon, young lady. I'm here to sell my staff... It's a little old, but well cared for. I assure you, it'll fetch a good price!
+Good afternoon, young lady. 
+I'm here to sell my staff... It's a little old, but well cared for. I assure you, it'll fetch a good price!
 * "What kind of staff?"
-    Hah! Sweetie, some things don’t need explaining. You’ll understand the moment you lay eyes on it.
+    Hah! Silly, some things don’t need explaining. You’ll understand the moment you lay eyes on it.
     -> DONE
 * "How old?"
     Oh ho! That’s not something you ask a lady! Just because it’s old doesn’t mean it’s lost its sparkle!
@@ -35,7 +36,7 @@ That won’t do, little toadstool. You don’t have that kind of money. I’ll j
 
 === e ===
 //You refused the client's offer
-The magic may have faded a little, but this antique still holds its worth, darling!
+The magic may have faded a little, but this antique still holds its worth, bud!
 -> DONE
 
 === f ===

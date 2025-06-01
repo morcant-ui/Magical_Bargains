@@ -18,7 +18,7 @@
             "offerIsImpossible": "true",
             "grade": "excellent",
 
-            "clientName": "Angry wiz",
+            "clientName": "Angry Wiz",
             "clientColor": "#32a852"
         },
         {
@@ -60,7 +60,7 @@
             "canBargain":"thermometer",
             "grade": "ok",
 
-            "clientName": "mimi fun",
+            "clientName": "Mimi Fun",
             "clientColor": "#40c65c"
         },
         {
@@ -79,10 +79,10 @@
             
             "artifactOffer": "80",
             "minOfferAccepted": "40",
-            "canBargain":"camera",
+            "canBargain":"false",
             "grade": "good",
 
-            "clientName": "green lady",
+            "clientName": "Green Lady",
             "clientColor": "#1DEA0F"
         }
     ]

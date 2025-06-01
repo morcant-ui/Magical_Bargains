@@ -16,9 +16,33 @@
             "canBargain":"camera",
             "grade": "haunted",
 
-            "clientName": "miette",
+            "clientName": "Miette",
             "clientColor": "#FF0008"
         },
+        {
+            "clientSprite": "c15",
+            "artifactSprite": "a6",
+
+            "cameraSprite":"a6-hidden",
+            "magnifierSprite":"a6-hidden",
+            
+            "thermoColor": "#1FE51B",
+            "thermoIntensity":0.68,
+
+            "fullDialogue":"c5-dia",
+            "dialogueA":"diaSa15",
+            "dialogueB":"diaSb15",
+            "dialogueC":"diaSc15",
+            "dialogueD":"diaSd15",
+            
+            "artifactOffer": "90",
+            "minOfferAccepted": "50",
+            "canBargain":"false",
+            "grade": "good",
+
+            "clientName": "Simba",
+            "clientColor": "#3b7a5e"
+        },  
         {
             "clientSprite": "c8",
             "artifactSprite": "a6",
@@ -40,7 +64,7 @@
             "canBargain":"false",
             "grade": "good",
 
-            "clientName": "skinny john",
+            "clientName": "Skinny John",
             "clientColor": "#7915B0"
         },  
         {
@@ -62,7 +86,7 @@
             "dialogueC":"diaSc5",
             "dialogueD":"diaSd5",
 
-            "clientName": "pepine",
+            "clientName": "Pepine",
             "clientColor": "#D4AA0B"
         },
 
@@ -82,7 +106,7 @@
             "minOfferAccepted": "90",
             "grade": "junk",
 
-            "clientName": "pablo di san paolo",
+            "clientName": "Pablo di San Paolo",
             "clientColor": "#4B0991"
         }
     ]

@@ -18,7 +18,7 @@
             "canBargain":"false",
             "grade": "good",
 
-            "clientName": "francis la menace",
+            "clientName": "Francis la menace",
             "clientColor": "#132FE5"
         },
         {
@@ -36,7 +36,7 @@
             "canBargain":"false",
             "grade": "junk",
 
-            "clientName": "kit & kat",
+            "clientName": "Kit & Kat",
             "clientColor": "#9270C3"
         }, 
         {
@@ -55,7 +55,7 @@
             "canBargain":"magnifier",
             "grade": "bad",
 
-            "clientName": "sus-ie",
+            "clientName": "Sus-ie",
             "clientColor": "#3EC362"
         },
         {
@@ -77,7 +77,7 @@
             "canBargain":"camera",
             "grade": "haunted",
 
-            "clientName": "good ol' pepe",
+            "clientName": "Good ol' Pepe",
             "clientColor": "#b240c6"
         },
         {
