@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.EventSystems;
 using Ink.Runtime;
 using UnityEngine.UI;
 
@@ -250,6 +251,8 @@ public class DialogueManager : MonoBehaviour
 
     void DisplayChoices()
     {
+
+        EventSystem.current.SetSelectedGameObject(null);
 
         int choiceCount = currentStory.currentChoices.Count;
 

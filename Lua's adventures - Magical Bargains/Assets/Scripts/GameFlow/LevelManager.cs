@@ -128,8 +128,6 @@ public class LevelManager : MonoBehaviour
         string currentLevelName = currentLevel.listClientsName;
         int currentMaxTime = tutoActivated ? 0 : currentLevel.maxTime;
 
-        Debug.Log("----------TEST: " + currentLevel.dailyExpenses);
-
 
         GameStateManager.GetInstance().UpdateMaxTime(currentMaxTime);
 

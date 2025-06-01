@@ -30,7 +30,6 @@ public class GameStateManager : MonoBehaviour
     [SerializeField] private AudioClip levelMusic;
     [SerializeField] private AudioClip gameOutroMusic;
     [SerializeField] private float volume = 0.6f;
-    [SerializeField] private float introVolume = 0.1f;
 
     private float maxTime = -1;
 
@@ -103,7 +102,10 @@ public class GameStateManager : MonoBehaviour
         state = "game intro";
 
         // start playing the game intro music
-        AudioManager.GetInstance().StartMusic(gameIntroMusic, introVolume, true);
+
+        AudioManager.GetInstance().SetMusicVolume(volume);
+
+        AudioManager.GetInstance().StartMusic(gameIntroMusic, true);
 
         levelManager.LoadGameData();
         levelManager.SetTutoStatus(tutoActivated);
@@ -127,7 +129,7 @@ public class GameStateManager : MonoBehaviour
         initialSavings = savings;
 
         // start playing the level music
-        AudioManager.GetInstance().StartMusic(levelMusic, volume, true);
+        AudioManager.GetInstance().StartMusic(levelMusic, true);
 
         grandpa.SetActive(true);
 
@@ -235,7 +237,7 @@ public class GameStateManager : MonoBehaviour
         // stop music
         AudioManager.GetInstance().StopMusic();
         // start playing the level outro music
-        AudioManager.GetInstance().StartMusic(levelOutroMusic, volume);
+        AudioManager.GetInstance().StartMusic(levelOutroMusic);
 
         float elapsedTime = timer.CheckTimer();
 
@@ -248,8 +250,7 @@ public class GameStateManager : MonoBehaviour
 
     public void LoadGameOutro()
     {
-
-        AudioManager.GetInstance().StartMusic(gameOutroMusic, introVolume, true);
+        AudioManager.GetInstance().StartMusic(gameOutroMusic, true);
         DialogueManager.GetInstance().Reset();
 
         savings += levelOutro.CalculateEarnings(currentPurchases, savings);

@@ -11,6 +11,9 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioSource musicSource;
 
 
+    private float volume = 0.1f;
+
+
     private static AudioManager instance;
 
     // Start is called before the first frame update
@@ -50,7 +53,7 @@ public class AudioManager : MonoBehaviour
     }
 
 
-    public void StartMusic(AudioClip audio, float volume, bool playOnLoop = false) {
+    public void StartMusic(AudioClip audio, bool playOnLoop = false) {
 
         musicSource.clip = audio;
 
@@ -71,20 +74,18 @@ public class AudioManager : MonoBehaviour
 
     public float GetMusicVolume() {
 
-        
-
-        if (musicSource.isPlaying)
-        {
-            return musicSource.volume;
-        }
-        else { return 0f; }
+        return volume;
     }
 
     public void SetMusicVolume(float vol) {
 
+        volume = vol;
+
         if (musicSource.isPlaying) {
 
-            musicSource.volume = vol;
+            
+            musicSource.volume = volume;
+
         }
     }
 }

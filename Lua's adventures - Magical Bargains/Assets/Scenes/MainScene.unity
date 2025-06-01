@@ -216,7 +216,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 2
-  m_VerticalAlignment: 512
+  m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -1666,7 +1666,6 @@ MonoBehaviour:
   levelMusic: {fileID: 8300000, guid: 543d841fb19cf2142b434eaa5ecbeffb, type: 3}
   gameOutroMusic: {fileID: 8300000, guid: 67c9585021808be41bcf531c7c55fb52, type: 3}
   volume: 0.02
-  introVolume: 0.02
 --- !u!1 &209753676
 GameObject:
   m_ObjectHideFlags: 0
