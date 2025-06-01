@@ -2,7 +2,10 @@
 //-> b
 -> c
 -> d
-//-> e
+-> e
+//-> f
+//-> g
+//-> h
 
 
 === default ===
@@ -30,9 +33,10 @@ What?! You lack the coin? The audacity! You fool! You have dishonored this sacre
 What !! Are you trying to buy this beautiful sword at such a measly price !! I take great offense.. Let us never see each other again..
 -> DONE
 
-//=== e ===
+=== e ===
 //You refused the client's offer
-//-> DONE
+You refuse this amazing offer? You cheap… child! How utterly insulting!
+-> DONE
 
 //=== f ===
 // Client tells you your offer is not enough and offer to bargain
