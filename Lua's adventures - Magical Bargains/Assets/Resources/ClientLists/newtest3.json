@@ -1,6 +1,25 @@
 {
     "clients": [
         {
+            "clientSprite": "c9",
+            "artifactSprite": "a12",
+
+            "cameraSprite":"a12-hidden",
+            "thermoColor": "#FF0008",
+            "thermoIntensity":0.9,
+
+            "fullDialogue":"c12-dia",
+            "dialogueA":"diaSa12",
+
+            "artifactOffer": "50",
+            "minOfferAccepted": "20",
+            "canBargain":"camera",
+            "grade": "haunted",
+
+            "clientName": "Miette",
+            "clientColor": "#FF0008"
+        },
+        {
             "clientSprite": "c10",
             "artifactSprite": "a5",
 

@@ -40,23 +40,23 @@
             "clientColor": "#9270C3"
         }, 
         {
-            "clientSprite": "c9",
-            "artifactSprite": "a12",
+            "clientSprite": "c10",
+            "artifactSprite": "a5",
 
-            "cameraSprite":"a12-hidden",
-            "thermoColor": "#FF0008",
-            "thermoIntensity":0.9,
+            "magnifierSprite":"a5-hidden",
+            "thermoColor": "#5BD1DE",
+            "thermoIntensity":0.75,
 
-            "fullDialogue":"c12-dia",
-            "dialogueA":"diaSa12",
+            "fullDialogue":"c9-dia",
+            "dialogueA":"diaSa9",
 
-            "artifactOffer": "50",
-            "minOfferAccepted": "20",
-            "canBargain":"camera",
-            "grade": "haunted",
+            "artifactOffer": "80",
+            "minOfferAccepted": "50",
+            "canBargain":"magnifier",
+            "grade": "bad",
 
-            "clientName": "Miette",
-            "clientColor": "#FF0008"
+            "clientName": "Sus-ie",
+            "clientColor": "#3EC362"
         },
         {
             "clientSprite": "c7",
