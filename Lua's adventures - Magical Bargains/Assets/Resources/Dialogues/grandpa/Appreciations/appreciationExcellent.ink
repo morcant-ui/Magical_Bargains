@@ -1,2 +1,1 @@
-avô Pedro: Let's goooo grand-daughter of mine
-avô Pedro: you are a godsend I'm getting rich !!
+avô Pedro: Neta, you’re a gift from the spirits! Riches are raining down on me!

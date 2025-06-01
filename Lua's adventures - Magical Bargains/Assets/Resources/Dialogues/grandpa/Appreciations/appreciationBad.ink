@@ -1,1 +1,2 @@
-avô Pedro: Missy pleasssse don't spend all my money :-(
+avô Pedro: Neta, pleasssse don’t spend all my money! 
+avô Pedro: Be reasonable today...
