@@ -22,6 +22,7 @@ public class ClientData
     public string dialogueF;
     public string dialogueG;
     public string dialogueH;
+    public string dialogueI;
 
     public string artifactOffer;
     public string minOfferAccepted;

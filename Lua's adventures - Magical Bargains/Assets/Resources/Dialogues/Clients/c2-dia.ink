@@ -6,6 +6,7 @@
 -> f
 -> g
 // -> h
+-> i
 
 
 === default ===
@@ -59,3 +60,8 @@ How dare you! It’s only been lightly chewed... out of love! I see I’m not we
 // = false -> there was no way to bargain for a decreased offer (but could maybe offer more money) (so you missed also)
 // no need in this case
 //-> DONE
+
+=== i ===
+// congrats you found the scam
+Yesssss you're right!! Sorry, I might have chewed on it a little... But it’s still a very good wand, yes yes!! Just a tiny bit chewed, no problem!! Totally fine!!
+-> DONE

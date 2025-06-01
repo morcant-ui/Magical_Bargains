@@ -6,6 +6,7 @@
 //-> f
 //-> g
 //-> h
+//-> i
 
 
 === default ===
@@ -53,3 +54,7 @@ You refuse this amazing offer? You cheap… child! How utterly insulting!
 // never happens in this situation
 //-> DONE
 
+//=== i ===
+// congrats you found the scam
+// never happens in this situation
+//-> DONE

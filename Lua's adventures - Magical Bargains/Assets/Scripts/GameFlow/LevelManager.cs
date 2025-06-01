@@ -494,8 +494,8 @@ public class LevelManager : MonoBehaviour
             GameStateManager.GetInstance().AddToListPurchases(currentClient);
 
             // 3)
-            dialogue = dialogueLoader.LoadDialogue(dialogueName, "dialogueB");
-            knotName = "b";
+            dialogue = dialogueLoader.LoadDialogue(dialogueName, "dialogueI");
+            knotName = "i";
         }
         else if (currentClient.canBargain != "false" && currentClient.canBargain != action)
         {
