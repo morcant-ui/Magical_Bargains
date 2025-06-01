@@ -68,6 +68,6 @@ That’s low. You don’t need to make excuses. Just say no if it’s no.
 
 === i ===
 // congrats you found the scam
-Okay, yes... it is just a normal slice of pizza. But we tried to infuse it with our magic! I guess we’re not strong enough... yet.
+Okay, yes... it is just a normal slice of pizza. Il't take you on your offer, it's better than nothing I guess!
 -> DONE
 
