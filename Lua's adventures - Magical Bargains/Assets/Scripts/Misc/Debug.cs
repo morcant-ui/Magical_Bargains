@@ -10,7 +10,7 @@ namespace DebugStuff
         private string stack;
         bool doShow = false;
 
-        void Update() { if (Input.GetKeyDown(KeyCode.Escape)) { doShow = !doShow; } }
+        void Update() { if (Input.GetKeyDown(KeyCode.Tab)) { doShow = !doShow; } }
 
         void OnEnable()
         {
