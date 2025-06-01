@@ -35,7 +35,7 @@
             "dialogueD":"diaSd2",
             
             "artifactOffer": "60",
-            "minOfferAccepted": "30",
+            "minOfferAccepted": "20",
             "canBargain":"magnifier",
             "grade": "junk",
 
@@ -77,8 +77,8 @@
             "dialogueC":"diaSc4",
             "dialogueD":"diaSd4",
             
-            "artifactOffer": "80",
-            "minOfferAccepted": "40",
+            "artifactOffer": "90",
+            "minOfferAccepted": "70",
             "canBargain":"false",
             "grade": "good",
 
