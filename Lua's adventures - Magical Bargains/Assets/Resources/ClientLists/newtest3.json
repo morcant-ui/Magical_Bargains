@@ -13,12 +13,13 @@
 
             "artifactOffer": "50",
             "minOfferAccepted": "20",
+            "canBargain":"camera",
             "grade": "haunted",
 
             "clientName": "miette",
             "clientColor": "#FF0008"
         },
-                {
+        {
             "clientSprite": "c8",
             "artifactSprite": "a6",
 
@@ -35,7 +36,8 @@
             "dialogueD":"diaSd6",
             
             "artifactOffer": "60",
-            "minOfferAccepted": "40",
+            "minOfferAccepted": "30",
+            "canBargain":"false",
             "grade": "good",
 
             "clientName": "skinny john",
@@ -51,6 +53,7 @@
 
             "artifactOffer": "80",
             "minOfferAccepted": "30",
+            "canBargain":"magnifier",
             "grade": "junk",
 
             "fullDialogue":"c5-dia",
@@ -69,7 +72,8 @@
 
             "cameraSprite":"a2-hidden",
             "thermoColor": "#1C1FC8",
-            "thermoIntensity":0.5,
+            "canBargain":"camera, thermometer",
+            "thermoIntensity":0.3,
 
             "fullDialogue":"c11-dia",
             "dialogueA":"diaSa11",

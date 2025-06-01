@@ -15,6 +15,7 @@
 
             "artifactOffer": "90",
             "minOfferAccepted": "40",
+            "canBargain":"false",
             "grade": "good",
 
             "clientName": "francis la menace",
@@ -32,6 +33,7 @@
 
             "artifactOffer": "90",
             "minOfferAccepted": "60",
+            "canBargain":"false",
             "grade": "junk",
 
             "clientName": "kit & kat",
@@ -50,6 +52,7 @@
 
             "artifactOffer": "80",
             "minOfferAccepted": "50",
+            "canBargain":"magnifier",
             "grade": "bad",
 
             "clientName": "sus-ie",
@@ -71,6 +74,7 @@
             
             "artifactOffer": "50",
             "minOfferAccepted": "20",
+            "canBargain":"camera",
             "grade": "haunted",
 
             "clientName": "good ol' pepe",
@@ -89,6 +93,7 @@
             
             "artifactOffer": "120",
             "minOfferAccepted": "50",
+            "canBargain":"false",
             "grade": "excellent",
 
             "clientName": "la ballerina creatura",
