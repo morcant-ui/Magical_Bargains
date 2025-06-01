@@ -67,4 +67,24 @@ public class AudioManager : MonoBehaviour
         musicSource.Stop();
 
     }
+
+
+    public float GetMusicVolume() {
+
+        
+
+        if (musicSource.isPlaying)
+        {
+            return musicSource.volume;
+        }
+        else { return 0f; }
+    }
+
+    public void SetMusicVolume(float vol) {
+
+        if (musicSource.isPlaying) {
+
+            musicSource.volume = vol;
+        }
+    }
 }

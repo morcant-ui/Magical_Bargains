@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using TMPro;
 
 public class LevelMenu : MonoBehaviour
 {
@@ -10,7 +11,8 @@ public class LevelMenu : MonoBehaviour
    
     [SerializeField] private GameObject menuPanel;
 
-    [SerializeField] private GameObject musicSlider;
+    [SerializeField] private TextMeshProUGUI volumeText;
+    [SerializeField] private Slider musicSlider;
     [SerializeField] private Foldout musicSection;
     [SerializeField] private Foldout controlSection;
 
@@ -20,6 +22,7 @@ public class LevelMenu : MonoBehaviour
     void Start()
     {
         menuPanel.SetActive(false);
+        musicSlider.onValueChanged.AddListener(delegate { ChangeMusicVolume(); });
     }
 
     // Update is called once per frame
@@ -42,7 +45,9 @@ public class LevelMenu : MonoBehaviour
 
 
             // update music volume
-            Slider slider = musicSlider.GetComponent<Slider>();
+            float vol = AudioManager.GetInstance().GetMusicVolume();
+            musicSlider.value = vol;
+            volumeText.text = vol.ToString("0.00");
 
             // reset buttons
             if (musicSection.isFoldoutExpanded()) 
@@ -60,6 +65,16 @@ public class LevelMenu : MonoBehaviour
         }
 
         isOn = !isOn;
+
+    }
+
+
+    private void ChangeMusicVolume() {
+        float vol = musicSlider.value;
+
+        volumeText.text = vol.ToString("0.00");
+
+        AudioManager.GetInstance().SetMusicVolume(vol);
 
     }
 }
