@@ -40,23 +40,27 @@
 
             "clientName": "skinny john",
             "clientColor": "#7915B0"
-        },
+        },  
         {
-            "clientSprite": "c11",
-            "artifactSprite": "artifact3",
+            "clientSprite": "c5",
+            "artifactSprite": "a11",
 
-            "thermoColor": "#FFBD00",
-            "thermoIntensity":0.86,
+            "magnifierSprite": "a11-hidden",
+            "thermoColor": "#000000",
+            "thermoIntensity":0.1,
 
-            "fullDialogue":"c10-dia",
-            "dialogueA":"diaSa10",
-
-            "artifactOffer": "90",
-            "minOfferAccepted": "60",
+            "artifactOffer": "80",
+            "minOfferAccepted": "30",
             "grade": "junk",
 
-            "clientName": "kit & kat",
-            "clientColor": "#9270C3"
+            "fullDialogue":"c5-dia",
+            "dialogueA":"diaSa5",
+            "dialogueB":"diaSb5",
+            "dialogueC":"diaSc5",
+            "dialogueD":"diaSd5",
+
+            "clientName": "pepine",
+            "clientColor": "#D4AA0B"
         },
 
         {

@@ -21,25 +21,21 @@
             "clientColor": "#132FE5"
         },
         {
-            "clientSprite": "c5",
-            "artifactSprite": "a11",
+            "clientSprite": "c11",
+            "artifactSprite": "artifact3",
 
-            "magnifierSprite": "a11-hidden",
-            "thermoColor": "#000000",
-            "thermoIntensity":0.1,
+            "thermoColor": "#FFBD00",
+            "thermoIntensity":0.86,
 
-            "artifactOffer": "80",
-            "minOfferAccepted": "30",
+            "fullDialogue":"c10-dia",
+            "dialogueA":"diaSa10",
+
+            "artifactOffer": "90",
+            "minOfferAccepted": "60",
             "grade": "junk",
 
-            "fullDialogue":"c5-dia",
-            "dialogueA":"diaSa5",
-            "dialogueB":"diaSb5",
-            "dialogueC":"diaSc5",
-            "dialogueD":"diaSd5",
-
-            "clientName": "pepine",
-            "clientColor": "#D4AA0B"
+            "clientName": "kit & kat",
+            "clientColor": "#9270C3"
         }, 
         {
             "clientSprite": "c10",
