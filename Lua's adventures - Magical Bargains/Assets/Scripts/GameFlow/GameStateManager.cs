@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.IO;
+using UnityEngine.EventSystems;
 
 public class GameStateManager : MonoBehaviour
 {
@@ -193,6 +194,8 @@ public class GameStateManager : MonoBehaviour
         DialogueManager.GetInstance().Reset();
 
         levelManager.PrepareBargainState();
+
+        EventSystem.current.SetSelectedGameObject(null);
 
     }
 

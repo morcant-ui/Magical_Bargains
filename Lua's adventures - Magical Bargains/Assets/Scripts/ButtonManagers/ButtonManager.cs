@@ -16,6 +16,7 @@ public class ButtonManager : MonoBehaviour
     [SerializeField] private Button introButton;
 
     [Header("Bargain Buttons")]
+    [SerializeField] private GameObject bargainFrog;
     [SerializeField] private Button acceptButton;
     [SerializeField] private Button refuseButton;
     [SerializeField] private Button addButton;
@@ -176,6 +177,8 @@ public class ButtonManager : MonoBehaviour
         magnifierButtonActivated = false;
         thermometer.gameObject.SetActive(false);
         thermometerButtonActivated = false;
+
+        EventSystem.current.SetSelectedGameObject(null);
     }
 
     public void OnReduceOfferButtonClick(){
@@ -187,6 +190,8 @@ public class ButtonManager : MonoBehaviour
         magnifierButtonActivated = false;
         thermometer.gameObject.SetActive(false);
         thermometerButtonActivated = false;
+
+        EventSystem.current.SetSelectedGameObject(null);
     }
     public void OnAcceptOfferButtonClick()
     {
@@ -204,6 +209,8 @@ public class ButtonManager : MonoBehaviour
         magnifierButtonActivated = false;
         thermometer.gameObject.SetActive(false);
         thermometerButtonActivated = false;
+
+        EventSystem.current.SetSelectedGameObject(null);
     }
 
     public void OnProblemCameraButtonClick()
@@ -261,6 +268,8 @@ public class ButtonManager : MonoBehaviour
         magnifierButtonActivated = false;
         thermometer.gameObject.SetActive(false);
         thermometerButtonActivated = false;
+
+
     }
     
     public void OnRefuseOfferButtonClick()
@@ -279,6 +288,8 @@ public class ButtonManager : MonoBehaviour
         magnifierButtonActivated = false;
         thermometer.gameObject.SetActive(false);
         thermometerButtonActivated = false;
+
+        EventSystem.current.SetSelectedGameObject(null);
     }
 
     public void OnIntroButtonClick()
@@ -296,6 +307,8 @@ public class ButtonManager : MonoBehaviour
             thermometer.gameObject.SetActive(false);
             thermometerButtonActivated = false;
         }
+
+        EventSystem.current.SetSelectedGameObject(null);
     }
 
 
@@ -494,8 +507,12 @@ public class ButtonManager : MonoBehaviour
         bargainButton.gameObject.SetActive(isBargainActive);
         bargainButton.interactable = isBargainActive && additionalCheck && bargainDoubleCheck;
 
+        
+
         introButton.gameObject.SetActive(isIntroActive && additionalCheck);
         introButton.interactable = isIntroActive && additionalCheck;
+
+        bargainFrog.SetActive(bargainInProgress);
 
         acceptButton.gameObject.SetActive(bargainInProgress);
         refuseButton.gameObject.SetActive(bargainInProgress);

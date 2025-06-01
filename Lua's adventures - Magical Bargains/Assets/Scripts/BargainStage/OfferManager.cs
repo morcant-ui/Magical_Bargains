@@ -9,6 +9,7 @@ public class OfferManager : MonoBehaviour
     [Header("Dialogue UI")]
     [SerializeField] private GameObject offerPanel;
     [SerializeField] private TextMeshProUGUI offerText;
+    [SerializeField] private TextMeshProUGUI offeredPrice;
 
     private int originalOffer;
     private int yourOffer;
@@ -74,8 +75,8 @@ public class OfferManager : MonoBehaviour
     {
         if (isBargainOn)
         {
-            offerText.text = "The client offer is " + originalOffer.ToString() + " coins! \n Your offer is now " + yourOffer.ToString() + " coins :)";
-
+            offerText.text = "The client offer is " + originalOffer.ToString() + " coins!";
+            offeredPrice.text = "Your offer:\n" + yourOffer.ToString("00.00");
         }
         else if (choosingAction)
         {
