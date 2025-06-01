@@ -31,3 +31,19 @@ Very powerful, it could break the sea in two!! true fact for real now pleassse b
 //You refused the client's offer
 //-> DONE
 
+//=== f ===
+//You trying to bargain
+//-> DONE
+
+//=== g ===
+// there was a way to bargain but you missed
+//-> DONE
+
+//=== h ===
+// = false -> there was no way to bargain for a decreased offer (but could maybe offer more money) (so you missed also)
+//-> DONE
+
+//=== i ===
+// congrats you found the scam
+//-> DONE
+

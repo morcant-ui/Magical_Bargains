@@ -26,17 +26,17 @@
             "artifactSprite": "artifact3",
 
             "thermoColor": "#FFBD00",
-            "thermoIntensity":0.86,
+            "thermoIntensity":0.2,
 
             "fullDialogue":"c10-dia",
             "dialogueA":"diaSa10",
 
             "artifactOffer": "90",
             "minOfferAccepted": "60",
-            "canBargain":"false",
+            "canBargain":"thermometer",
             "grade": "junk",
 
-            "clientName": "Kit & Kat",
+            "clientName": "Qiwy & Quellia",
             "clientColor": "#9270C3"
         }, 
         {
