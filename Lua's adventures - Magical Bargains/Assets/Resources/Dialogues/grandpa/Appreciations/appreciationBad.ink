@@ -1,2 +1,2 @@
-avô Pedro: Neta, pleasssse don’t spend all my money! 
+avô Pedro: Lua, pleasssse don’t make me lose all my money! 
 avô Pedro: Be reasonable today...

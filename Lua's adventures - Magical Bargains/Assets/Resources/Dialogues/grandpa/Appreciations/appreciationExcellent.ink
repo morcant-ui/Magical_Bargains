@@ -1,1 +1,1 @@
-avô Pedro: Neta, you’re a gift from the spirits! Riches are raining down on me!
+avô Pedro: Lua, you’re a gift from the spirits! Riches are raining down on me!
