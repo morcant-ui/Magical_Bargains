@@ -149,6 +149,9 @@ public class GameStateManager : MonoBehaviour
         }
 
         DialogueManager.GetInstance().Reset();
+        DialogueManager.GetInstance().HideSavings();
+
+
         levelManager.LoadNextClient( timerEnded );
 
 
@@ -173,6 +176,8 @@ public class GameStateManager : MonoBehaviour
             
         } else {
 
+            levelManager.CreateArtifact();
+
             ReadTutoDialogue("tuto3");
 
             if (tutoWaitForGrandpa != null) { StopCoroutine(tutoWaitForGrandpa); }
@@ -192,6 +197,7 @@ public class GameStateManager : MonoBehaviour
         // move Desk and stuff for layout change
         //hide tools + show bargaining buttons
         DialogueManager.GetInstance().Reset();
+        DialogueManager.GetInstance().ShowSavings();
 
         levelManager.PrepareBargainState();
 
@@ -341,6 +347,6 @@ public class GameStateManager : MonoBehaviour
         //yield return new WaitUntil();
 
         timer.StartTimer(maxTime);
-        levelManager.CreateArtifact();
+        
     }
 }

@@ -27,10 +27,17 @@ public class LevelManager : MonoBehaviour
     [Header("Transitional blackscreen")]
     [SerializeField] private GameObject blackScreen;
 
+    [Header("money sound Clip")]
+    [SerializeField] private AudioClip moneyAudioClip;
+    [SerializeField] private float volume = 0.1f;
+
     [Header("WarningNoMoney Graphics")]
     [SerializeField] private GameObject holder;
     [SerializeField] private GameObject backgroundColor;
-     // message if skipped last client
+
+
+
+    // message if skipped last client
     public GameObject warningNoMoreMoneyMessage;
 
 
@@ -391,6 +398,10 @@ public class LevelManager : MonoBehaviour
         {
             // Outcome B: offer accepted
             Debug.Log("Finish Bargain State: Outcome B");
+
+            // play audio
+            Transform position = savingsImage.GetComponent<Transform>();
+            AudioManager.GetInstance().PlayClip(moneyAudioClip, position, volume);
 
             // update savings
             savings = GameStateManager.GetInstance().RetrieveMoney(finalOffer);

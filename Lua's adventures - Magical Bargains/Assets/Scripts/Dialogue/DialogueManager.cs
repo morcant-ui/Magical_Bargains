@@ -91,6 +91,8 @@ public class DialogueManager : MonoBehaviour
         dialoguePanel.SetActive(!isCutscenePlaying);
 
         typingSpeed = normalSpeed;
+
+        HideSavings();
     }
 
     public static DialogueManager GetInstance() {
@@ -499,5 +501,13 @@ public class DialogueManager : MonoBehaviour
     public void CutsceneStopped() {
 
         isCutscenePlaying = false;
+    }
+
+    public void ShowSavings() {
+        savingsImage.SetActive(true);
+    }
+
+    public void HideSavings() {
+        savingsImage.SetActive(false);
     }
 }

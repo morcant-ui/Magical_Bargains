@@ -23,7 +23,11 @@ public class ShakingThermo : MonoBehaviour
     public Image screenOverlay;
 
     public float fadeDuration = 1f;
-    
+
+    [Header("poof sound Clip")]
+    [SerializeField] private AudioClip audioClip;
+    [SerializeField] private float volume = 0.1f;
+
     public void StartProcess()
     {
         originalPos = transform.localPosition;
@@ -144,6 +148,11 @@ public class ShakingThermo : MonoBehaviour
     private IEnumerator FlashEffect(Color flashColor)
     {
         holder.SetActive(true);
+
+        // play clip
+        Transform position = holder.GetComponent<Transform>();
+        AudioManager.GetInstance().PlayClip(audioClip, position, volume);
+
         // Fade in
         float t = 0;
         float fadeInDuration = 0.3f;
@@ -158,7 +167,7 @@ public class ShakingThermo : MonoBehaviour
         
 
         // Wait a bit
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.3f);
 
         // Fade out
         t = 0;
