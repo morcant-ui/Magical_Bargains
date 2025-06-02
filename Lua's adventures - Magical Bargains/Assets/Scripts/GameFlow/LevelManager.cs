@@ -303,8 +303,7 @@ public class LevelManager : MonoBehaviour
         savings = GameStateManager.GetInstance().CheckMoney();
         savingsText.text = "$" + savings.ToString("00.00");
 
-        savingsText.color = Color.white;
-        savingsImage.SetActive(true);
+        
 
 
         // 3)
@@ -650,6 +649,11 @@ public class LevelManager : MonoBehaviour
 
             yield return null;
         }
+
+        // only show savings NOW 
+
+        savingsText.color = Color.white;
+        savingsImage.SetActive(true);
 
         offerManager.StartBargain(currentOffer, maxSavings);
     }

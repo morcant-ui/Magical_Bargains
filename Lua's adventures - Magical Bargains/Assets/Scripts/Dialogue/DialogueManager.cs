@@ -17,7 +17,7 @@ public class DialogueManager : MonoBehaviour
 
     [SerializeField] private GameObject savingsImage;
     [SerializeField] private TextMeshProUGUI savingsText;
-    [SerializeField] private Image spaceBarIcon;
+    [SerializeField] private GameObject spaceBarIcon;
 
     [Header("Typing Speed")]
     [SerializeField] private bool skipTypingAsAWhole = false;
@@ -31,6 +31,7 @@ public class DialogueManager : MonoBehaviour
     // Booleans
     public bool dialogueIsPlaying { get; private set; }
     public bool dialogueIsFinished { get; private set; }
+    private bool choiceInProgress = false;
 
     private bool isCurrentlyTyping;
 
@@ -90,6 +91,8 @@ public class DialogueManager : MonoBehaviour
 
         dialoguePanel.SetActive(!isCutscenePlaying);
 
+        spaceBarIcon.SetActive(false);
+
         typingSpeed = normalSpeed;
 
         HideSavings();
@@ -110,7 +113,7 @@ public class DialogueManager : MonoBehaviour
 
             if (isCurrentlyTyping)
             {
-                spaceBarIcon.color = Color.white;
+                spaceBarIcon.SetActive(false);
 
                 if (Input.GetKeyDown(inputKey)) {
 
@@ -256,6 +259,8 @@ public class DialogueManager : MonoBehaviour
 
         EventSystem.current.SetSelectedGameObject(null);
 
+        choiceInProgress = true;
+
         int choiceCount = currentStory.currentChoices.Count;
 
         for (int i = 0; i < choiceButtons.Length; i++)
@@ -289,6 +294,8 @@ public class DialogueManager : MonoBehaviour
  
     public void OnChoiceSelected(int choiceIndex)
     {
+        choiceInProgress = false;
+
         string choiceText = currentStory.currentChoices[choiceIndex].text;
         // Debug.Log($"Selected choice text: [{choiceText}]");
 
@@ -426,14 +433,14 @@ public class DialogueManager : MonoBehaviour
 
     private IEnumerator makeSpaceBarFlutter() {
 
-        Color flutterColor = new Color (0.9f, 0.9f, 0.9f);
+        Color flutterColor = new Color (0.19f, 0.26f, 0.22f);
 
-        while ( dialogueIsPlaying && !isCurrentlyTyping ) { 
+        while ( dialogueIsPlaying && !isCurrentlyTyping && !choiceInProgress ) { 
         
-            if ( spaceBarIcon.color == Color.white ) {
-                spaceBarIcon.color = flutterColor;
-            } else if (spaceBarIcon.color == flutterColor) {
-                spaceBarIcon.color = Color.white;
+            if ( spaceBarIcon.activeSelf ) {
+                spaceBarIcon.SetActive(false);
+            } else {
+                spaceBarIcon.SetActive(true);
             }
 
             yield return new WaitForSeconds( flutterSpeed );
@@ -450,7 +457,7 @@ public class DialogueManager : MonoBehaviour
             SpaceBarFlutterCoroutine = null;
         }
 
-        spaceBarIcon.color = Color.white;
+        spaceBarIcon.SetActive(false);
 
     }
 

@@ -197,7 +197,11 @@ public class GameStateManager : MonoBehaviour
         // move Desk and stuff for layout change
         //hide tools + show bargaining buttons
         DialogueManager.GetInstance().Reset();
-        DialogueManager.GetInstance().ShowSavings();
+
+        if (!tutoActivated)
+        {
+            DialogueManager.GetInstance().ShowSavings();
+        }
 
         levelManager.PrepareBargainState();
 
