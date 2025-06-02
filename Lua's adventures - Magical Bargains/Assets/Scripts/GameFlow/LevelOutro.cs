@@ -12,7 +12,7 @@ public class LevelOutro : MonoBehaviour
     [Header("Outro Graphics")]
     [SerializeField] private GameObject holder;
     [SerializeField] private GameObject backgroundColor;
-    [SerializeField] private GameObject cutsceneImage;
+
 
     [SerializeField] private GameObject generalStatsHolder;
     [SerializeField] private GameObject perItemStatsHolder;
@@ -38,6 +38,9 @@ public class LevelOutro : MonoBehaviour
 
     private Vector3 itemStatBasePosition;
     private float lastHeightUsed;
+
+    private float ObjectBoughtFontSize = 28f;
+    private float ObjectBoughtY = 38f;
 
     double earnings;
 
@@ -107,7 +110,7 @@ public class LevelOutro : MonoBehaviour
         // set base item stat pos
         Vector3 pos = perItemBaseDisplay.gameObject.transform.position;
 
-        itemStatBasePosition = new Vector3(pos.x + 35f, pos.y - 2f, pos.z);
+        itemStatBasePosition = new Vector3(pos.x + 45f, pos.y - 2f, pos.z);
         lastHeightUsed = itemStatBasePosition.y;
 
         // old statistics:
@@ -143,6 +146,7 @@ public class LevelOutro : MonoBehaviour
         double totalLoss = (initialSavings - oldSavings ) + dailyExpenses;
         double grossEarnings = oldSavings - newSavings; //////////// I think there's a problem with this
         double netEarnings = newSavings - initialSavings;
+        string netEarningsColor = netEarnings > 0 ? "green" : "red";
 
         // absolute value
         if (totalLoss < 0) { totalLoss *= -1;  }
@@ -157,7 +161,7 @@ public class LevelOutro : MonoBehaviour
         itemsBoughtTextDisplay.text = nbPurchases.ToString();
         dailyExpensesTextDisplay.text =  dailyExpenses.ToString("00.00") + "$";
         totalLossTextDisplay.text =  totalLoss.ToString("00.00") + "$";
-        netEarningsDisplay.text = netEarnings.ToString("0.00") + "$";
+        netEarningsDisplay.text = "<b><color=" + netEarningsColor + ">" + netEarnings.ToString("0.00") + "$"  + "</color></b>";
 
 
 
@@ -195,7 +199,6 @@ public class LevelOutro : MonoBehaviour
 
         // display outro graphics
         holder.SetActive(true);
-        cutsceneImage.SetActive(true);
 
 
         return appreciation;
@@ -293,7 +296,10 @@ public class LevelOutro : MonoBehaviour
 
     private void CreateAndDisplayItemStat(int currentIndex, double finalPrice, double earnedAmount) {
 
-        lastHeightUsed = lastHeightUsed - 22f;
+
+
+
+        lastHeightUsed = lastHeightUsed - ObjectBoughtY;
 
         Vector3 pos = itemStatBasePosition;
         pos.y = lastHeightUsed;
@@ -304,9 +310,9 @@ public class LevelOutro : MonoBehaviour
         objBought.color = Color.red;
         objBought.tag = "endLevelItemStat";
         objBought.transform.SetParent(perItemStatsHolder.transform);
-        objBought.fontSize = 16;
+        objBought.fontSize = ObjectBoughtFontSize;
 
-        lastHeightUsed = lastHeightUsed - 22f;
+        lastHeightUsed = lastHeightUsed - ObjectBoughtY;
         pos.y = lastHeightUsed;
 
         TextMeshProUGUI objSold = Instantiate(ItemExampleDisplay, pos, Quaternion.identity);
@@ -315,7 +321,7 @@ public class LevelOutro : MonoBehaviour
         objSold.color = Color.green;
         objSold.tag = "endLevelItemStat";
         objSold.transform.SetParent(perItemStatsHolder.transform);
-        objSold.fontSize = 16;
+        objSold.fontSize = ObjectBoughtFontSize;
 
 
         objBought.gameObject.SetActive(true);
@@ -361,7 +367,6 @@ public class LevelOutro : MonoBehaviour
         GameStateManager.GetInstance().LoadLevelIntro();
 
         // hide the cutscene graphics and reset text content
-        cutsceneImage.SetActive(false);
         appreciationTextDisplay.text = "";
         processedClientsTextDisplay.text = "";
         itemsBoughtTextDisplay.text = "";
