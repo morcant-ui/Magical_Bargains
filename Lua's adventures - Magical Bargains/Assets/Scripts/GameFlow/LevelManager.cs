@@ -495,7 +495,11 @@ public class LevelManager : MonoBehaviour
         if (currentClient.canBargain.Split(',').Select(s => s.Trim()).Contains(action)) //accepts "thermometer", "thermometer, magnifier" type of strings
         {
             // congrats you found the sus element!
-            
+
+            // play audio
+            Transform position = savingsImage.GetComponent<Transform>();
+            AudioManager.GetInstance().PlayClip(moneyAudioClip, position, volume);
+
             // update savings
             savings = GameStateManager.GetInstance().RetrieveMoney(finalOffer);
             savingsText.text = "$" + savings.ToString("00.00");
