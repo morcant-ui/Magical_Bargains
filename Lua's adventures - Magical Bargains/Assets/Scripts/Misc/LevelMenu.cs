@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class LevelMenu : MonoBehaviour
 {
@@ -16,13 +17,21 @@ public class LevelMenu : MonoBehaviour
     [SerializeField] private Foldout musicSection;
     [SerializeField] private Foldout controlSection;
 
+    [SerializeField] private Button quitButton;
+
+    private string menuScene = "SimpleMenu";
+
     private bool isOn = false;
 
     // Start is called before the first frame update
     void Start()
     {
         menuPanel.SetActive(false);
+
         musicSlider.onValueChanged.AddListener(delegate { ChangeMusicVolume(); });
+
+        quitButton.interactable = false;
+        quitButton.onClick.AddListener(OnQuitButtonClick);
     }
 
     // Update is called once per frame
@@ -38,6 +47,7 @@ public class LevelMenu : MonoBehaviour
             // hide menu
 
             menuPanel.SetActive(false);
+            quitButton.interactable = false;
             
         }
         else {
@@ -62,6 +72,7 @@ public class LevelMenu : MonoBehaviour
 
             // show menu
             menuPanel.SetActive(true);
+            quitButton.interactable = true;
         }
 
         isOn = !isOn;
@@ -76,5 +87,9 @@ public class LevelMenu : MonoBehaviour
 
         AudioManager.GetInstance().SetMusicVolume(vol);
 
+    }
+
+    private void OnQuitButtonClick() {
+        SceneManager.LoadScene(menuScene);
     }
 }
