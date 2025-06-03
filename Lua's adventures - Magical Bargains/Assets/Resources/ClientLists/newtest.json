@@ -1,7 +1,7 @@
 {
     "clients": [
         {
-            "clientSprite": "c2",
+            "clientSprite": "c15",
             "artifactSprite": "a8",
 
             "cameraSprite":"a8-hidden",
