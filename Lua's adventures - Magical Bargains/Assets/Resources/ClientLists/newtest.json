@@ -13,8 +13,8 @@
             "dialogueC":"diaSc1",
             "dialogueD":"diaSd1",
             
-            "artifactOffer": "800",
-            "minOfferAccepted": "800",
+            "artifactOffer": "400",
+            "minOfferAccepted": "400",
             "offerIsImpossible": "true",
             "grade": "excellent",
 
