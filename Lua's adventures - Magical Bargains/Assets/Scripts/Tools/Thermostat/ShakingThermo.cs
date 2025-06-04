@@ -27,6 +27,7 @@ public class ShakingThermo : MonoBehaviour
     [Header("poof sound Clip")]
     [SerializeField] private AudioClip audioClip;
     [SerializeField] private float volume = 0.1f;
+    [SerializeField] private float audioDelay = 0.35f;
 
     public void StartProcess()
     {
@@ -151,7 +152,7 @@ public class ShakingThermo : MonoBehaviour
 
         // play clip
         Transform position = holder.GetComponent<Transform>();
-        AudioManager.GetInstance().PlayClip(audioClip, position, volume);
+        AudioManager.GetInstance().PlayClip(audioClip, position, volume, audioDelay);
 
         // Fade in
         float t = 0;

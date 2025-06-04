@@ -32,7 +32,7 @@ public class AudioManager : MonoBehaviour
     public static AudioManager GetInstance() { return instance; }
 
 
-    public void PlayClip(AudioClip audioClip, Transform spawnTransform, float volume) {
+    public void PlayClip(AudioClip audioClip, Transform spawnTransform, float volume, float startingTime = 0f) {
         //spawn a new gameobject
         AudioSource audioSource = Instantiate(obj, spawnTransform.position, Quaternion.identity);
 
@@ -41,6 +41,11 @@ public class AudioManager : MonoBehaviour
 
         // assign volume
         audioSource.volume = volume;
+
+        // if startingTime specified start at that time:
+        if (startingTime != 0f) {
+            audioSource.time = startingTime;
+        }
 
         // play sound
         audioSource.Play();

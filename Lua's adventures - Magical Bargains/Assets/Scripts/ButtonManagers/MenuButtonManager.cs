@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 
 public static class GameLaunchOptions {
     public static bool SkipTutorial = false;
-    public static float MusicVolume = 0.2f;
+    public static float MusicVolume = 0.1f;
 }
 
 
