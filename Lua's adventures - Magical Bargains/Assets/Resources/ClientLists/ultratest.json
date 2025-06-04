@@ -1,0 +1,25 @@
+{
+    "clients": [
+        {
+            "clientSprite": "c6",
+            "artifactSprite": "artifact1",
+
+            "magnifierSprite":"hidden-artifact1",
+            "thermoColor": "#3647ca",
+            "thermoIntensity":0.735,
+
+            "fullDialogue":"c2-dia",
+            "dialogueA":"diaSa2",
+            "dialogueB":"diaSb2",
+            "dialogueD":"diaSd2",
+            
+            "artifactOffer": "60",
+            "minOfferAccepted": "20",
+            "canBargain":"magnifier",
+            "grade": "junk",
+
+            "clientName": "Kali",
+            "clientColor": "#3647ca"
+        }
+    ]
+}

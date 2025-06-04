@@ -1,22 +1,10 @@
 {
     "levelData": [
         {
-            "listClientsName":"newtest",
+            "listClientsName":"ultratest",
             "grandpaIntroDialogue":"gid1",
             "maxTime":10,
             "dailyExpenses":30.0
-        },
-        {
-            "listClientsName": "newtest2",
-            "grandpaIntroDialogue": "gidS",
-            "maxTime":60 ,
-            "dailyExpenses":50.0
-        },
-        {
-            "listClientsName": "newtest3",
-            "grandpaIntroDialogue": "gidS2",
-            "maxTime":60 ,
-            "dailyExpenses":40.0
         }
     ]
 }

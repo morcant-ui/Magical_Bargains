@@ -80,6 +80,7 @@ public class AudioManager : MonoBehaviour
     public void SetMusicVolume(float vol) {
 
         volume = vol;
+        GameLaunchOptions.MusicVolume = vol;
 
         if (musicSource.isPlaying) {
 

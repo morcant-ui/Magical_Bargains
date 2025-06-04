@@ -11,7 +11,9 @@ public class GameStateManager : MonoBehaviour
     [SerializeField] private bool playIntroCutscene = true;
 
     [Header("SKIP TUTO ?")]
-    [SerializeField] public bool tutoActivated = true;
+    [SerializeField] private bool skipTutoInspectorOption = true;
+
+    public bool tutoActivated { get; private set; }
 
     [Header("Grandpa sprite")]
     [SerializeField] private GameObject grandpa;
@@ -36,7 +38,7 @@ public class GameStateManager : MonoBehaviour
 
     private Queue<ClientData> currentPurchases = new Queue<ClientData>();
 
-    private static double savings = 99.0; // static vars cannot show in inspector
+    private static double savings; // static vars cannot show in inspector
 
     private double initialSavings;
 
@@ -46,14 +48,14 @@ public class GameStateManager : MonoBehaviour
 
     private string tutoPathName = Path.Combine("Dialogues", "grandpa", "Tuto");
 
-    private Coroutine tutoWaitsForClient;
     private Coroutine tutoWaitForGrandpa;
-    private Coroutine tutoWaitForBargain;
 
     private static GameStateManager instance;
 
 
-    
+
+
+
 
     private string state;
 
@@ -90,10 +92,41 @@ public class GameStateManager : MonoBehaviour
 
     private void Start() {
 
-        savings = 300.0;
-        currentPurchases = new Queue<ClientData>();
+        StartGame();
+    }
 
+
+
+    public void StartGame( ) {
+
+        volume = GameLaunchOptions.MusicVolume;
+
+        bool doSkipTuto = GameLaunchOptions.SkipTutorial;
+        
+
+        tutoActivated = !doSkipTuto; // if we turn skipTuto true tuto activated = false, if done nothing it will be false
+
+
+        // if using inspector, it should have priority
+        if (skipTutoInspectorOption) {
+            tutoActivated = !skipTutoInspectorOption;
+        }
+
+        // reset all game state variables
+        savings = 300.0;
+        initialSavings = savings;
+        maxTime = -1;
+        currentPurchases = new Queue<ClientData>();
+        lastAppreciation = "";
+        timerEnded = false;
+
+        if (tutoWaitForGrandpa != null) { StopCoroutine(tutoWaitForGrandpa); }
+        tutoWaitForGrandpa = null;
+
+
+        // start the game
         LoadGameIntro();
+
     }
 
 

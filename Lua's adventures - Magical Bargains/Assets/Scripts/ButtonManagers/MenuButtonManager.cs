@@ -4,22 +4,43 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+
+public static class GameLaunchOptions {
+    public static bool SkipTutorial = false;
+    public static float MusicVolume = 0.2f;
+}
+
+
 public class MenuButtonManager : MonoBehaviour
 {
+
+    [SerializeField] private MenuAudioManager audioManager;
+
     [Header("Buttons")]
-    [SerializeField] private Button properSceneButton;
+    [SerializeField] private Button startGameButton;
+    [SerializeField] private Toggle skipTutoToggle;
 
     [Header("Scenes")]
-    [SerializeField] private string properScene = "MainScene";
+    [SerializeField] private string scene = "MainScene";
 
 
 
     private void Start() {
-        properSceneButton.onClick.AddListener(OnProperSceneButtonClick);
+        audioManager.SetMusicVolume( GameLaunchOptions.MusicVolume );
+
+        startGameButton.onClick.AddListener(OnStartGameButtonClick);
+
     }
 
-    public void OnProperSceneButtonClick()
+    public void OnStartGameButtonClick()
     {
-        SceneManager.LoadScene(properScene);
+
+        GameLaunchOptions.MusicVolume = audioManager.GetMusicVolume();
+        GameLaunchOptions.SkipTutorial = skipTutoToggle.isOn;
+
+        SceneManager.LoadScene(scene);
     }
+
+
+
 }
