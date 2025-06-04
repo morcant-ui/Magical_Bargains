@@ -187,7 +187,6 @@ public class ShakingThermo : MonoBehaviour
     Color ParseColor(string hex, float alpha)
     {
 
-        Debug.Log("-----PARSE COLOR: HEX: " + hex + ", ALPHA: " + alpha);
 
         if (alpha == 0.0)
         {
@@ -215,8 +214,6 @@ public class ShakingThermo : MonoBehaviour
             float b = (float)blue / 255f;
 
             Color c = new Color(r, g, b, alpha);
-
-            Debug.Log("------C: " + c);
 
             return c;
         }

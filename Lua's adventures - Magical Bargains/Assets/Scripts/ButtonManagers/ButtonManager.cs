@@ -327,7 +327,20 @@ public class ButtonManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("Magnifier position: " + magnifierHandle.transform.position);
+
+            // if activate a tool, make sure to deactivate the ones active if there are
+            if (cameraButtonActivated) {
+
+                Debug.Log("camera was active");
+                cameraButtonActivated = false;
+                fishingGame.SetActive(false);
+                cameraScript.Abort();
+            }
+
+            if (thermometerButtonActivated) {
+                thermometer.SetActive(false);
+                thermometerButtonActivated = false;
+            }
 
             magnifierHandle.transform.position = magnifierPosition;
             magnifier.SetActive(true);
@@ -369,6 +382,17 @@ public class ButtonManager : MonoBehaviour
         }
         else
         {
+            // if activate a tool, make sure to deactivate the ones active if there are
+            if (magnifierButtonActivated) {
+                magnifier.SetActive(false);
+                magnifierButtonActivated = false;
+            }
+
+            if (thermometerButtonActivated) {
+                thermometer.SetActive(false);
+                thermometerButtonActivated = false;
+            }
+
             cameraButtonActivated = true;
             fishingGame.SetActive(true);
             cameraScript.StartProcess();
@@ -408,6 +432,18 @@ public class ButtonManager : MonoBehaviour
         }
         else
         {
+
+            // if activate a tool, make sure to deactivate the ones active if there are
+            if (magnifierButtonActivated) {
+                magnifier.SetActive(false);
+                magnifierButtonActivated = false;
+            }
+
+            if (cameraButtonActivated) {
+                cameraButtonActivated = false;
+                fishingGame.SetActive(false);
+                cameraScript.Abort();
+            }
 
             thermometer.SetActive(true);
             thermometerButtonActivated = true;
@@ -534,13 +570,13 @@ public class ButtonManager : MonoBehaviour
 
 
         thermometerButton.gameObject.SetActive(isToolsActive);
-        thermometerButton.interactable = (!(magnifierButtonActivated || cameraButtonActivated)) && additionalCheck;
+        thermometerButton.interactable = isToolsActive && additionalCheck;
 
         magnifierButton.gameObject.SetActive(isToolsActive);
-        magnifierButton.interactable = (!(cameraButtonActivated || thermometerButtonActivated)) && additionalCheck;
+        magnifierButton.interactable = isToolsActive && additionalCheck;
 
         cameraButton.gameObject.SetActive(isToolsActive);
-        cameraButton.interactable = (!(magnifierButtonActivated || thermometerButtonActivated)) && additionalCheck;
+        cameraButton.interactable = isToolsActive && additionalCheck;
 
         if (!magnifierButtonActivated)
         {
