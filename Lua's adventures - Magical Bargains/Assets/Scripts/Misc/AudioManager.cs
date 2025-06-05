@@ -11,6 +11,15 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioSource musicSource;
 
 
+    [SerializeField] private AudioClip musicLvl1;
+    [SerializeField] private AudioClip musicLvl2;
+    [SerializeField] private AudioClip musicLvl3;
+
+
+    private bool lvl1Played = false;
+    private bool lvl2Played = false;
+
+
     private float volume = 0.1f;
 
 
@@ -55,6 +64,29 @@ public class AudioManager : MonoBehaviour
 
         // destroy clip after it's done playing
         Destroy(audioSource.gameObject, clipLength);
+    }
+
+
+    public void StartLevelMusic() {
+
+        if (!lvl1Played)
+        {
+            StartMusic(musicLvl1, true);
+            lvl1Played = true;
+
+        }
+        else if (!lvl2Played)
+        {
+            StartMusic(musicLvl2, true);
+            lvl2Played = true;
+        }
+        else if (lvl1Played && lvl2Played) {
+
+            StartMusic(musicLvl3, true);
+
+        }
+    
+    
     }
 
 

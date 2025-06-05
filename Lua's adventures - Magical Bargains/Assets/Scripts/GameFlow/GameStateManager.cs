@@ -163,7 +163,7 @@ public class GameStateManager : MonoBehaviour
         initialSavings = savings;
 
         // start playing the level music
-        AudioManager.GetInstance().StartMusic(levelMusic, true);
+        AudioManager.GetInstance().StartLevelMusic();
 
         grandpa.SetActive(true);
 

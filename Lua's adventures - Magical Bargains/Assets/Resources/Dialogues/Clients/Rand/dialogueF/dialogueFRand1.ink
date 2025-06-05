@@ -1,4 +1,4 @@
-﻿-> f
+-> f
 
 === f ===
 Hum... could you give me a bit more money maybe?

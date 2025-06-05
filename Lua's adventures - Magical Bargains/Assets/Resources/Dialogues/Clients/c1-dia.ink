@@ -17,7 +17,12 @@ This is the default knot, we should not be reading this in game
 //greetings
 Greetings, I am Bingus the Old....
 I have traveled far to bring you a legendary weapon...A rare treasure, and quite the bargain... Please have a look...
--> DONE
+* "What is this name?"
+    Such rudeness! You should know I have many other shops where I could sell my items!
+    -> DONE
+* "Legendary????"
+    Yes, child. Legendary... the most powerful and spectacular weapon of our time.
+    -> DONE
 
 //=== b ===
 //The client accepts your offer
