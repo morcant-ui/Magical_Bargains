@@ -64,6 +64,10 @@ public class ButtonManager : MonoBehaviour
     private bool endDialogueReady = false;
     private bool isTutoToolsFinished = false;
 
+    private bool tutoMagnifierCheck = true;
+    private bool tutoCameraCheck = true;
+    private bool tutoThermoCheck = true;
+
     private Coroutine endOfToolsTutoCoroutine;
     private Coroutine endOfLastToolTutoCoroutine;
 
@@ -316,14 +320,8 @@ public class ButtonManager : MonoBehaviour
     {
         if (magnifierButtonActivated)
         {
-
             magnifier.SetActive(false);
             magnifierButtonActivated = false;
-
-            if (endDialogueReady && !isTutoToolsFinished)
-            {
-                LoadEndDialogue();
-            }
         }
         else
         {
@@ -353,18 +351,23 @@ public class ButtonManager : MonoBehaviour
 
                 DialogueManager.GetInstance().EnterDialogueMode(tutoDialogue);
 
+                magnifierTutoSeen = true;
+
                 if (cameraTutoSeen && thermoTutoSeen)
                 {
-                    //LoadEndDialogue(tutoDialogue);
                     endDialogueReady = true;
+                    EventSystem.current.SetSelectedGameObject(null);
+                    return;
+
                 }
-
-
-                magnifierTutoSeen = true;
             }
-            
-            
         }
+
+        if (endDialogueReady && !isTutoToolsFinished)
+        {
+            LoadEndDialogue();
+        }
+
         EventSystem.current.SetSelectedGameObject(null);
     }
 
@@ -374,11 +377,6 @@ public class ButtonManager : MonoBehaviour
             cameraButtonActivated = false;
             fishingGame.SetActive(false);
             cameraScript.Abort();
-
-            if (endDialogueReady && !isTutoToolsFinished)
-            {
-                LoadEndDialogue();
-            }
         }
         else
         {
@@ -406,15 +404,22 @@ public class ButtonManager : MonoBehaviour
 
                 DialogueManager.GetInstance().EnterDialogueMode(tutoDialogue);
 
+                cameraTutoSeen = true;
+
                 if (magnifierTutoSeen && thermoTutoSeen)
                 {
-                    //LoadEndDialogue(tutoDialogue);
                     endDialogueReady = true;
-                }
-
-                cameraTutoSeen = true;
+                    EventSystem.current.SetSelectedGameObject(null);
+                    return;
+                }                
             }
         }
+
+        if (endDialogueReady && !isTutoToolsFinished)
+        {
+            LoadEndDialogue();
+        }
+
         EventSystem.current.SetSelectedGameObject(null);
     }
 
@@ -425,10 +430,6 @@ public class ButtonManager : MonoBehaviour
 
             thermometer.SetActive(false);
             thermometerButtonActivated = false;
-
-            if (endDialogueReady && !isTutoToolsFinished) {
-                LoadEndDialogue();
-            }
         }
         else
         {
@@ -457,16 +458,23 @@ public class ButtonManager : MonoBehaviour
 
                 DialogueManager.GetInstance().EnterDialogueMode(tutoDialogue);
 
+                thermoTutoSeen = true;
+
                 if (cameraTutoSeen && magnifierTutoSeen)
                 {
 
-                    //LoadEndDialogue(tutoDialogue);
                     endDialogueReady = true;
-                }
-
-                thermoTutoSeen = true;
+                    EventSystem.current.SetSelectedGameObject(null);
+                    return;
+                }    
             }
         }
+
+        if (endDialogueReady && !isTutoToolsFinished)
+        {
+            LoadEndDialogue();
+        }
+
         EventSystem.current.SetSelectedGameObject(null);
     }
 
@@ -477,6 +485,7 @@ public class ButtonManager : MonoBehaviour
         bool dialoguePlaying = DialogueManager.GetInstance().dialogueIsPlaying;
         bool additionalCheck = true;
         bool bargainDoubleCheck = true;
+        bool additionalTutoToolsCheck = true;
         
 
         bool isOpenShopActive = false;
@@ -509,7 +518,10 @@ public class ButtonManager : MonoBehaviour
             isToolsActive = true;
 
             if ( isTutoActivated && dialoguePlaying ) { additionalCheck = false; }
-            if (isTutoActivated && !isTutoToolsFinished) { bargainDoubleCheck = false; }
+            if (isTutoActivated && !isTutoToolsFinished) { 
+                bargainDoubleCheck = false;
+            }
+
         }
 
         if (currentState == "bargain" && !offerAccepted){
@@ -568,15 +580,23 @@ public class ButtonManager : MonoBehaviour
         problemThermoButton.interactable = choosingNewAction;
         moreMoneyButton.interactable = choosingNewAction;
 
+        bool isThermoInteractable = isToolsActive && additionalCheck;
+        bool isMagnifierInteractable = isToolsActive && additionalCheck;
+        bool isCameraInteractable = isToolsActive && additionalCheck;
+
+        if (magnifierButtonActivated && !isTutoToolsFinished && endDialogueReady) { isThermoInteractable = false; isCameraInteractable = false; }
+        if (thermometerButtonActivated && !isTutoToolsFinished && endDialogueReady) { isMagnifierInteractable = false; isCameraInteractable = false; }
+        if (cameraButtonActivated && !isTutoToolsFinished && endDialogueReady) { isMagnifierInteractable = false; isThermoInteractable = false; }
+
 
         thermometerButton.gameObject.SetActive(isToolsActive);
-        thermometerButton.interactable = isToolsActive && additionalCheck;
+        thermometerButton.interactable = isThermoInteractable;
 
         magnifierButton.gameObject.SetActive(isToolsActive);
-        magnifierButton.interactable = isToolsActive && additionalCheck;
+        magnifierButton.interactable = isMagnifierInteractable;
 
         cameraButton.gameObject.SetActive(isToolsActive);
-        cameraButton.interactable = isToolsActive && additionalCheck;
+        cameraButton.interactable = isCameraInteractable;
 
         if (!magnifierButtonActivated)
         {

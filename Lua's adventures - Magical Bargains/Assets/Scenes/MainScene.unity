@@ -1684,7 +1684,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playIntroCutscene: 0
-  skipTutoInspectorOption: 1
+  skipTutoInspectorOption: 0
   grandpa: {fileID: 777833723}
   levelManager: {fileID: 547474431}
   buttonManager: {fileID: 176006325}
