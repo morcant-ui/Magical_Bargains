@@ -30,7 +30,6 @@ public class GameStateManager : MonoBehaviour
     [Header("Music")]
     [SerializeField] private AudioClip gameIntroMusic;
     [SerializeField] private AudioClip levelOutroMusic;
-    [SerializeField] private AudioClip levelMusic;
     [SerializeField] private AudioClip gameOutroMusic;
     [SerializeField] private float volume = 0.6f;
 
@@ -283,7 +282,8 @@ public class GameStateManager : MonoBehaviour
         // stop music
         AudioManager.GetInstance().StopMusic();
         // start playing the level outro music
-        AudioManager.GetInstance().StartMusic(levelOutroMusic);
+
+        AudioManager.GetInstance().StartMusic(levelOutroMusic,false);
 
         float elapsedTime = timer.CheckTimer();
 

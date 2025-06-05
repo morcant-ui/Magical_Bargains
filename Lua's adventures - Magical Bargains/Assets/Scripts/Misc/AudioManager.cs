@@ -90,6 +90,17 @@ public class AudioManager : MonoBehaviour
     }
 
 
+    public void PlayFknClip(AudioClip audio, float delay) {
+
+        musicSource.clip = audio;
+        musicSource.loop = false;
+        musicSource.volume = volume;
+        musicSource.time = delay;
+        musicSource.Play();
+    
+    }
+
+
     public void StartMusic(AudioClip audio, bool playOnLoop = false) {
 
         musicSource.clip = audio;
