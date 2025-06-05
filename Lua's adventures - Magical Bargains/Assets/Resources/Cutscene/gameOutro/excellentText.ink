@@ -1,1 +1,1 @@
-This is placeholder text for the endings ! This is the excellent ending
+You are a wizard Harry... Specialized in money making !

@@ -1,1 +1,1 @@
-goooood my guy, you're doing well !
+Good Job, really ! You might as well become the new assistant :)

@@ -299,9 +299,11 @@ public class GameStateManager : MonoBehaviour
         AudioManager.GetInstance().StartMusic(gameOutroMusic, true);
         DialogueManager.GetInstance().Reset();
 
-        savings += levelOutro.CalculateEarnings(currentPurchases, savings);
+        double finalEarnings = levelOutro.CalculateEarnings(currentPurchases, savings);
 
-        gameOutro.ShowGameOutro(savings);
+        savings += finalEarnings;
+
+        gameOutro.ShowGameOutro(savings, finalEarnings);
 
     }
 

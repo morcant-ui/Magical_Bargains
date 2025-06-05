@@ -14,35 +14,41 @@ This is the default knot, we should not be reading this in game
 -> DONE
 
 === a ===
-Good day to you, I brought you quite the rare artifact today, please take a look.
-They say stroking it gently with a cloth will grant you wishes... 
-It might fetch a high price at auctions, if you're lucky.
-* "For real?"
-    Oh, absolutely. Look at me, don't I seem like someone who got everything they wished for?
+Goooood evening young little child!
+I bring you a powerful magical staff...
+It was a toothpick, yes. But now? It’s a staff!
+Very powerful, it could break the sea in two! True fact! For real now. Pleaaase buy it?
+AAAaaaA! Be very careful while handling it, yes?
+* "A toothpick?"
+    Yes, you know? That thing you use to remove any extra food in between your teeth after a meal? It's never been used, I swear!
     -> DONE
-* "Why would you sell it?"
-    Because every wish I made was granted... just not in ways I wanted.
+* "Careful?"
+    Yes, please avoid touching the tip of it!
+    -> DONE
 
 === b ===
-Thank you for your offer... May it bring you better fortune than it brought me.
+//The client accepts your offer
+This amount satisfies me, child. Do me a favor... don’t put it in your mouth... unless you enjoy instant regret.
 -> DONE
 
 === c ===
-I’m sorry... I truly believe it deserves a higher price.
+//The client thinks your offer is too low and refuses the deal
+What? Only this? Do you think my mighty staff is a joke? Hmph, I’m leaving!
 -> DONE
 
 === d ===
-Your coin pouch seems rather light... not the best day for wish-making?
+//You don't have enough money and the client refuses the deal
+You offer coins you do not have! This is blasphemy! Or worse, rudeness! I cannot bargain with such unprofessional people!
 -> DONE
 
 === e ===
 //You refused the client's offer
-Maybe you're not as naive as I thought you would be... Good for you.
+... Why would you refuse? It is so powerful... Give it back! WAIT! Don't touch the tip of it!
 -> DONE
 
 === f ===
 //You trying to bargain
-Surely you can do better? Artifacts like this don’t come around every day...
+Hmm... this amount does not satisfy me... Is there a way to do better?
 Do you wish to bargain again?
 * "Yes, let's bargain again" 
     -> DONE
@@ -52,7 +58,7 @@ Do you wish to bargain again?
 
 === g ===
 // there was a way to bargain but you missed
-No, no, it’s not broken, nor is it lacking in magic... I can assure you of that! A shame you couldn’t see it.
+No no, that’s truly not the case! My staff is lacking nothing in this area!
 -> DONE
 
 //=== h ===
@@ -61,5 +67,5 @@ No, no, it’s not broken, nor is it lacking in magic... I can assure you of tha
 
 === i ===
 // congrats you found the scam
-You... saw it? I underestimated you. Take it... just get it far, far away from me.
+Fine... you win. There is poison on it... I will give it to you for the offered amount...
 -> DONE

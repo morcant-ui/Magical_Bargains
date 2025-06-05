@@ -58,10 +58,10 @@ public class LevelOutro : MonoBehaviour
 
     // End of level appreciation text:
     private string okTextBase = "Keep doing what you're doing !";
-    private string midTextBase = "Are you sure you bought any object today ?";
+    private string midTextBase = "Eeeh not too good, Sorry ! You'll need to focus a little more tomorrow !";
     private string badTextBase = "You gotta be more careful, your grandpa is getting a little scared !";
     private string junkTextBase = "Be careful not to buy too much junk !";
-    private string hauntedTextBase = "That haunted object you bought is gonna cause you some trouble !";
+    private string hauntedTextBase = "That haunted object you bought has caused your grandpa some trouble !";
 
     // to exit we store the coroutine in this var to make sure it happens only once
     private Coroutine exitCutsceneCoroutine;
@@ -235,14 +235,14 @@ public class LevelOutro : MonoBehaviour
             {
                 case "excellent":
                     min = 2.0;
-                    max = 4.0;
+                    max = 3.0;
                     break;
                 case "good":
-                    min = 0.9;
-                    max = 1.8;
+                    min = 1.5;
+                    max = 2.4;
                     break;
                 case "ok":
-                    min = 0.4;
+                    min = 0.8;
                     max = 1.3;
                     break;
                 case "bad":
@@ -252,7 +252,7 @@ public class LevelOutro : MonoBehaviour
                 case "haunted":
                     hauntedCount += 1;
                     min = -3.0;
-                    max = -1.0;
+                    max = -0.8;
                     break;
                 case "junk":
                     junkCount += 1;
@@ -260,13 +260,13 @@ public class LevelOutro : MonoBehaviour
                     if (flipCoin < 0.5)
                     {
                         Debug.Log("-----HEADS");
-                        min = -1.5;
+                        min = -1.2;
                         max = -0.1;
                     }
                     else {
                         Debug.Log("------TAILS");
                         min = 0.05;
-                        max = 0.7;
+                        max = 0.8;
                     }
                     
                     break;

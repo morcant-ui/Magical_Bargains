@@ -1,1 +1,1 @@
-This is placeholder text for the endings ! This is the bad ending
+Yoo my gal, where did all the money go ?! Sorry, this is the bad ending :')

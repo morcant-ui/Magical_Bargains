@@ -40,23 +40,26 @@
             "clientColor": "#9270C3"
         }, 
         {
-            "clientSprite": "c10",
-            "artifactSprite": "a5",
+            "clientSprite": "c5",
+            "artifactSprite": "a11",
 
-            "magnifierSprite":"a5-hidden",
-            "thermoColor": "#5BD1DE",
-            "thermoIntensity":0.75,
-
-            "fullDialogue":"c9-dia",
-            "dialogueA":"diaSa9",
+            "magnifierSprite": "a11-hidden",
+            "thermoColor": "#000000",
+            "thermoIntensity":0.1,
 
             "artifactOffer": "80",
-            "minOfferAccepted": "50",
-            "canBargain":"magnifier",
-            "grade": "bad",
+            "minOfferAccepted": "30",
+            "canBargain":"magnifier, thermometer",
+            "grade": "junk",
 
-            "clientName": "Sus-ie",
-            "clientColor": "#3EC362"
+            "fullDialogue":"c5-dia",
+            "dialogueA":"diaSa5",
+            "dialogueB":"diaSb5",
+            "dialogueC":"diaSc5",
+            "dialogueD":"diaSd5",
+
+            "clientName": "Pepine",
+            "clientColor": "#D4AA0B"
         },
         {
             "clientSprite": "c7",

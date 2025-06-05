@@ -45,26 +45,23 @@
             "clientColor": "#7915B0"
         },  
         {
-            "clientSprite": "c5",
-            "artifactSprite": "a11",
+            "clientSprite": "c10",
+            "artifactSprite": "a5",
 
-            "magnifierSprite": "a11-hidden",
-            "thermoColor": "#000000",
-            "thermoIntensity":0.1,
+            "magnifierSprite":"a5-hidden",
+            "thermoColor": "#5BD1DE",
+            "thermoIntensity":0.75,
+
+            "fullDialogue":"c9-dia",
+            "dialogueA":"diaSa9",
 
             "artifactOffer": "80",
-            "minOfferAccepted": "30",
+            "minOfferAccepted": "50",
             "canBargain":"magnifier",
-            "grade": "junk",
+            "grade": "bad",
 
-            "fullDialogue":"c5-dia",
-            "dialogueA":"diaSa5",
-            "dialogueB":"diaSb5",
-            "dialogueC":"diaSc5",
-            "dialogueD":"diaSd5",
-
-            "clientName": "Pepine",
-            "clientColor": "#D4AA0B"
+            "clientName": "Sus-ie",
+            "clientColor": "#3EC362"
         },
         {
             "clientSprite": "c12",

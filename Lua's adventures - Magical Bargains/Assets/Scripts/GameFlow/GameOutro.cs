@@ -26,7 +26,7 @@ public class GameOutro : MonoBehaviour
 
     private Coroutine exitCutsceneCoroutine;
 
-    //private string menuScene = "SimpleMenu";
+    private string menuScene = "SimpleMenu";
 
 
     // Start is called before the first frame update
@@ -50,19 +50,17 @@ public class GameOutro : MonoBehaviour
     }
 
 
-    public void ShowGameOutro(double savings) {
+    public void ShowGameOutro(double savings, double finalEarnings) {
 
         outroActivated = true;
 
-        
-
         string appreciation;
 
-        if (savings >= 300){ appreciation = "excellent"; }
+        if (finalEarnings >= 100 || savings >= 300){ appreciation = "excellent"; }
 
-        else if (savings >= 150){ appreciation = "good"; }
+        else if (savings >= 50 || savings >= 150){ appreciation = "good"; }
 
-        else if (savings >= 100){ appreciation = "ok"; }
+        else if (savings > 0 || savings >= 50){ appreciation = "ok"; }
 
         else if (savings >= 50){ appreciation = "bad"; }
 
@@ -104,7 +102,7 @@ public class GameOutro : MonoBehaviour
         cutsceneTextDisplay.text = "";
         //holder.SetActive(false);
 
-        //SceneManager.LoadScene(menuScene);
-        Application.Quit();
+        SceneManager.LoadScene(menuScene);
+        //Application.Quit();
     }
 }
