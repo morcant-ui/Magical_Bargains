@@ -35,10 +35,12 @@ namespace DebugStuff
 
         void OnGUI()
         {
-            //if (!Application.isEditor) //Do not display in editor ( or you can use the UNITY_EDITOR macro to also disable the rest)
-            if (!doShow) { return; }
-            {
-                myLog = GUI.TextArea(new Rect(10, 10, Screen.width /2, Screen.height /2), myLog);
+            if (Application.isEditor)
+            { //Do not display in editor ( or you can use the UNITY_EDITOR macro to also disable the rest)
+                if (!doShow) { return; }
+                {
+                    myLog = GUI.TextArea(new Rect(10, 10, Screen.width / 2, Screen.height / 2), myLog);
+                }
             }
         }
         //#endif

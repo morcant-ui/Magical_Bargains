@@ -64,10 +64,6 @@ public class ButtonManager : MonoBehaviour
     private bool endDialogueReady = false;
     private bool isTutoToolsFinished = false;
 
-    private bool tutoMagnifierCheck = true;
-    private bool tutoCameraCheck = true;
-    private bool tutoThermoCheck = true;
-
     private Coroutine endOfToolsTutoCoroutine;
     private Coroutine endOfLastToolTutoCoroutine;
 
@@ -485,7 +481,6 @@ public class ButtonManager : MonoBehaviour
         bool dialoguePlaying = DialogueManager.GetInstance().dialogueIsPlaying;
         bool additionalCheck = true;
         bool bargainDoubleCheck = true;
-        bool additionalTutoToolsCheck = true;
         
 
         bool isOpenShopActive = false;
