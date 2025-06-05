@@ -206,7 +206,8 @@ public class DialogueManager : MonoBehaviour
                 if (colonIndex >= 0)
                 {
                     // Extract "avô Pedro:" including colon
-                    string speakerTag = nextLineTrim.Substring(0, colonIndex + 1);
+                    // quick fix to have a capitalized A
+                    string speakerTag = "A" + nextLineTrim.Substring(1, colonIndex + 1);
                     string restOfLine = nextLineTrim.Substring(colonIndex + 1);
 
                     // Color only the speaker tag

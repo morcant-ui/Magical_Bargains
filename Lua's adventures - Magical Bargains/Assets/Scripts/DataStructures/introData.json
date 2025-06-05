@@ -1,8 +1,8 @@
 {
     "imageNames": [
-        {"imageName":"image1"},
-        {"imageName":"image2"},
-        {"imageName":"image3"}
+        {"imageName":"i1"},
+        {"imageName":"i2"},
+        {"imageName":"i4"}
     ],
 
     "textName":"cutsceneText"
