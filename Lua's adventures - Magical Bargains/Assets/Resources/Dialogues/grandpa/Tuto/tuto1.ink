@@ -19,9 +19,9 @@ avô Pedro: Lua! How many times did I tell you not to go into my garage? <br><br
 === ok ===
 avô Pedro: Actually, that's alright. I was going to bring you along today anyway.
 avô Pedro: You know that I run a shop right? 
-avô Pedro: Well my assistant Luc got hurt yesterday while tending to it.
+avô Pedro: Well my assistant Luke got hurt yesterday while tending to it.
 avô Pedro: I thought you could help me by replacing him for the time being.
-* "What happened to Luc?"
+* "What happened to Luke?"
     avô Pedro: Nothing to be worried about, I promise, neta!
     -> parents
     
@@ -47,7 +47,7 @@ avô Pedro: Seeing as how magic is now illegal, you understand why your parents 
     avô Pedro: Magic yes... don't look at me like this, I'm not crazy!
     -> explain_shop
 * "I knew it!"
-    avô Pedro: You did? Well, I guess Luc wasn’t as careful as he should’ve been... 
+    avô Pedro: You did? Well, I guess Luke wasn’t as careful as he should’ve been... 
     -> explain_shop
 
 === explain_shop ===
