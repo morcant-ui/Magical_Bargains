@@ -56,11 +56,11 @@ public class GameOutro : MonoBehaviour
 
         string appreciation;
 
-        if (finalEarnings >= 100 || savings >= 300){ appreciation = "excellent"; }
+        if (finalEarnings >= 100 || (savings >= 300 && finalEarnings > 10)){ appreciation = "excellent"; }
 
-        else if (savings >= 50 || savings >= 150){ appreciation = "good"; }
+        else if (finalEarnings >= 50 || (savings >= 150 && finalEarnings > 0)){ appreciation = "good"; }
 
-        else if (savings > 0 || savings >= 50){ appreciation = "ok"; }
+        else if (finalEarnings > 0 && savings >= 80){ appreciation = "ok"; }
 
         else if (savings >= 50){ appreciation = "bad"; }
 

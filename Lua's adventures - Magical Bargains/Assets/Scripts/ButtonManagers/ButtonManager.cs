@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.IO;
+using TMPro;
 
 public class ButtonManager : MonoBehaviour
 {
@@ -34,6 +35,11 @@ public class ButtonManager : MonoBehaviour
     [SerializeField] private Button magnifierButton;
     [SerializeField] private Button cameraButton;
     [SerializeField] private Button thermometerButton;
+
+    [SerializeField] private TextMeshProUGUI magniText;
+    [SerializeField] private TextMeshProUGUI cameraText;
+    [SerializeField] private TextMeshProUGUI thermoText;
+
 
     [Header("Tools Themselves")]
     [SerializeField] private GameObject magnifier;
@@ -423,7 +429,6 @@ public class ButtonManager : MonoBehaviour
     {
         if (thermometerButtonActivated)
         {
-
             thermometer.SetActive(false);
             thermometerButtonActivated = false;
         }
@@ -586,12 +591,16 @@ public class ButtonManager : MonoBehaviour
 
         thermometerButton.gameObject.SetActive(isToolsActive);
         thermometerButton.interactable = isThermoInteractable;
+        thermoText.gameObject.SetActive(isThermoInteractable);
 
         magnifierButton.gameObject.SetActive(isToolsActive);
         magnifierButton.interactable = isMagnifierInteractable;
+        magniText.gameObject.SetActive(isMagnifierInteractable);
 
         cameraButton.gameObject.SetActive(isToolsActive);
         cameraButton.interactable = isCameraInteractable;
+        cameraText.gameObject.SetActive(isCameraInteractable);
+
 
         if (!magnifierButtonActivated)
         {

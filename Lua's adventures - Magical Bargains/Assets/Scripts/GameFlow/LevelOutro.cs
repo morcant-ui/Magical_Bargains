@@ -235,19 +235,19 @@ public class LevelOutro : MonoBehaviour
             {
                 case "excellent":
                     min = 2.0;
-                    max = 3.0;
+                    max = 2.5;
                     break;
                 case "good":
                     min = 1.5;
-                    max = 2.4;
+                    max = 1.8;
                     break;
                 case "ok":
                     min = 0.8;
                     max = 1.3;
                     break;
                 case "bad":
-                    min = 0.5;
-                    max = 0.9;
+                    min = 0.2;
+                    max = 0.8;
                     break;
                 case "haunted":
                     hauntedCount += 1;
@@ -260,13 +260,13 @@ public class LevelOutro : MonoBehaviour
                     if (flipCoin < 0.5)
                     {
                         Debug.Log("-----HEADS");
-                        min = -1.2;
+                        min = -1.5;
                         max = -0.1;
                     }
                     else {
                         Debug.Log("------TAILS");
                         min = 0.05;
-                        max = 0.8;
+                        max = 0.5;
                     }
                     
                     break;
@@ -283,7 +283,7 @@ public class LevelOutro : MonoBehaviour
 
             earnings += earned;
 
-            Debug.Log("---FOR EACH NEW ITEM: RANGE: " + range.ToString("0.0") );
+            Debug.Log("---FOR EACH NEW ITEM: RANGE: " + range.ToString("0.0") + ", PRICE: " + earned );
 
             CreateAndDisplayItemStat(index, finalPrice, earned);
 
